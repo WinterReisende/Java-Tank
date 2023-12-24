@@ -196,10 +196,8 @@ public class ServerModel implements Runnable {
             if (!clientConnected[i]) {
                 id = i;
                 setClientConnected(id, true);
-                // Player player = new Player(this, id, -1, id * 50, id * 50);
                 setPlayerNumber(getPlayerNumber() + 1);
                 this.view.mainPanel.setPlayerNumber(getPlayerNumber());
-                this.view.mainPanel.setPlayerAddress(id, id * 50, id * 50);
                 break;
             }
         }
@@ -214,7 +212,6 @@ public class ServerModel implements Runnable {
         setPlayerNumber(getPlayerNumber() - 1);
         // 这里还应该根据player是否存活决定是否要减少playerLivingNumber，不过断开连接只会让server进入死循环，所以暂时不用考虑这个问题
         this.view.mainPanel.setPlayerNumber(getPlayerNumber());
-        this.view.mainPanel.deletePlayer(id);
         return 1;
     }
 

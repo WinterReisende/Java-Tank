@@ -1,32 +1,18 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/AcyKyItb)
-# j05
-
-请将j04的迷宫任务改造为一个ruguelike的对战游戏(不限于葫芦娃主题）。下图供参考。
-
-![](0.webp)
-
-**游戏构思和实现请发挥想象力**，具体需求如下：
-
-- **并发**：用多线程实现游戏中生物体的自主行为
-  - 每个生物体的移动、攻击等行为决策可使用Minimax或其他算法（可参考https://www.baeldung.com/java-minimax-algorithm）
-  - 请特别注意线程race condition（两个生物体不能占据同一个tile，对同一生物体的两个攻击行为应该先后发生作用，等）
-  - **完成后录屏发小破站**
-- **构建**：支持项目自动化构建
-  - 使用maven进行所有第三方库的依赖管理和构建
-  - **在github actions中运行构建过程**
-- **测试**：编写junit单元测试用例
-  - 代码测试覆盖率不低于50%（vscode请使用Coverage Gutters扩展，intellij IDEA请run with coverage）
-  - **在github actions中运行测试过程**
-- **IO**：提供游戏保存功能
-  - 地图保存/地图加载
-  - 进度保存/进度恢复
-  - 游戏过程录制/回放
-  - **完成后录屏发小破站**
-- **网络通信**：支持网络对战
-  - 支持多方（大于两方）对战
-  - 要求使用NIO Selector实现
-  - 要求通信过程全局状态一致（所有玩家看到的游戏过程完全一样），可通过各方分别录制游戏过程后进行比对验证
-  - **完成后录屏发小破站**
-
-
-
+本文件夹包含游戏服务器端的实现代码。  
+其主要结构如下：  
+ServerView作为JFrame的派生类，实现了完整的游戏界面，同时包含一个线程池，用来调度不同的线程，此外不具备太多的逻辑功能。  
+ServerController是一个单独的类，其中包含了对若干按钮和键盘操作的响应控制，没有太多的逻辑功能。  
+Actor是各种游戏对象的均会继承的接口，代表了基本功能。  
+Player、Enemy、Bullet、Wall、Boundary均继承了Actor。  
+Map类中编码了地图的字符串表示，以便ServerModel中据此利用各种Actor生成游戏场景，同时包含一系列用来保存地图到文件以及从文件读取地图的函数。  
+EnemyCreater类用来动态生成敌人  
+ServerModel是Runnable的派生类，其中实现了主要的游戏逻辑：  
+    - 首先，在run函数中有一个循环，用于检查游戏状态并根据客户端发送的信息来调用Player对象的响应函数进行行动，同时生成要发送给客户端的指令  
+    - readInstruction函数的功能是对客户端发送的信息进行解析，从而调整记录的各种信息，形成可供解析的控制信息。  
+    - setModelStart函数用来执行创建新游戏的功能。  
+    - getString函数用来生成详细的指令。  
+    - saveState函数用来将游戏的当前状态保存到文件，以便下次加载。  
+    - loadState函数用来从文件加载游戏。  
+ServerSelector类是Runnable的派生类，通过NIO的方式与客户端进行通信。  
+DrawingPanel类没有作用，只是为了保证文件结构的一致性而存在的。  
+总的来说，游戏服务器端通过处理从客户端发送的信息来控制游戏流程，实现开启新游戏、加载进度、回看等功能。  

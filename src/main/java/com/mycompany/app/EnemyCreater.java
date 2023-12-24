@@ -16,17 +16,17 @@ public class EnemyCreater implements Runnable {
         this.level = 0;
         // enemyNumber = new int[4];
         enemyNumberList = new int[5];
-        enemyNumberList[0] = 1;
-        enemyNumberList[1] = 1;
-        enemyNumberList[2] = 1;
-        enemyNumberList[3] = 1;
-        enemyNumberList[4] = 1;
+        enemyNumberList[0] = 2;
+        enemyNumberList[1] = 3;
+        enemyNumberList[2] = 3;
+        enemyNumberList[3] = 5;
+        enemyNumberList[4] = 4;
         enemyTypeList = new int[5];
         enemyTypeList[0] = 1;
         enemyTypeList[1] = 1;
         enemyTypeList[2] = 2;
         enemyTypeList[3] = 1;
-        enemyTypeList[4] = 2;
+        enemyTypeList[4] = 3;
         leftEnemy = 0;
         createInterval = 150;
     }

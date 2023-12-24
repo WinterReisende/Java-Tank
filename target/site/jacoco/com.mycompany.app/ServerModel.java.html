@@ -56,82 +56,82 @@ public class ServerModel implements Runnable {
     private java.io.File progressFile;
     private java.io.PrintWriter progressOutpuWriter;
 
-<span class="nc" id="L59">    public ServerModel(ServerView thisview) throws IOException {</span>
-<span class="nc" id="L60">        view = thisview;</span>
+<span class="fc" id="L59">    public ServerModel(ServerView thisview) throws IOException {</span>
+<span class="fc" id="L60">        view = thisview;</span>
         // fromUsers = new String[5];
-<span class="nc" id="L62">        fromServer = &quot;&quot;;</span>
-<span class="nc" id="L63">        moveUp = new boolean[5];</span>
-<span class="nc" id="L64">        moveDown = new boolean[5];</span>
-<span class="nc" id="L65">        moveLeft = new boolean[5];</span>
-<span class="nc" id="L66">        moveRight = new boolean[5];</span>
-<span class="nc" id="L67">        fire = new boolean[5];</span>
+<span class="fc" id="L62">        fromServer = &quot;&quot;;</span>
+<span class="fc" id="L63">        moveUp = new boolean[5];</span>
+<span class="fc" id="L64">        moveDown = new boolean[5];</span>
+<span class="fc" id="L65">        moveLeft = new boolean[5];</span>
+<span class="fc" id="L66">        moveRight = new boolean[5];</span>
+<span class="fc" id="L67">        fire = new boolean[5];</span>
 
-<span class="nc" id="L69">        clientInstructionPrepared = new boolean[5];</span>
-<span class="nc" id="L70">        clientInstruction = new String[5];</span>
-<span class="nc" id="L71">        playerNumber = 0;</span>
-<span class="nc" id="L72">        playerLivingNumber = 0;</span>
-<span class="nc" id="L73">        Pnid = new int[5];</span>
+<span class="fc" id="L69">        clientInstructionPrepared = new boolean[5];</span>
+<span class="fc" id="L70">        clientInstruction = new String[5];</span>
+<span class="fc" id="L71">        playerNumber = 0;</span>
+<span class="fc" id="L72">        playerLivingNumber = 0;</span>
+<span class="fc" id="L73">        Pnid = new int[5];</span>
 
-<span class="nc" id="L75">        clientConnected = new boolean[5];</span>
-<span class="nc" id="L76">        gamePrepared = new boolean[5];</span>
-<span class="nc" id="L77">        wantToLoad = new boolean[5];</span>
-<span class="nc" id="L78">        wantToView = new boolean[5];</span>
+<span class="fc" id="L75">        clientConnected = new boolean[5];</span>
+<span class="fc" id="L76">        gamePrepared = new boolean[5];</span>
+<span class="fc" id="L77">        wantToLoad = new boolean[5];</span>
+<span class="fc" id="L78">        wantToView = new boolean[5];</span>
 
-<span class="nc" id="L80">        actors = new Actor[400];</span>
-<span class="nc" id="L81">        map = new Map(this);</span>
-<span class="nc bnc" id="L82" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc" id="L83">            clientConnected[i] = false;</span>
-<span class="nc" id="L84">            gamePrepared[i] = false;</span>
-<span class="nc" id="L85">            wantToLoad[i] = false;</span>
-<span class="nc" id="L86">            wantToView[i] = false;</span>
-<span class="nc" id="L87">            Pnid[i] = -1;</span>
-<span class="nc" id="L88">            moveUp[i] = false;</span>
-<span class="nc" id="L89">            moveDown[i] = false;</span>
-<span class="nc" id="L90">            moveLeft[i] = false;</span>
-<span class="nc" id="L91">            moveRight[i] = false;</span>
-<span class="nc" id="L92">            fire[i] = false;</span>
-<span class="nc" id="L93">            clientInstructionPrepared[i] = false;</span>
-<span class="nc" id="L94">            clientInstruction[i] = &quot;&quot;;</span>
+<span class="fc" id="L80">        actors = new Actor[400];</span>
+<span class="fc" id="L81">        map = new Map(this);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="fc" id="L83">            clientConnected[i] = false;</span>
+<span class="fc" id="L84">            gamePrepared[i] = false;</span>
+<span class="fc" id="L85">            wantToLoad[i] = false;</span>
+<span class="fc" id="L86">            wantToView[i] = false;</span>
+<span class="fc" id="L87">            Pnid[i] = -1;</span>
+<span class="fc" id="L88">            moveUp[i] = false;</span>
+<span class="fc" id="L89">            moveDown[i] = false;</span>
+<span class="fc" id="L90">            moveLeft[i] = false;</span>
+<span class="fc" id="L91">            moveRight[i] = false;</span>
+<span class="fc" id="L92">            fire[i] = false;</span>
+<span class="fc" id="L93">            clientInstructionPrepared[i] = false;</span>
+<span class="fc" id="L94">            clientInstruction[i] = &quot;&quot;;</span>
         }
 
-<span class="nc" id="L97">        instructionPrepared = false;</span>
-<span class="nc" id="L98">        gameStarted = false;</span>
-<span class="nc" id="L99">        viewStarted = false;</span>
-<span class="nc" id="L100">        gameWin = false;</span>
+<span class="fc" id="L97">        instructionPrepared = false;</span>
+<span class="fc" id="L98">        gameStarted = false;</span>
+<span class="fc" id="L99">        viewStarted = false;</span>
+<span class="fc" id="L100">        gameWin = false;</span>
 
-<span class="nc" id="L102">        this.saveProgress();</span>
-<span class="nc" id="L103">    }</span>
+<span class="fc" id="L102">        this.saveProgress();</span>
+<span class="fc" id="L103">    }</span>
 
     public void saveProgress() {
         // 开始时，读取上次存储的savedProgress.txt，并将其存储到preProgress.txt中
-<span class="nc" id="L107">        java.io.File preProgressFile = new java.io.File(&quot;preProgress.txt&quot;);</span>
-<span class="nc" id="L108">        try (java.io.PrintWriter preProgressOutpuWriter = new java.io.PrintWriter(preProgressFile)) {</span>
-<span class="nc" id="L109">            java.io.BufferedReader preProgressBufferedReader = new java.io.BufferedReader(</span>
+<span class="fc" id="L107">        java.io.File preProgressFile = new java.io.File(&quot;preProgress.txt&quot;);</span>
+<span class="fc" id="L108">        try (java.io.PrintWriter preProgressOutpuWriter = new java.io.PrintWriter(preProgressFile)) {</span>
+<span class="fc" id="L109">            java.io.BufferedReader preProgressBufferedReader = new java.io.BufferedReader(</span>
                     new java.io.FileReader(&quot;savedProgress.txt&quot;));
             String line;
-<span class="nc bnc" id="L112" title="All 2 branches missed.">            while ((line = preProgressBufferedReader.readLine()) != null) {</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">            while ((line = preProgressBufferedReader.readLine()) != null) {</span>
 <span class="nc" id="L113">                preProgressOutpuWriter.println(line);</span>
             }
-<span class="nc" id="L115">            preProgressBufferedReader.close();</span>
-<span class="nc" id="L116">            preProgressOutpuWriter.close();</span>
+<span class="fc" id="L115">            preProgressBufferedReader.close();</span>
+<span class="fc" id="L116">            preProgressOutpuWriter.close();</span>
 <span class="nc" id="L117">        } catch (IOException e) {</span>
 <span class="nc" id="L118">            e.printStackTrace();</span>
-<span class="nc" id="L119">        }</span>
-<span class="nc" id="L120">        this.progressFile = new java.io.File(&quot;savedProgress.txt&quot;);</span>
+<span class="fc" id="L119">        }</span>
+<span class="fc" id="L120">        this.progressFile = new java.io.File(&quot;savedProgress.txt&quot;);</span>
         try {
-<span class="nc" id="L122">            this.progressOutpuWriter = new java.io.PrintWriter(progressFile);</span>
+<span class="fc" id="L122">            this.progressOutpuWriter = new java.io.PrintWriter(progressFile);</span>
 <span class="nc" id="L123">        } catch (FileNotFoundException e) {</span>
 <span class="nc" id="L124">            e.printStackTrace();</span>
-<span class="nc" id="L125">        }</span>
-<span class="nc" id="L126">    }</span>
+<span class="fc" id="L125">        }</span>
+<span class="fc" id="L126">    }</span>
 
     public void setSelector(ServerSelector thisselector) {
-<span class="nc" id="L129">        selector = thisselector;</span>
-<span class="nc" id="L130">    }</span>
+<span class="fc" id="L129">        selector = thisselector;</span>
+<span class="fc" id="L130">    }</span>
 
     public void setController(ServerController thisControler) {
-<span class="nc" id="L133">        controller = thisControler;</span>
-<span class="nc" id="L134">    }</span>
+<span class="fc" id="L133">        controller = thisControler;</span>
+<span class="fc" id="L134">    }</span>
 
     public synchronized void setMoveDirections(int id, boolean up, boolean down, boolean left, boolean right) {
 <span class="nc" id="L137">        this.moveUp[id] = up;</span>
@@ -183,8 +183,8 @@ public class ServerModel implements Runnable {
     }
 
     public void setGameStarted(boolean c) {
-<span class="nc" id="L186">        this.gameStarted = c;</span>
-<span class="nc" id="L187">    }</span>
+<span class="fc" id="L186">        this.gameStarted = c;</span>
+<span class="fc" id="L187">    }</span>
 
     public void setClientConnected(int id, boolean c) {
 <span class="nc" id="L190">        this.clientConnected[id] = c;</span>
@@ -196,402 +196,400 @@ public class ServerModel implements Runnable {
 <span class="nc bnc" id="L196" title="All 2 branches missed.">            if (!clientConnected[i]) {</span>
 <span class="nc" id="L197">                id = i;</span>
 <span class="nc" id="L198">                setClientConnected(id, true);</span>
-                // Player player = new Player(this, id, -1, id * 50, id * 50);
-<span class="nc" id="L200">                setPlayerNumber(getPlayerNumber() + 1);</span>
-<span class="nc" id="L201">                this.view.mainPanel.setPlayerNumber(getPlayerNumber());</span>
-<span class="nc" id="L202">                this.view.mainPanel.setPlayerAddress(id, id * 50, id * 50);</span>
-<span class="nc" id="L203">                break;</span>
+<span class="nc" id="L199">                setPlayerNumber(getPlayerNumber() + 1);</span>
+<span class="nc" id="L200">                this.view.mainPanel.setPlayerNumber(getPlayerNumber());</span>
+<span class="nc" id="L201">                break;</span>
             }
         }
-<span class="nc" id="L206">        return id;</span>
+<span class="nc" id="L204">        return id;</span>
     }
 
     public synchronized int deleteClient(int id) {
-<span class="nc bnc" id="L210" title="All 4 branches missed.">        if (id &lt; 0 || id &gt; 4) {</span>
-<span class="nc" id="L211">            return -1;</span>
+<span class="nc bnc" id="L208" title="All 4 branches missed.">        if (id &lt; 0 || id &gt; 4) {</span>
+<span class="nc" id="L209">            return -1;</span>
         }
-<span class="nc" id="L213">        setClientConnected(id, false);</span>
-<span class="nc" id="L214">        setPlayerNumber(getPlayerNumber() - 1);</span>
+<span class="nc" id="L211">        setClientConnected(id, false);</span>
+<span class="nc" id="L212">        setPlayerNumber(getPlayerNumber() - 1);</span>
         // 这里还应该根据player是否存活决定是否要减少playerLivingNumber，不过断开连接只会让server进入死循环，所以暂时不用考虑这个问题
-<span class="nc" id="L216">        this.view.mainPanel.setPlayerNumber(getPlayerNumber());</span>
-<span class="nc" id="L217">        this.view.mainPanel.deletePlayer(id);</span>
-<span class="nc" id="L218">        return 1;</span>
+<span class="nc" id="L214">        this.view.mainPanel.setPlayerNumber(getPlayerNumber());</span>
+<span class="nc" id="L215">        return 1;</span>
     }
 
     public synchronized void addActor(Actor actor) {
-<span class="nc bnc" id="L222" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
-<span class="nc bnc" id="L223" title="All 2 branches missed.">            if (actors[i] == null) {</span>
-<span class="nc" id="L224">                actors[i] = actor;</span>
-<span class="nc" id="L225">                actors[i].setId(i);</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">            if (actors[i] == null) {</span>
+<span class="nc" id="L221">                actors[i] = actor;</span>
+<span class="nc" id="L222">                actors[i].setId(i);</span>
                 // 检查类名，若为player、bullet或enemy，则添加到view中
-<span class="nc bnc" id="L227" title="All 2 branches missed.">                if (actor.getClass().getName().equals(&quot;com.mycompany.app.Player&quot;)) {</span>
-<span class="nc" id="L228">                    this.view.exec.execute((Player) actor);</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">                if (actor.getClass().getName().equals(&quot;com.mycompany.app.Player&quot;)) {</span>
+<span class="nc" id="L225">                    this.view.exec.execute((Player) actor);</span>
                 }
-<span class="nc bnc" id="L230" title="All 2 branches missed.">                if (actor.getClass().getName().equals(&quot;com.mycompany.app.Bullet&quot;)) {</span>
-<span class="nc" id="L231">                    this.view.exec.execute((Bullet) actor);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">                if (actor.getClass().getName().equals(&quot;com.mycompany.app.Bullet&quot;)) {</span>
+<span class="nc" id="L228">                    this.view.exec.execute((Bullet) actor);</span>
                 }
-<span class="nc bnc" id="L233" title="All 2 branches missed.">                if (actor.getClass().getName().equals(&quot;com.mycompany.app.Enemy&quot;)) {</span>
-<span class="nc" id="L234">                    this.view.exec.execute((Enemy) actor);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">                if (actor.getClass().getName().equals(&quot;com.mycompany.app.Enemy&quot;)) {</span>
+<span class="nc" id="L231">                    this.view.exec.execute((Enemy) actor);</span>
                 }
                 break;
             }
         }
-<span class="nc" id="L239">    }</span>
+<span class="nc" id="L236">    }</span>
 
     public void deleteActor(int id) {
-<span class="nc" id="L242">        actors[id] = null;</span>
-<span class="nc" id="L243">    }</span>
+<span class="nc" id="L239">        actors[id] = null;</span>
+<span class="nc" id="L240">    }</span>
 
     public synchronized void deleteActor(Actor actor) {
-<span class="nc bnc" id="L246" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">            if (actors[i] == actor) {</span>
-<span class="nc" id="L248">                actors[i] = null;</span>
-<span class="nc" id="L249">                break;</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">            if (actors[i] == actor) {</span>
+<span class="nc" id="L245">                actors[i] = null;</span>
+<span class="nc" id="L246">                break;</span>
             }
         }
-<span class="nc" id="L252">    }</span>
+<span class="nc" id="L249">    }</span>
 
     public void setActorAddress(int id, int x, int y) {
-<span class="nc" id="L255">        actors[id].setX(x);</span>
-<span class="nc" id="L256">        actors[id].setY(y);</span>
-<span class="nc" id="L257">    }</span>
+<span class="nc" id="L252">        actors[id].setX(x);</span>
+<span class="nc" id="L253">        actors[id].setY(y);</span>
+<span class="nc" id="L254">    }</span>
 
     public void setActorDirection(int id, int direction) {
-<span class="nc" id="L260">        actors[id].setDirection(direction);</span>
-<span class="nc" id="L261">    }</span>
+<span class="nc" id="L257">        actors[id].setDirection(direction);</span>
+<span class="nc" id="L258">    }</span>
 
     public Actor getActor(int id) {
-<span class="nc bnc" id="L264" title="All 4 branches missed.">        if (id &gt;= 0 &amp;&amp; id &lt; 400) {</span>
-<span class="nc" id="L265">            return actors[id];</span>
+<span class="nc bnc" id="L261" title="All 4 branches missed.">        if (id &gt;= 0 &amp;&amp; id &lt; 400) {</span>
+<span class="nc" id="L262">            return actors[id];</span>
         }
-<span class="nc" id="L267">        return null;</span>
+<span class="nc" id="L264">        return null;</span>
     }
 
     // 检查是否出现任何碰撞，若有，则返回碰撞的actor，否则返回null
     public Actor checkCollison(Actor a) {
-<span class="nc bnc" id="L272" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
-<span class="nc bnc" id="L273" title="All 4 branches missed.">            if (actors[i] != null &amp;&amp; actors[i] != a) {</span>
-<span class="nc bnc" id="L274" title="All 2 branches missed.">                if (actors[i].getBorder().intersects(a.getBorder())) {</span>
-<span class="nc" id="L275">                    return actors[i];</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
+<span class="nc bnc" id="L270" title="All 4 branches missed.">            if (actors[i] != null &amp;&amp; actors[i] != a) {</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">                if (actors[i].getBorder().intersects(a.getBorder())) {</span>
+<span class="nc" id="L272">                    return actors[i];</span>
                 }
             }
         }
-<span class="nc" id="L279">        return null;</span>
+<span class="nc" id="L276">        return null;</span>
     }
 
     public void setMap(Map map) {
-<span class="nc" id="L283">        this.map = map;</span>
-<span class="nc" id="L284">    }</span>
+<span class="nc" id="L280">        this.map = map;</span>
+<span class="nc" id="L281">    }</span>
 
     public Map getMap() {
-<span class="nc" id="L287">        return this.map;</span>
+<span class="nc" id="L284">        return this.map;</span>
     }
 
     public void setMapFromFile(String filename) {
-<span class="nc" id="L291">        this.map.setMapFromFile(filename);</span>
-<span class="nc" id="L292">    }</span>
+<span class="nc" id="L288">        this.map.setMapFromFile(filename);</span>
+<span class="nc" id="L289">    }</span>
 
     public void writeMapToFile(String filename) {
-<span class="nc" id="L295">        this.map.writeMapToFile(filename);</span>
-<span class="nc" id="L296">    }</span>
+<span class="nc" id="L292">        this.map.writeMapToFile(filename);</span>
+<span class="nc" id="L293">    }</span>
 
     public void setEnemyCreater(EnemyCreater creater) {
-<span class="nc" id="L299">        this.creater = creater;</span>
-<span class="nc" id="L300">    }</span>
+<span class="nc" id="L296">        this.creater = creater;</span>
+<span class="nc" id="L297">    }</span>
 
     public EnemyCreater getEnemyCreater() {
-<span class="nc" id="L303">        return this.creater;</span>
+<span class="nc" id="L300">        return this.creater;</span>
     }
 
     public void setInstructionPrepared(boolean c) {
-<span class="nc" id="L307">        this.instructionPrepared = c;</span>
-<span class="nc" id="L308">    }</span>
+<span class="nc" id="L304">        this.instructionPrepared = c;</span>
+<span class="nc" id="L305">    }</span>
 
     public boolean getInstructionPrepared() {
-<span class="nc" id="L311">        return this.instructionPrepared;</span>
+<span class="fc" id="L308">        return this.instructionPrepared;</span>
     }
 
     public void setInstruction(String thisinstruction) {
-<span class="nc" id="L315">        this.instruction = thisinstruction;</span>
-<span class="nc" id="L316">    }</span>
+<span class="nc" id="L312">        this.instruction = thisinstruction;</span>
+<span class="nc" id="L313">    }</span>
 
     public String getInstruction() {
-<span class="nc" id="L319">        String instructioncopy = this.instruction;</span>
-<span class="nc" id="L320">        return instructioncopy;</span>
+<span class="nc" id="L316">        String instructioncopy = this.instruction;</span>
+<span class="nc" id="L317">        return instructioncopy;</span>
     }
 
     public void setClientInstructionPrepared(int id, boolean c) {
-<span class="nc bnc" id="L324" title="All 2 branches missed.">        if (clientConnected[id]) {</span>
-<span class="nc" id="L325">            this.clientInstructionPrepared[id] = c;</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">        if (clientConnected[id]) {</span>
+<span class="nc" id="L322">            this.clientInstructionPrepared[id] = c;</span>
         }
-<span class="nc" id="L327">    }</span>
+<span class="nc" id="L324">    }</span>
 
     public void setClientInstruction(int id, String thisinstruction) {
-<span class="nc bnc" id="L330" title="All 2 branches missed.">        if (clientConnected[id]) {</span>
-<span class="nc" id="L331">            this.clientInstruction[id] = thisinstruction;</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">        if (clientConnected[id]) {</span>
+<span class="nc" id="L328">            this.clientInstruction[id] = thisinstruction;</span>
         }
-<span class="nc" id="L333">    }</span>
+<span class="nc" id="L330">    }</span>
 
     public void setGamePrepared(int id, boolean c) {
-<span class="nc" id="L336">        this.gamePrepared[id] = c;</span>
-<span class="nc" id="L337">    }</span>
+<span class="nc" id="L333">        this.gamePrepared[id] = c;</span>
+<span class="nc" id="L334">    }</span>
 
     public synchronized void setgameStart(boolean c) {
-<span class="nc bnc" id="L340" title="All 2 branches missed.">        if (c) {</span>
-<span class="nc" id="L341">            System.out.println(&quot;setgamestart&quot;);</span>
+<span class="nc bnc" id="L337" title="All 2 branches missed.">        if (c) {</span>
+<span class="nc" id="L338">            System.out.println(&quot;setgamestart&quot;);</span>
         } else {
-<span class="nc" id="L343">            System.out.println(&quot;setgamestop&quot;);</span>
+<span class="nc" id="L340">            System.out.println(&quot;setgamestop&quot;);</span>
         }
-<span class="nc" id="L345">        this.gameStarted = c;</span>
-<span class="nc" id="L346">    }</span>
+<span class="nc" id="L342">        this.gameStarted = c;</span>
+<span class="nc" id="L343">    }</span>
 
     public void setGameWin(boolean c) {
-<span class="nc" id="L349">        this.gameWin = c;</span>
-<span class="nc" id="L350">    }</span>
+<span class="nc" id="L346">        this.gameWin = c;</span>
+<span class="nc" id="L347">    }</span>
 
     public boolean getGameWin() {
-<span class="nc" id="L353">        return this.gameWin;</span>
+<span class="nc" id="L350">        return this.gameWin;</span>
     }
 
     public boolean isMoveDown(int id) {
-<span class="nc" id="L357">        return this.moveDown[id];</span>
+<span class="nc" id="L354">        return this.moveDown[id];</span>
     }
 
     public boolean isMoveLeft(int id) {
-<span class="nc" id="L361">        return this.moveLeft[id];</span>
+<span class="nc" id="L358">        return this.moveLeft[id];</span>
     }
 
     public boolean isMoveRight(int id) {
-<span class="nc" id="L365">        return this.moveRight[id];</span>
+<span class="nc" id="L362">        return this.moveRight[id];</span>
     }
 
     public boolean isMoveUp(int id) {
-<span class="nc" id="L369">        return this.moveUp[id];</span>
+<span class="nc" id="L366">        return this.moveUp[id];</span>
     }
 
     public boolean isFire(int id) {
-<span class="nc" id="L373">        return this.fire[id];</span>
+<span class="nc" id="L370">        return this.fire[id];</span>
     }
 
     public int getPnid(int i) {
-<span class="nc" id="L377">        return Pnid[i];</span>
+<span class="nc" id="L374">        return Pnid[i];</span>
     }
 
     public void setPnid(int id, int n) {
-<span class="nc" id="L381">        this.Pnid[id] = n;</span>
-<span class="nc" id="L382">    }</span>
+<span class="nc" id="L378">        this.Pnid[id] = n;</span>
+<span class="nc" id="L379">    }</span>
 
     public void run() {
         try {
             // System.out.println(&quot; ServerModel is running&quot;);
-<span class="nc" id="L387">            int preplayerNumber = 0;</span>
-<span class="nc" id="L388">            int preparedplayerNumber = 0;</span>
-<span class="nc" id="L389">            int sleepTooLong = 0;</span>
-<span class="nc" id="L390">            long previousTime = System.currentTimeMillis();</span>
+<span class="fc" id="L384">            int preplayerNumber = 0;</span>
+<span class="fc" id="L385">            int preparedplayerNumber = 0;</span>
+<span class="fc" id="L386">            int sleepTooLong = 0;</span>
+<span class="fc" id="L387">            long previousTime = System.currentTimeMillis();</span>
             while (true) {
                 // 使用动态帧率控制进行睡眠33毫秒，同时设置sleepTooLong
-<span class="nc" id="L393">                sleepTooLong++;</span>
+<span class="fc" id="L390">                sleepTooLong++;</span>
                 try {
                     // 使用动态帧率控制，记录每次循环的开始时间，以及结束时间，计算时间差，然后进行sleep
-<span class="nc" id="L396">                    long currentTime = System.currentTimeMillis();</span>
-<span class="nc" id="L397">                    long timeDiff = currentTime - previousTime;</span>
-<span class="nc" id="L398">                    long sleep = 33 - timeDiff;</span>
-<span class="nc bnc" id="L399" title="All 2 branches missed.">                    if (sleep &lt; 0) {</span>
-<span class="nc" id="L400">                        sleep = 0;</span>
+<span class="fc" id="L393">                    long currentTime = System.currentTimeMillis();</span>
+<span class="fc" id="L394">                    long timeDiff = currentTime - previousTime;</span>
+<span class="fc" id="L395">                    long sleep = 33 - timeDiff;</span>
+<span class="pc bpc" id="L396" title="1 of 2 branches missed.">                    if (sleep &lt; 0) {</span>
+<span class="nc" id="L397">                        sleep = 0;</span>
                     }
-<span class="nc" id="L402">                    Thread.sleep(sleep);</span>
-<span class="nc" id="L403">                    previousTime = System.currentTimeMillis();</span>
-<span class="nc" id="L404">                } catch (InterruptedException e) {</span>
-<span class="nc" id="L405">                    System.err.println(&quot;Thread was interrupted: &quot; + e.getMessage());</span>
-<span class="nc" id="L406">                    view.mainPanel.setgameStart(false);</span>
-<span class="nc" id="L407">                    Thread.currentThread().interrupt();</span>
-<span class="nc" id="L408">                    break;</span>
-<span class="nc" id="L409">                }</span>
-<span class="nc" id="L410">                fromServer = &quot;&quot;;</span>
-<span class="nc bnc" id="L411" title="All 2 branches missed.">                if (sleepTooLong &gt; 10) {</span>
-<span class="nc" id="L412">                    fromServer = &quot;noon;&quot;;// 如果sleepTooLong超过10次，则发送一个noon，以防止客户端长时间没有收到消息</span>
+<span class="fc" id="L399">                    Thread.sleep(sleep);</span>
+<span class="fc" id="L400">                    previousTime = System.currentTimeMillis();</span>
+<span class="nc" id="L401">                } catch (InterruptedException e) {</span>
+<span class="nc" id="L402">                    System.err.println(&quot;Thread was interrupted: &quot; + e.getMessage());</span>
+<span class="nc" id="L403">                    view.mainPanel.setgameStart(false);</span>
+<span class="nc" id="L404">                    Thread.currentThread().interrupt();</span>
+<span class="nc" id="L405">                    break;</span>
+<span class="fc" id="L406">                }</span>
+<span class="fc" id="L407">                fromServer = &quot;&quot;;</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">                if (sleepTooLong &gt; 10) {</span>
+<span class="fc" id="L409">                    fromServer = &quot;noon;&quot;;// 如果sleepTooLong超过10次，则发送一个noon，以防止客户端长时间没有收到消息</span>
                 }
-<span class="nc bnc" id="L414" title="All 2 branches missed.">                if (playerNumber == 0) {</span>
-<span class="nc" id="L415">                    continue;</span>
+<span class="pc bpc" id="L411" title="1 of 2 branches missed.">                if (playerNumber == 0) {</span>
+<span class="fc" id="L412">                    continue;</span>
                 }
-<span class="nc bnc" id="L417" title="All 2 branches missed.">                if (playerNumber != preplayerNumber) {</span>
-<span class="nc" id="L418">                    preplayerNumber = playerNumber;</span>
-<span class="nc" id="L419">                    view.mainPanel.setPlayerNumber(playerNumber);</span>
-<span class="nc" id="L420">                    fromServer = &quot;N&quot; + playerNumber + &quot;;&quot;;// 人数变化，则更新人数</span>
+<span class="nc bnc" id="L414" title="All 2 branches missed.">                if (playerNumber != preplayerNumber) {</span>
+<span class="nc" id="L415">                    preplayerNumber = playerNumber;</span>
+<span class="nc" id="L416">                    view.mainPanel.setPlayerNumber(playerNumber);</span>
+<span class="nc" id="L417">                    fromServer = &quot;N&quot; + playerNumber + &quot;;&quot;;// 人数变化，则更新人数</span>
                 }
                 // 检查用户的信息情况，若都已发送，则读取信息并进行处理
-<span class="nc" id="L423">                boolean allInstructionready = true;</span>
-<span class="nc bnc" id="L424" title="All 2 branches missed.">                for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L425" title="All 2 branches missed.">                    if (clientConnected[i]) {</span>
-<span class="nc bnc" id="L426" title="All 2 branches missed.">                        if (!clientInstructionPrepared[i]) {</span>
-<span class="nc" id="L427">                            allInstructionready = false;</span>
-<span class="nc" id="L428">                            break;</span>
+<span class="nc" id="L420">                boolean allInstructionready = true;</span>
+<span class="nc bnc" id="L421" title="All 2 branches missed.">                for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">                    if (clientConnected[i]) {</span>
+<span class="nc bnc" id="L423" title="All 2 branches missed.">                        if (!clientInstructionPrepared[i]) {</span>
+<span class="nc" id="L424">                            allInstructionready = false;</span>
+<span class="nc" id="L425">                            break;</span>
                         }
                     }
                 }
-<span class="nc bnc" id="L432" title="All 2 branches missed.">                if (!allInstructionready) {</span>
-<span class="nc bnc" id="L433" title="All 2 branches missed.">                    if (fromServer.length() &gt; 0) {</span>
-<span class="nc" id="L434">                        this.setInstruction(fromServer);</span>
-<span class="nc" id="L435">                        this.setInstructionPrepared(true);</span>
-<span class="nc" id="L436">                        progressOutpuWriter.println(fromServer);</span>
-<span class="nc" id="L437">                        sleepTooLong = 0;</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">                if (!allInstructionready) {</span>
+<span class="nc bnc" id="L430" title="All 2 branches missed.">                    if (fromServer.length() &gt; 0) {</span>
+<span class="nc" id="L431">                        this.setInstruction(fromServer);</span>
+<span class="nc" id="L432">                        this.setInstructionPrepared(true);</span>
+<span class="nc" id="L433">                        progressOutpuWriter.println(fromServer);</span>
+<span class="nc" id="L434">                        sleepTooLong = 0;</span>
                     }
                     continue;
                 }
-<span class="nc" id="L441">                this.readInstruction();</span>
+<span class="nc" id="L438">                this.readInstruction();</span>
                 // 若游戏未开始，则进行检查，若用户已全部准备好，则开始游戏
-<span class="nc bnc" id="L443" title="All 4 branches missed.">                if (!gameStarted &amp;&amp; !viewStarted) {</span>
+<span class="nc bnc" id="L440" title="All 4 branches missed.">                if (!gameStarted &amp;&amp; !viewStarted) {</span>
                     // 先检查是否用户全都想要开始新游戏
                     // 再检查是否用户全都想要load或者view
-<span class="nc" id="L446">                    boolean allprepared = true;</span>
-<span class="nc" id="L447">                    boolean load = true;</span>
-<span class="nc" id="L448">                    boolean view = true;</span>
-<span class="nc bnc" id="L449" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L450" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
-<span class="nc bnc" id="L451" title="All 2 branches missed.">                            if (!gamePrepared[i]) {</span>
-<span class="nc" id="L452">                                allprepared = false;</span>
-<span class="nc" id="L453">                                break;</span>
+<span class="nc" id="L443">                    boolean allprepared = true;</span>
+<span class="nc" id="L444">                    boolean load = true;</span>
+<span class="nc" id="L445">                    boolean view = true;</span>
+<span class="nc bnc" id="L446" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L447" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
+<span class="nc bnc" id="L448" title="All 2 branches missed.">                            if (!gamePrepared[i]) {</span>
+<span class="nc" id="L449">                                allprepared = false;</span>
+<span class="nc" id="L450">                                break;</span>
                             }
                         }
                     }
-<span class="nc bnc" id="L457" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L458" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
-<span class="nc bnc" id="L459" title="All 2 branches missed.">                            if (!wantToLoad[i]) {</span>
-<span class="nc" id="L460">                                load = false;</span>
-<span class="nc" id="L461">                                break;</span>
+<span class="nc bnc" id="L454" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L455" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">                            if (!wantToLoad[i]) {</span>
+<span class="nc" id="L457">                                load = false;</span>
+<span class="nc" id="L458">                                break;</span>
                             }
                         }
                     }
-<span class="nc bnc" id="L465" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L466" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
-<span class="nc bnc" id="L467" title="All 2 branches missed.">                            if (!wantToView[i]) {</span>
-<span class="nc" id="L468">                                view = false;</span>
-<span class="nc" id="L469">                                break;</span>
+<span class="nc bnc" id="L462" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L463" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
+<span class="nc bnc" id="L464" title="All 2 branches missed.">                            if (!wantToView[i]) {</span>
+<span class="nc" id="L465">                                view = false;</span>
+<span class="nc" id="L466">                                break;</span>
                             }
                         }
                     }
-<span class="nc bnc" id="L473" title="All 6 branches missed.">                    if (!allprepared &amp;&amp; !load &amp;&amp; !view) {</span>
-<span class="nc bnc" id="L474" title="All 2 branches missed.">                        if (fromServer.length() &gt; 0) {</span>
-<span class="nc" id="L475">                            this.setInstruction(fromServer);</span>
-<span class="nc" id="L476">                            this.setInstructionPrepared(true);</span>
-<span class="nc" id="L477">                            progressOutpuWriter.println(fromServer);</span>
-<span class="nc" id="L478">                            sleepTooLong = 0;</span>
+<span class="nc bnc" id="L470" title="All 6 branches missed.">                    if (!allprepared &amp;&amp; !load &amp;&amp; !view) {</span>
+<span class="nc bnc" id="L471" title="All 2 branches missed.">                        if (fromServer.length() &gt; 0) {</span>
+<span class="nc" id="L472">                            this.setInstruction(fromServer);</span>
+<span class="nc" id="L473">                            this.setInstructionPrepared(true);</span>
+<span class="nc" id="L474">                            progressOutpuWriter.println(fromServer);</span>
+<span class="nc" id="L475">                            sleepTooLong = 0;</span>
                         }
                         continue;
-<span class="nc bnc" id="L481" title="All 2 branches missed.">                    } else if (allprepared) {</span>
-<span class="nc" id="L482">                        gameStarted = true;</span>
-<span class="nc" id="L483">                        this.setModelStart();</span>
-<span class="nc" id="L484">                        fromServer += &quot;M&quot; + this.map.getMapId() + &quot;;&quot;;</span>
-<span class="nc" id="L485">                        this.view.mainPanel.setgameStart(true);</span>
-<span class="nc" id="L486">                        this.view.mainPanel.repaint();</span>
-<span class="nc" id="L487">                        fromServer += &quot;S;&quot;;</span>
-<span class="nc bnc" id="L488" title="All 2 branches missed.">                    } else if (load) {</span>
-<span class="nc" id="L489">                        gameStarted = true;</span>
-<span class="nc" id="L490">                        this.loadState(&quot;savedState&quot;);</span>
-<span class="nc" id="L491">                        fromServer += &quot;M&quot; + this.map.getMapId() + &quot;;&quot;;</span>
-<span class="nc" id="L492">                        this.view.mainPanel.setgameStart(true);</span>
-<span class="nc" id="L493">                        this.view.mainPanel.repaint();</span>
-<span class="nc" id="L494">                        fromServer += &quot;S;&quot;;</span>
-<span class="nc bnc" id="L495" title="All 2 branches missed.">                    } else if (view) {</span>
+<span class="nc bnc" id="L478" title="All 2 branches missed.">                    } else if (allprepared) {</span>
+<span class="nc" id="L479">                        gameStarted = true;</span>
+<span class="nc" id="L480">                        this.setModelStart();</span>
+<span class="nc" id="L481">                        fromServer += &quot;M&quot; + this.map.getMapId() + &quot;;&quot;;</span>
+<span class="nc" id="L482">                        this.view.mainPanel.setgameStart(true);</span>
+<span class="nc" id="L483">                        this.view.mainPanel.repaint();</span>
+<span class="nc" id="L484">                        fromServer += &quot;S;&quot;;</span>
+<span class="nc bnc" id="L485" title="All 2 branches missed.">                    } else if (load) {</span>
+<span class="nc" id="L486">                        gameStarted = true;</span>
+<span class="nc" id="L487">                        this.loadState(&quot;savedState&quot;);</span>
+<span class="nc" id="L488">                        fromServer += &quot;M&quot; + this.map.getMapId() + &quot;;&quot;;</span>
+<span class="nc" id="L489">                        this.view.mainPanel.setgameStart(true);</span>
+<span class="nc" id="L490">                        this.view.mainPanel.repaint();</span>
+<span class="nc" id="L491">                        fromServer += &quot;S;&quot;;</span>
+<span class="nc bnc" id="L492" title="All 2 branches missed.">                    } else if (view) {</span>
                         // 在一个循环里，读取preProgress.txt中的信息，发送给客户端，并存入savedProgress.txt中
-<span class="nc" id="L497">                        java.io.BufferedReader preProgressBufferedReader = new java.io.BufferedReader(</span>
+<span class="nc" id="L494">                        java.io.BufferedReader preProgressBufferedReader = new java.io.BufferedReader(</span>
                                 new java.io.FileReader(&quot;preProgress.txt&quot;));
                         String line;
-<span class="nc" id="L500">                        long previousTime2 = System.currentTimeMillis();</span>
-<span class="nc bnc" id="L501" title="All 2 branches missed.">                        while ((line = preProgressBufferedReader.readLine()) != null) {</span>
+<span class="nc" id="L497">                        long previousTime2 = System.currentTimeMillis();</span>
+<span class="nc bnc" id="L498" title="All 2 branches missed.">                        while ((line = preProgressBufferedReader.readLine()) != null) {</span>
                             try {
                                 // 使用动态帧率控制，记录每次循环的开始时间，以及结束时间，计算时间差，然后进行sleep
-<span class="nc" id="L504">                                long currentTime = System.currentTimeMillis();</span>
-<span class="nc" id="L505">                                long timeDiff = currentTime - previousTime2;</span>
-<span class="nc" id="L506">                                long sleep = 33 - timeDiff;</span>
-<span class="nc bnc" id="L507" title="All 2 branches missed.">                                if (sleep &lt; 0) {</span>
-<span class="nc" id="L508">                                    sleep = 0;</span>
+<span class="nc" id="L501">                                long currentTime = System.currentTimeMillis();</span>
+<span class="nc" id="L502">                                long timeDiff = currentTime - previousTime2;</span>
+<span class="nc" id="L503">                                long sleep = 33 - timeDiff;</span>
+<span class="nc bnc" id="L504" title="All 2 branches missed.">                                if (sleep &lt; 0) {</span>
+<span class="nc" id="L505">                                    sleep = 0;</span>
                                 }
-<span class="nc" id="L510">                                Thread.sleep(sleep);</span>
-<span class="nc" id="L511">                                previousTime2 = System.currentTimeMillis();</span>
-<span class="nc" id="L512">                            } catch (InterruptedException e) {</span>
-<span class="nc" id="L513">                                System.err.println(&quot;Thread was interrupted: &quot; + e.getMessage());</span>
-<span class="nc" id="L514">                                this.view.mainPanel.setgameStart(false);</span>
-<span class="nc" id="L515">                                Thread.currentThread().interrupt();</span>
-<span class="nc" id="L516">                                break;</span>
-<span class="nc" id="L517">                            }</span>
-<span class="nc" id="L518">                            fromServer = line;</span>
-<span class="nc" id="L519">                            progressOutpuWriter.println(line);</span>
-<span class="nc" id="L520">                            this.setInstruction(fromServer);</span>
-<span class="nc" id="L521">                            this.setInstructionPrepared(true);</span>
+<span class="nc" id="L507">                                Thread.sleep(sleep);</span>
+<span class="nc" id="L508">                                previousTime2 = System.currentTimeMillis();</span>
+<span class="nc" id="L509">                            } catch (InterruptedException e) {</span>
+<span class="nc" id="L510">                                System.err.println(&quot;Thread was interrupted: &quot; + e.getMessage());</span>
+<span class="nc" id="L511">                                this.view.mainPanel.setgameStart(false);</span>
+<span class="nc" id="L512">                                Thread.currentThread().interrupt();</span>
+<span class="nc" id="L513">                                break;</span>
+<span class="nc" id="L514">                            }</span>
+<span class="nc" id="L515">                            fromServer = line;</span>
+<span class="nc" id="L516">                            progressOutpuWriter.println(line);</span>
+<span class="nc" id="L517">                            this.setInstruction(fromServer);</span>
+<span class="nc" id="L518">                            this.setInstructionPrepared(true);</span>
                         }
-<span class="nc" id="L523">                        this.viewStarted = true;</span>
-<span class="nc" id="L524">                        this.actors = new Actor[400];</span>
-<span class="nc" id="L525">                        this.creater = null;</span>
-<span class="nc bnc" id="L526" title="All 2 branches missed.">                        for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L527" title="All 2 branches missed.">                            if (clientConnected[i]) {</span>
-<span class="nc" id="L528">                                this.wantToLoad[i] = false;</span>
-<span class="nc" id="L529">                                this.wantToView[i] = false;</span>
-<span class="nc" id="L530">                                this.gamePrepared[i] = false;</span>
-<span class="nc" id="L531">                                this.Pnid[i] = -1;</span>
+<span class="nc" id="L520">                        this.viewStarted = false;</span>
+<span class="nc" id="L521">                        this.actors = new Actor[400];</span>
+<span class="nc" id="L522">                        this.creater = null;</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">                        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">                            if (clientConnected[i]) {</span>
+<span class="nc" id="L525">                                this.wantToLoad[i] = false;</span>
+<span class="nc" id="L526">                                this.wantToView[i] = false;</span>
+<span class="nc" id="L527">                                this.gamePrepared[i] = false;</span>
+<span class="nc" id="L528">                                this.Pnid[i] = -1;</span>
                             }
                         }
-<span class="nc" id="L534">                        preProgressBufferedReader.close();</span>
+<span class="nc" id="L531">                        preProgressBufferedReader.close();</span>
+<span class="nc" id="L532">                        continue;</span>
                     }
                     // 这里需要添加类似的逻辑，检查是否是load或者view
                 }
                 // 检查prepared的用户数量是否发生变化，若是，则更新preparedplayerNumber，并fromServer += &quot;S;&quot;
-<span class="nc" id="L539">                int nowpreparedplayerNumber = 0;</span>
-<span class="nc bnc" id="L540" title="All 2 branches missed.">                for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L541" title="All 2 branches missed.">                    if (clientConnected[i]) {</span>
-<span class="nc bnc" id="L542" title="All 2 branches missed.">                        if (gamePrepared[i]) {</span>
-<span class="nc" id="L543">                            nowpreparedplayerNumber++;</span>
+<span class="nc" id="L537">                int nowpreparedplayerNumber = 0;</span>
+<span class="nc bnc" id="L538" title="All 2 branches missed.">                for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">                    if (clientConnected[i]) {</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">                        if (gamePrepared[i]) {</span>
+<span class="nc" id="L541">                            nowpreparedplayerNumber++;</span>
                         }
                     }
                 }
                 // 这里是一个废弃的逻辑，本意是在游戏开始后仍可自由加入玩家
                 // 但由于逻辑中创建player只在setgamestart()中执行，而非addclient()中执行，所以这里的逻辑是无效的
                 // 但是遵循当代码能跑时就不要乱动的原则，所以暂时保留这段代码
-<span class="nc bnc" id="L550" title="All 2 branches missed.">                if (nowpreparedplayerNumber != preparedplayerNumber) {</span>
-<span class="nc" id="L551">                    preparedplayerNumber = nowpreparedplayerNumber;</span>
-<span class="nc" id="L552">                    fromServer += &quot;S;&quot;;</span>
+<span class="nc bnc" id="L548" title="All 2 branches missed.">                if (nowpreparedplayerNumber != preparedplayerNumber) {</span>
+<span class="nc" id="L549">                    preparedplayerNumber = nowpreparedplayerNumber;</span>
+<span class="nc" id="L550">                    fromServer += &quot;S;&quot;;</span>
                 }
                 // 检查存活玩家数量是否为0，若是，则发送指令，同时停止游戏
-<span class="nc bnc" id="L555" title="All 2 branches missed.">                if (playerLivingNumber == 0) {</span>
-<span class="nc" id="L556">                    fromServer += &quot;D;&quot;;</span>
-<span class="nc" id="L557">                    this.setgameStart(false);</span>
-<span class="nc" id="L558">                    this.setInstruction(fromServer);</span>
-<span class="nc" id="L559">                    this.setInstructionPrepared(true);</span>
-<span class="nc" id="L560">                    this.actors = new Actor[400];</span>
-<span class="nc" id="L561">                    this.creater = null;</span>
-<span class="nc bnc" id="L562" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L563" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
-<span class="nc" id="L564">                            this.wantToLoad[i] = false;</span>
-<span class="nc" id="L565">                            this.wantToView[i] = false;</span>
-<span class="nc" id="L566">                            this.gamePrepared[i] = false;</span>
-<span class="nc" id="L567">                            this.Pnid[i] = -1;</span>
+<span class="nc bnc" id="L553" title="All 2 branches missed.">                if (playerLivingNumber == 0) {</span>
+<span class="nc" id="L554">                    fromServer += &quot;D;&quot;;</span>
+<span class="nc" id="L555">                    this.setgameStart(false);</span>
+<span class="nc" id="L556">                    this.setInstruction(fromServer);</span>
+<span class="nc" id="L557">                    this.setInstructionPrepared(true);</span>
+<span class="nc" id="L558">                    this.actors = new Actor[400];</span>
+<span class="nc" id="L559">                    this.creater = null;</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L561" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
+<span class="nc" id="L562">                            this.wantToLoad[i] = false;</span>
+<span class="nc" id="L563">                            this.wantToView[i] = false;</span>
+<span class="nc" id="L564">                            this.gamePrepared[i] = false;</span>
+<span class="nc" id="L565">                            this.Pnid[i] = -1;</span>
                         }
                     }
-<span class="nc" id="L570">                    progressOutpuWriter.println(fromServer);</span>
-<span class="nc" id="L571">                    progressOutpuWriter.close();</span>
-<span class="nc" id="L572">                    sleepTooLong = 0;</span>
-<span class="nc" id="L573">                    continue;</span>
+<span class="nc" id="L568">                    progressOutpuWriter.println(fromServer);</span>
+<span class="nc" id="L569">                    progressOutpuWriter.close();</span>
+<span class="nc" id="L570">                    sleepTooLong = 0;</span>
+<span class="nc" id="L571">                    continue;</span>
                 }
-<span class="nc bnc" id="L575" title="All 2 branches missed.">                if (this.getGameWin()) {</span>
-<span class="nc" id="L576">                    this.setGameWin(false);</span>
-<span class="nc" id="L577">                    fromServer += &quot;W;&quot;;</span>
-<span class="nc" id="L578">                    this.setgameStart(false);</span>
-<span class="nc" id="L579">                    this.setInstruction(fromServer);</span>
-<span class="nc" id="L580">                    this.setInstructionPrepared(true);</span>
-<span class="nc" id="L581">                    this.actors = new Actor[400];</span>
-<span class="nc" id="L582">                    this.creater = null;</span>
-<span class="nc bnc" id="L583" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L584" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
-<span class="nc" id="L585">                            this.wantToLoad[i] = false;</span>
-<span class="nc" id="L586">                            this.wantToView[i] = false;</span>
-<span class="nc" id="L587">                            this.gamePrepared[i] = false;</span>
-<span class="nc" id="L588">                            this.Pnid[i] = -1;</span>
+<span class="nc bnc" id="L573" title="All 2 branches missed.">                if (this.getGameWin()) {</span>
+<span class="nc" id="L574">                    this.setGameWin(false);</span>
+<span class="nc" id="L575">                    fromServer += &quot;W;&quot;;</span>
+<span class="nc" id="L576">                    this.setgameStart(false);</span>
+<span class="nc" id="L577">                    this.setInstruction(fromServer);</span>
+<span class="nc" id="L578">                    this.setInstructionPrepared(true);</span>
+<span class="nc" id="L579">                    this.actors = new Actor[400];</span>
+<span class="nc" id="L580">                    this.creater = null;</span>
+<span class="nc bnc" id="L581" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L582" title="All 2 branches missed.">                        if (clientConnected[i]) {</span>
+<span class="nc" id="L583">                            this.wantToLoad[i] = false;</span>
+<span class="nc" id="L584">                            this.wantToView[i] = false;</span>
+<span class="nc" id="L585">                            this.gamePrepared[i] = false;</span>
+<span class="nc" id="L586">                            this.Pnid[i] = -1;</span>
                         }
                     }
-<span class="nc" id="L591">                    progressOutpuWriter.println(fromServer);</span>
-<span class="nc" id="L592">                    progressOutpuWriter.close();</span>
-<span class="nc" id="L593">                    sleepTooLong = 0;</span>
-<span class="nc" id="L594">                    continue;</span>
+<span class="nc" id="L589">                    progressOutpuWriter.println(fromServer);</span>
+<span class="nc" id="L590">                    progressOutpuWriter.close();</span>
+<span class="nc" id="L591">                    sleepTooLong = 0;</span>
+<span class="nc" id="L592">                    continue;</span>
                 }
 
                 // 若游戏已开始，则进行游戏逻辑处理
@@ -602,291 +600,291 @@ public class ServerModel implements Runnable {
                 // 玩家信息包括玩家的位置，玩家的方向，玩家的生命值，玩家的分数，玩家的类型，只要满足绘图要求即可
                 // 敌人信息包括敌人的位置，敌人的方向，敌人的生命值，敌人的类型，只要满足绘图要求即可
                 // 子弹信息包括子弹的位置，子弹的方向，子弹的类型，只要满足绘图要求即可
-<span class="nc" id="L605">                fromServer += this.getString();</span>
+<span class="nc" id="L603">                fromServer += this.getString();</span>
 
-<span class="nc" id="L607">                sleepTooLong = 0;</span>
-<span class="nc" id="L608">                view.mainPanel.repaint();</span>
+<span class="nc" id="L605">                sleepTooLong = 0;</span>
+<span class="nc" id="L606">                view.mainPanel.repaint();</span>
 
-<span class="nc bnc" id="L610" title="All 2 branches missed.">                for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L611" title="All 2 branches missed.">                    if (clientConnected[i]) {</span>
-<span class="nc" id="L612">                        System.out.println(&quot;    response to client&quot; + i);</span>
-<span class="nc" id="L613">                        Player p = (Player) (this.getActor(this.getPnid(i)));</span>
-<span class="nc" id="L614">                        p.responseInput(this.isMoveUp(i), this.isMoveDown(i), this.isMoveLeft(i), this.isMoveRight(i),</span>
-<span class="nc" id="L615">                                this.isFire(i));</span>
+<span class="nc bnc" id="L608" title="All 2 branches missed.">                for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L609" title="All 2 branches missed.">                    if (clientConnected[i]) {</span>
+<span class="nc" id="L610">                        System.out.println(&quot;    response to client&quot; + i);</span>
+<span class="nc" id="L611">                        Player p = (Player) (this.getActor(this.getPnid(i)));</span>
+<span class="nc" id="L612">                        p.responseInput(this.isMoveUp(i), this.isMoveDown(i), this.isMoveLeft(i), this.isMoveRight(i),</span>
+<span class="nc" id="L613">                                this.isFire(i));</span>
                     }
                 }
-<span class="nc" id="L618">                this.setInstruction(fromServer);</span>
-<span class="nc" id="L619">                this.setInstructionPrepared(true);</span>
-<span class="nc" id="L620">                progressOutpuWriter.println(fromServer);</span>
+<span class="nc" id="L616">                this.setInstruction(fromServer);</span>
+<span class="nc" id="L617">                this.setInstructionPrepared(true);</span>
+<span class="nc" id="L618">                progressOutpuWriter.println(fromServer);</span>
 
-<span class="nc" id="L622">            }</span>
-<span class="nc" id="L623">        } catch (Exception ex) {</span>
-<span class="nc" id="L624">            ex.printStackTrace();</span>
-<span class="nc" id="L625">            gameStarted = false;</span>
-<span class="nc" id="L626">            view.mainPanel.setgameStart(false);</span>
-<span class="nc" id="L627">            Thread.currentThread().interrupt();</span>
-<span class="nc" id="L628">        }</span>
+<span class="nc" id="L620">            }</span>
+<span class="nc" id="L621">        } catch (Exception ex) {</span>
+<span class="nc" id="L622">            ex.printStackTrace();</span>
+<span class="nc" id="L623">            gameStarted = false;</span>
+<span class="nc" id="L624">            view.mainPanel.setgameStart(false);</span>
+<span class="nc" id="L625">            Thread.currentThread().interrupt();</span>
+<span class="nc" id="L626">        }</span>
 
-<span class="nc" id="L630">    }</span>
+<span class="nc" id="L628">    }</span>
 
     private synchronized int readInstruction() {
-<span class="nc bnc" id="L633" title="All 2 branches missed.">        for (int id = 0; id &lt; 5; id++) {</span>
-<span class="nc bnc" id="L634" title="All 2 branches missed.">            if (this.clientConnected[id]) {</span>
+<span class="nc bnc" id="L631" title="All 2 branches missed.">        for (int id = 0; id &lt; 5; id++) {</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">            if (this.clientConnected[id]) {</span>
                 // 使用局部变量来存储serverInstruction的副本
                 String instructionCopy;
-<span class="nc" id="L637">                synchronized (this) {</span>
-<span class="nc bnc" id="L638" title="All 2 branches missed.">                    if (this.clientInstruction[id].length() == 0) {</span>
-<span class="nc" id="L639">                        return 0;</span>
+<span class="nc" id="L635">                synchronized (this) {</span>
+<span class="nc bnc" id="L636" title="All 2 branches missed.">                    if (this.clientInstruction[id].length() == 0) {</span>
+<span class="nc" id="L637">                        return 0;</span>
                     }
                     // 复制serverInstruction字符串以在副本上进行操作
-<span class="nc" id="L642">                    instructionCopy = this.clientInstruction[id];</span>
-<span class="nc" id="L643">                }</span>
+<span class="nc" id="L640">                    instructionCopy = this.clientInstruction[id];</span>
+<span class="nc" id="L641">                }</span>
 
                 // 使用副本进行解析
-<span class="nc" id="L646">                int i = 0;</span>
-<span class="nc bnc" id="L647" title="All 2 branches missed.">                while (i &lt; instructionCopy.length()) {</span>
-<span class="nc" id="L648">                    StringBuilder perInstruction = new StringBuilder();</span>
-<span class="nc bnc" id="L649" title="All 2 branches missed.">                    while (!instructionCopy.substring(i, i + 1).equals(&quot;;&quot;)) {</span>
-<span class="nc" id="L650">                        perInstruction.append(instructionCopy.substring(i, i + 1));</span>
-<span class="nc" id="L651">                        i++;</span>
+<span class="nc" id="L644">                int i = 0;</span>
+<span class="nc bnc" id="L645" title="All 2 branches missed.">                while (i &lt; instructionCopy.length()) {</span>
+<span class="nc" id="L646">                    StringBuilder perInstruction = new StringBuilder();</span>
+<span class="nc bnc" id="L647" title="All 2 branches missed.">                    while (!instructionCopy.substring(i, i + 1).equals(&quot;;&quot;)) {</span>
+<span class="nc" id="L648">                        perInstruction.append(instructionCopy.substring(i, i + 1));</span>
+<span class="nc" id="L649">                        i++;</span>
                         // 如果到达字符串末尾，跳出循环
-<span class="nc bnc" id="L653" title="All 2 branches missed.">                        if (i &gt;= instructionCopy.length())</span>
-<span class="nc" id="L654">                            break;</span>
+<span class="nc bnc" id="L651" title="All 2 branches missed.">                        if (i &gt;= instructionCopy.length())</span>
+<span class="nc" id="L652">                            break;</span>
                     }
-<span class="nc" id="L656">                    i++; </span>
+<span class="nc" id="L654">                    i++;</span>
 
                     // 解析指令
-<span class="nc bnc" id="L659" title="All 2 branches missed.">                    if (perInstruction.substring(0, 1).equals(&quot;P&quot;)) {</span>
-<span class="nc" id="L660">                        this.setGamePrepared(id, true);// 设置玩家准备状态</span>
+<span class="nc bnc" id="L657" title="All 2 branches missed.">                    if (perInstruction.substring(0, 1).equals(&quot;P&quot;)) {</span>
+<span class="nc" id="L658">                        this.setGamePrepared(id, true);// 设置玩家准备状态</span>
                     }
-<span class="nc bnc" id="L662" title="All 2 branches missed.">                    if (perInstruction.substring(0, 1).equals(&quot;L&quot;)) {</span>
-<span class="nc" id="L663">                        this.wantToLoad[id] = true;</span>
+<span class="nc bnc" id="L660" title="All 2 branches missed.">                    if (perInstruction.substring(0, 1).equals(&quot;L&quot;)) {</span>
+<span class="nc" id="L661">                        this.wantToLoad[id] = true;</span>
                     }
-<span class="nc bnc" id="L665" title="All 2 branches missed.">                    if (perInstruction.substring(0, 1).equals(&quot;V&quot;)) {</span>
-<span class="nc" id="L666">                        this.wantToView[id] = true;</span>
+<span class="nc bnc" id="L663" title="All 2 branches missed.">                    if (perInstruction.substring(0, 1).equals(&quot;V&quot;)) {</span>
+<span class="nc" id="L664">                        this.wantToView[id] = true;</span>
                     }
-<span class="nc bnc" id="L668" title="All 2 branches missed.">                    if (perInstruction.substring(0, 1).equals(&quot;m&quot;)) {</span>
-<span class="nc" id="L669">                        String temp = perInstruction.substring(1, 2);</span>
-<span class="nc bnc" id="L670" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
-<span class="nc" id="L671">                            this.setUp(id, true);</span>
+<span class="nc bnc" id="L666" title="All 2 branches missed.">                    if (perInstruction.substring(0, 1).equals(&quot;m&quot;)) {</span>
+<span class="nc" id="L667">                        String temp = perInstruction.substring(1, 2);</span>
+<span class="nc bnc" id="L668" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
+<span class="nc" id="L669">                            this.setUp(id, true);</span>
                         } else {
-<span class="nc" id="L673">                            this.setUp(id, false);</span>
+<span class="nc" id="L671">                            this.setUp(id, false);</span>
                         }
-<span class="nc" id="L675">                        temp = perInstruction.substring(2, 3);</span>
-<span class="nc bnc" id="L676" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
-<span class="nc" id="L677">                            this.setDown(id, true);</span>
+<span class="nc" id="L673">                        temp = perInstruction.substring(2, 3);</span>
+<span class="nc bnc" id="L674" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
+<span class="nc" id="L675">                            this.setDown(id, true);</span>
                         } else {
-<span class="nc" id="L679">                            this.setDown(id, false);</span>
+<span class="nc" id="L677">                            this.setDown(id, false);</span>
                         }
-<span class="nc" id="L681">                        temp = perInstruction.substring(3, 4);</span>
-<span class="nc bnc" id="L682" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
-<span class="nc" id="L683">                            this.setLeft(id, true);</span>
+<span class="nc" id="L679">                        temp = perInstruction.substring(3, 4);</span>
+<span class="nc bnc" id="L680" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
+<span class="nc" id="L681">                            this.setLeft(id, true);</span>
                         } else {
-<span class="nc" id="L685">                            this.setLeft(id, false);</span>
+<span class="nc" id="L683">                            this.setLeft(id, false);</span>
                         }
-<span class="nc" id="L687">                        temp = perInstruction.substring(4, 5);</span>
-<span class="nc bnc" id="L688" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
-<span class="nc" id="L689">                            this.setRight(id, true);</span>
+<span class="nc" id="L685">                        temp = perInstruction.substring(4, 5);</span>
+<span class="nc bnc" id="L686" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
+<span class="nc" id="L687">                            this.setRight(id, true);</span>
                         } else {
-<span class="nc" id="L691">                            this.setRight(id, false);</span>
+<span class="nc" id="L689">                            this.setRight(id, false);</span>
                         }
-<span class="nc" id="L693">                        temp = perInstruction.substring(5, 6);</span>
-<span class="nc bnc" id="L694" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
-<span class="nc" id="L695">                            this.setFire(id, true);</span>
+<span class="nc" id="L691">                        temp = perInstruction.substring(5, 6);</span>
+<span class="nc bnc" id="L692" title="All 2 branches missed.">                        if (temp.equals(&quot;1&quot;)) {</span>
+<span class="nc" id="L693">                            this.setFire(id, true);</span>
                         } else {
-<span class="nc" id="L697">                            this.setFire(id, false);</span>
+<span class="nc" id="L695">                            this.setFire(id, false);</span>
                         }
                     }
-<span class="nc" id="L700">                }</span>
+<span class="nc" id="L698">                }</span>
             }
         }
-<span class="nc" id="L703">        return 1;</span>
+<span class="nc" id="L701">        return 1;</span>
     }
 
     // 先考虑从头开始，设置gamestart==true后，用一个函数开启所有的线程，包括敌人生成器，玩家，子弹，敌人，地图元素等等
     // 然后，所有的线程都会开始运行，此时，只需要在每个线程的run函数中，检查gamestart的值，若为false，则退出线程，否则继续运行
     public synchronized void setModelStart() {
         // 首先，设置随机地图，然后初始化地图元素
-<span class="nc" id="L710">        this.map.setRandomMap();</span>
+<span class="nc" id="L708">        this.map.setRandomMap();</span>
         // 对于500*600的地图，每个格子的大小为25*25
         // 先用一圈boundary，在外侧把地图围起来
-<span class="nc bnc" id="L713" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) {</span>
-<span class="nc" id="L714">            Boundary boundary = new Boundary(this, -1, 12 + i * 25, -12);</span>
-<span class="nc" id="L715">            this.addActor(boundary);</span>
+<span class="nc bnc" id="L711" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) {</span>
+<span class="nc" id="L712">            Boundary boundary = new Boundary(this, -1, 12 + i * 25, -12);</span>
+<span class="nc" id="L713">            this.addActor(boundary);</span>
         }
-<span class="nc bnc" id="L717" title="All 2 branches missed.">        for (int i = 0; i &lt; 24; i++) {</span>
-<span class="nc" id="L718">            Boundary boundary = new Boundary(this, -1, 512, 12 + i * 25);</span>
-<span class="nc" id="L719">            this.addActor(boundary);</span>
+<span class="nc bnc" id="L715" title="All 2 branches missed.">        for (int i = 0; i &lt; 24; i++) {</span>
+<span class="nc" id="L716">            Boundary boundary = new Boundary(this, -1, 512, 12 + i * 25);</span>
+<span class="nc" id="L717">            this.addActor(boundary);</span>
         }
-<span class="nc bnc" id="L721" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) {</span>
-<span class="nc" id="L722">            Boundary boundary = new Boundary(this, -1, 12 + i * 25, 612);</span>
-<span class="nc" id="L723">            this.addActor(boundary);</span>
+<span class="nc bnc" id="L719" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) {</span>
+<span class="nc" id="L720">            Boundary boundary = new Boundary(this, -1, 12 + i * 25, 612);</span>
+<span class="nc" id="L721">            this.addActor(boundary);</span>
         }
-<span class="nc bnc" id="L725" title="All 2 branches missed.">        for (int i = 0; i &lt; 24; i++) {</span>
-<span class="nc" id="L726">            Boundary boundary = new Boundary(this, -1, -12, 12 + i * 25);</span>
-<span class="nc" id="L727">            this.addActor(boundary);</span>
+<span class="nc bnc" id="L723" title="All 2 branches missed.">        for (int i = 0; i &lt; 24; i++) {</span>
+<span class="nc" id="L724">            Boundary boundary = new Boundary(this, -1, -12, 12 + i * 25);</span>
+<span class="nc" id="L725">            this.addActor(boundary);</span>
         }
         // 再根据地图，设置地图元素
-<span class="nc" id="L730">        String[] mapString = this.map.getMap();</span>
-<span class="nc bnc" id="L731" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
-<span class="nc bnc" id="L732" title="All 2 branches missed.">            if (mapString[i].equals(&quot;##&quot;)) {</span>
-<span class="nc" id="L733">                Wall wall = new Wall(this, -1, 12 + i % 20 * 25, 12 + i / 20 * 25 + 50);</span>
-<span class="nc" id="L734">                this.addActor(wall);</span>
+<span class="nc" id="L728">        String[] mapString = this.map.getMap();</span>
+<span class="nc bnc" id="L729" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
+<span class="nc bnc" id="L730" title="All 2 branches missed.">            if (mapString[i].equals(&quot;##&quot;)) {</span>
+<span class="nc" id="L731">                Wall wall = new Wall(this, -1, 12 + i % 20 * 25, 12 + i / 20 * 25 + 50);</span>
+<span class="nc" id="L732">                this.addActor(wall);</span>
             }
         }
 
         // 开启敌人生成器线程
-<span class="nc" id="L739">        EnemyCreater creater = new EnemyCreater(this, this.map);</span>
-<span class="nc" id="L740">        this.setEnemyCreater(creater);</span>
-<span class="nc" id="L741">        view.exec.execute(this.creater);</span>
+<span class="nc" id="L737">        EnemyCreater creater = new EnemyCreater(this, this.map);</span>
+<span class="nc" id="L738">        this.setEnemyCreater(creater);</span>
+<span class="nc" id="L739">        view.exec.execute(this.creater);</span>
         // 开启玩家线程
-<span class="nc bnc" id="L743" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
-<span class="nc bnc" id="L744" title="All 2 branches missed.">            if (clientConnected[i]) {</span>
-<span class="nc" id="L745">                Player player = new Player(this, i, -1, i * 90 + 90, 570);</span>
-<span class="nc" id="L746">                this.addActor(player);</span>
-<span class="nc" id="L747">                this.setPnid(i, player.getId());</span>
-<span class="nc" id="L748">                this.setPlayerLivingNumber(this.getPlayerLivingNumber() + 1);</span>
+<span class="nc bnc" id="L741" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L742" title="All 2 branches missed.">            if (clientConnected[i]) {</span>
+<span class="nc" id="L743">                Player player = new Player(this, i, -1, i * 90 + 90, 570);</span>
+<span class="nc" id="L744">                this.addActor(player);</span>
+<span class="nc" id="L745">                this.setPnid(i, player.getId());</span>
+<span class="nc" id="L746">                this.setPlayerLivingNumber(this.getPlayerLivingNumber() + 1);</span>
             }
         }
-<span class="nc" id="L751">    }</span>
+<span class="nc" id="L749">    }</span>
 
     // 用于生成指令的信息部分
     public synchronized String getString() {
-<span class="nc" id="L755">        String info = &quot;&quot;;</span>
-<span class="nc bnc" id="L756" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
-<span class="nc bnc" id="L757" title="All 2 branches missed.">            if (this.getActor(i) != null) {</span>
-<span class="nc bnc" id="L758" title="All 2 branches missed.">                if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Player&quot;)) {</span>
-<span class="nc" id="L759">                    Player p = (Player) this.getActor(i);</span>
-<span class="nc" id="L760">                    System.out.println(&quot;player:  p.toString()&quot;);</span>
-<span class="nc" id="L761">                    info += p.toString();</span>
+<span class="nc" id="L753">        String info = &quot;&quot;;</span>
+<span class="nc bnc" id="L754" title="All 2 branches missed.">        for (int i = 0; i &lt; 400; i++) {</span>
+<span class="nc bnc" id="L755" title="All 2 branches missed.">            if (this.getActor(i) != null) {</span>
+<span class="nc bnc" id="L756" title="All 2 branches missed.">                if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Player&quot;)) {</span>
+<span class="nc" id="L757">                    Player p = (Player) this.getActor(i);</span>
+<span class="nc" id="L758">                    System.out.println(&quot;player:  p.toString()&quot;);</span>
+<span class="nc" id="L759">                    info += p.toString();</span>
                 }
-<span class="nc bnc" id="L763" title="All 2 branches missed.">                if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Enemy&quot;)) {</span>
-<span class="nc" id="L764">                    Enemy e = (Enemy) this.getActor(i);</span>
-<span class="nc" id="L765">                    System.out.println(&quot;enemy:  e.toString()&quot;);</span>
-<span class="nc" id="L766">                    info += e.toString();</span>
+<span class="nc bnc" id="L761" title="All 2 branches missed.">                if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Enemy&quot;)) {</span>
+<span class="nc" id="L762">                    Enemy e = (Enemy) this.getActor(i);</span>
+<span class="nc" id="L763">                    System.out.println(&quot;enemy:  e.toString()&quot;);</span>
+<span class="nc" id="L764">                    info += e.toString();</span>
                 }
-<span class="nc bnc" id="L768" title="All 2 branches missed.">                if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Bullet&quot;)) {</span>
-<span class="nc" id="L769">                    Bullet b = (Bullet) this.getActor(i);</span>
-<span class="nc" id="L770">                    System.out.println(&quot;bullet:  b.toString()&quot;);</span>
-<span class="nc" id="L771">                    info += b.toString();</span>
+<span class="nc bnc" id="L766" title="All 2 branches missed.">                if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Bullet&quot;)) {</span>
+<span class="nc" id="L767">                    Bullet b = (Bullet) this.getActor(i);</span>
+<span class="nc" id="L768">                    System.out.println(&quot;bullet:  b.toString()&quot;);</span>
+<span class="nc" id="L769">                    info += b.toString();</span>
                 }
             }
         }
-<span class="nc" id="L775">        return info;</span>
+<span class="nc" id="L773">        return info;</span>
     }
 
     // 将整个游戏的当前状态保存下来
     public void saveState(String filePath) {
         try {
-<span class="nc" id="L781">            java.io.File file = new java.io.File(filePath + &quot;.txt&quot;);</span>
-<span class="nc" id="L782">            java.io.PrintWriter output = new java.io.PrintWriter(file);</span>
-<span class="nc" id="L783">            output.println(this.playerNumber);</span>
-<span class="nc" id="L784">            output.println(this.playerLivingNumber);</span>
-<span class="nc" id="L785">            output.println(this.map.getMapId());</span>
-<span class="nc" id="L786">            output.println(this.creater.toString());</span>
-<span class="nc" id="L787">            String info = &quot;&quot;;</span>
-<span class="nc bnc" id="L788" title="All 2 branches missed.">            for (int i = 0; i &lt; 400; i++) {</span>
-<span class="nc bnc" id="L789" title="All 2 branches missed.">                if (this.getActor(i) != null) {</span>
-<span class="nc bnc" id="L790" title="All 2 branches missed.">                    if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Player&quot;)) {</span>
-<span class="nc" id="L791">                        Player p = (Player) this.getActor(i);</span>
-<span class="nc" id="L792">                        System.out.println(&quot;player:  p.toString()&quot;);</span>
-<span class="nc" id="L793">                        info += p.toString();</span>
+<span class="nc" id="L779">            java.io.File file = new java.io.File(filePath + &quot;.txt&quot;);</span>
+<span class="nc" id="L780">            java.io.PrintWriter output = new java.io.PrintWriter(file);</span>
+<span class="nc" id="L781">            output.println(this.playerNumber);</span>
+<span class="nc" id="L782">            output.println(this.playerLivingNumber);</span>
+<span class="nc" id="L783">            output.println(this.map.getMapId());</span>
+<span class="nc" id="L784">            output.println(this.creater.toString());</span>
+<span class="nc" id="L785">            String info = &quot;&quot;;</span>
+<span class="nc bnc" id="L786" title="All 2 branches missed.">            for (int i = 0; i &lt; 400; i++) {</span>
+<span class="nc bnc" id="L787" title="All 2 branches missed.">                if (this.getActor(i) != null) {</span>
+<span class="nc bnc" id="L788" title="All 2 branches missed.">                    if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Player&quot;)) {</span>
+<span class="nc" id="L789">                        Player p = (Player) this.getActor(i);</span>
+<span class="nc" id="L790">                        System.out.println(&quot;player:  p.toString()&quot;);</span>
+<span class="nc" id="L791">                        info += p.toString();</span>
                     }
-<span class="nc bnc" id="L795" title="All 2 branches missed.">                    if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Enemy&quot;)) {</span>
-<span class="nc" id="L796">                        Enemy e = (Enemy) this.getActor(i);</span>
-<span class="nc" id="L797">                        System.out.println(&quot;enemy:  e.toString()&quot;);</span>
-<span class="nc" id="L798">                        info += e.toString();</span>
+<span class="nc bnc" id="L793" title="All 2 branches missed.">                    if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Enemy&quot;)) {</span>
+<span class="nc" id="L794">                        Enemy e = (Enemy) this.getActor(i);</span>
+<span class="nc" id="L795">                        System.out.println(&quot;enemy:  e.toString()&quot;);</span>
+<span class="nc" id="L796">                        info += e.toString();</span>
                     }
-<span class="nc bnc" id="L800" title="All 2 branches missed.">                    if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Bullet&quot;)) {</span>
-<span class="nc" id="L801">                        Bullet b = (Bullet) this.getActor(i);</span>
-<span class="nc" id="L802">                        System.out.println(&quot;bullet:  b.toString()&quot;);</span>
-<span class="nc" id="L803">                        info += b.toString();</span>
+<span class="nc bnc" id="L798" title="All 2 branches missed.">                    if (this.getActor(i).getClass().getName().equals(&quot;com.mycompany.app.Bullet&quot;)) {</span>
+<span class="nc" id="L799">                        Bullet b = (Bullet) this.getActor(i);</span>
+<span class="nc" id="L800">                        System.out.println(&quot;bullet:  b.toString()&quot;);</span>
+<span class="nc" id="L801">                        info += b.toString();</span>
                     }
                 }
             }
-<span class="nc" id="L807">            output.println(info);</span>
-<span class="nc" id="L808">            output.close();</span>
-<span class="nc" id="L809">        } catch (FileNotFoundException e) {</span>
-<span class="nc" id="L810">            System.out.println(&quot;文件未找到: &quot; + e.getMessage());</span>
-<span class="nc" id="L811">        } catch (Exception e) {</span>
-<span class="nc" id="L812">            e.printStackTrace();</span>
-<span class="nc" id="L813">        }</span>
-<span class="nc" id="L814">    }</span>
+<span class="nc" id="L805">            output.println(info);</span>
+<span class="nc" id="L806">            output.close();</span>
+<span class="nc" id="L807">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L808">            System.out.println(&quot;文件未找到: &quot; + e.getMessage());</span>
+<span class="nc" id="L809">        } catch (Exception e) {</span>
+<span class="nc" id="L810">            e.printStackTrace();</span>
+<span class="nc" id="L811">        }</span>
+<span class="nc" id="L812">    }</span>
 
     // 从保存的状态中读取信息，并设置游戏状态，以便从上次保存的状态开始游戏
     public void loadState(String filePath) {
         try {
-<span class="nc" id="L819">            java.io.File file = new java.io.File(filePath + &quot;.txt&quot;);</span>
-<span class="nc" id="L820">            java.util.Scanner input = new java.util.Scanner(file);</span>
-<span class="nc" id="L821">            int playerNumberFile = input.nextInt();</span>
-<span class="nc bnc" id="L822" title="All 2 branches missed.">            if (this.getPlayerNumber() != playerNumberFile) {</span>
-<span class="nc" id="L823">                this.setModelStart();</span>
+<span class="nc" id="L817">            java.io.File file = new java.io.File(filePath + &quot;.txt&quot;);</span>
+<span class="nc" id="L818">            java.util.Scanner input = new java.util.Scanner(file);</span>
+<span class="nc" id="L819">            int playerNumberFile = input.nextInt();</span>
+<span class="nc bnc" id="L820" title="All 2 branches missed.">            if (this.getPlayerNumber() != playerNumberFile) {</span>
+<span class="nc" id="L821">                this.setModelStart();</span>
             } else {
-<span class="nc" id="L825">                this.playerLivingNumber = input.nextInt();</span>
-<span class="nc" id="L826">                int mapId = input.nextInt();</span>
-<span class="nc" id="L827">                this.map.setMap(mapId);</span>
+<span class="nc" id="L823">                this.playerLivingNumber = input.nextInt();</span>
+<span class="nc" id="L824">                int mapId = input.nextInt();</span>
+<span class="nc" id="L825">                this.map.setMap(mapId);</span>
                 // 首先，初始化地图元素
                 // 对于500*600的地图，每个格子的大小为25*25
                 // 先用一圈boundary，在外侧把地图围起来
-<span class="nc bnc" id="L831" title="All 2 branches missed.">                for (int i = 0; i &lt; 20; i++) {</span>
-<span class="nc" id="L832">                    Boundary boundary = new Boundary(this, -1, 12 + i * 25, -12);</span>
-<span class="nc" id="L833">                    this.addActor(boundary);</span>
+<span class="nc bnc" id="L829" title="All 2 branches missed.">                for (int i = 0; i &lt; 20; i++) {</span>
+<span class="nc" id="L830">                    Boundary boundary = new Boundary(this, -1, 12 + i * 25, -12);</span>
+<span class="nc" id="L831">                    this.addActor(boundary);</span>
                 }
-<span class="nc bnc" id="L835" title="All 2 branches missed.">                for (int i = 0; i &lt; 24; i++) {</span>
-<span class="nc" id="L836">                    Boundary boundary = new Boundary(this, -1, 512, 12 + i * 25);</span>
-<span class="nc" id="L837">                    this.addActor(boundary);</span>
+<span class="nc bnc" id="L833" title="All 2 branches missed.">                for (int i = 0; i &lt; 24; i++) {</span>
+<span class="nc" id="L834">                    Boundary boundary = new Boundary(this, -1, 512, 12 + i * 25);</span>
+<span class="nc" id="L835">                    this.addActor(boundary);</span>
                 }
-<span class="nc bnc" id="L839" title="All 2 branches missed.">                for (int i = 0; i &lt; 20; i++) {</span>
-<span class="nc" id="L840">                    Boundary boundary = new Boundary(this, -1, 12 + i * 25, 612);</span>
-<span class="nc" id="L841">                    this.addActor(boundary);</span>
+<span class="nc bnc" id="L837" title="All 2 branches missed.">                for (int i = 0; i &lt; 20; i++) {</span>
+<span class="nc" id="L838">                    Boundary boundary = new Boundary(this, -1, 12 + i * 25, 612);</span>
+<span class="nc" id="L839">                    this.addActor(boundary);</span>
                 }
-<span class="nc bnc" id="L843" title="All 2 branches missed.">                for (int i = 0; i &lt; 24; i++) {</span>
-<span class="nc" id="L844">                    Boundary boundary = new Boundary(this, -1, -12, 12 + i * 25);</span>
-<span class="nc" id="L845">                    this.addActor(boundary);</span>
+<span class="nc bnc" id="L841" title="All 2 branches missed.">                for (int i = 0; i &lt; 24; i++) {</span>
+<span class="nc" id="L842">                    Boundary boundary = new Boundary(this, -1, -12, 12 + i * 25);</span>
+<span class="nc" id="L843">                    this.addActor(boundary);</span>
                 }
                 // 再根据地图，设置地图元素
-<span class="nc" id="L848">                String[] mapString = this.map.getMap();</span>
-<span class="nc bnc" id="L849" title="All 2 branches missed.">                for (int i = 0; i &lt; 400; i++) {</span>
-<span class="nc bnc" id="L850" title="All 2 branches missed.">                    if (mapString[i].equals(&quot;##&quot;)) {</span>
-<span class="nc" id="L851">                        Wall wall = new Wall(this, -1, 12 + i % 20 * 25, 12 + i / 20 * 25 + 50);</span>
-<span class="nc" id="L852">                        this.addActor(wall);</span>
+<span class="nc" id="L846">                String[] mapString = this.map.getMap();</span>
+<span class="nc bnc" id="L847" title="All 2 branches missed.">                for (int i = 0; i &lt; 400; i++) {</span>
+<span class="nc bnc" id="L848" title="All 2 branches missed.">                    if (mapString[i].equals(&quot;##&quot;)) {</span>
+<span class="nc" id="L849">                        Wall wall = new Wall(this, -1, 12 + i % 20 * 25, 12 + i / 20 * 25 + 50);</span>
+<span class="nc" id="L850">                        this.addActor(wall);</span>
                     }
                 }
 
-<span class="nc" id="L856">                String createrInfo = input.next();</span>
-<span class="nc" id="L857">                this.creater = new EnemyCreater(this, this.map);</span>
-<span class="nc" id="L858">                this.creater.setEnemyCreater(createrInfo);</span>
-<span class="nc" id="L859">                view.exec.execute(creater);</span>
+<span class="nc" id="L854">                String createrInfo = input.next();</span>
+<span class="nc" id="L855">                this.creater = new EnemyCreater(this, this.map);</span>
+<span class="nc" id="L856">                this.creater.setEnemyCreater(createrInfo);</span>
+<span class="nc" id="L857">                view.exec.execute(creater);</span>
 
-<span class="nc" id="L861">                String info = input.next();</span>
-<span class="nc" id="L862">                int clienti = 0;</span>
-<span class="nc" id="L863">                int i = 0;</span>
-<span class="nc bnc" id="L864" title="All 2 branches missed.">                while (i &lt; info.length()) {</span>
-<span class="nc" id="L865">                    StringBuilder perInfo = new StringBuilder();</span>
-<span class="nc bnc" id="L866" title="All 2 branches missed.">                    while (!info.substring(i, i + 1).equals(&quot;;&quot;)) {</span>
-<span class="nc" id="L867">                        perInfo.append(info.substring(i, i + 1));</span>
-<span class="nc" id="L868">                        i++;</span>
+<span class="nc" id="L859">                String info = input.next();</span>
+<span class="nc" id="L860">                int clienti = 0;</span>
+<span class="nc" id="L861">                int i = 0;</span>
+<span class="nc bnc" id="L862" title="All 2 branches missed.">                while (i &lt; info.length()) {</span>
+<span class="nc" id="L863">                    StringBuilder perInfo = new StringBuilder();</span>
+<span class="nc bnc" id="L864" title="All 2 branches missed.">                    while (!info.substring(i, i + 1).equals(&quot;;&quot;)) {</span>
+<span class="nc" id="L865">                        perInfo.append(info.substring(i, i + 1));</span>
+<span class="nc" id="L866">                        i++;</span>
                         // 如果到达字符串末尾，跳出循环
-<span class="nc bnc" id="L870" title="All 2 branches missed.">                        if (i &gt;= info.length())</span>
-<span class="nc" id="L871">                            break;</span>
+<span class="nc bnc" id="L868" title="All 2 branches missed.">                        if (i &gt;= info.length())</span>
+<span class="nc" id="L869">                            break;</span>
                     }
-<span class="nc" id="L873">                    i++; // 跳过分号&quot;;&quot;</span>
+<span class="nc" id="L871">                    i++; // 跳过分号&quot;;&quot;</span>
 
                     // 解析指令
-<span class="nc bnc" id="L876" title="All 2 branches missed.">                    if (perInfo.substring(0, 1).equals(&quot;P&quot;)) {</span>
-<span class="nc" id="L877">                        Player player = new Player(this, -1, -1, 0, 0);</span>
-<span class="nc" id="L878">                        player.setInfo(perInfo.toString());</span>
-<span class="nc" id="L879">                        this.addActor(player);</span>
-<span class="nc" id="L880">                        this.setPnid(clienti++, player.getId());</span>
+<span class="nc bnc" id="L874" title="All 2 branches missed.">                    if (perInfo.substring(0, 1).equals(&quot;P&quot;)) {</span>
+<span class="nc" id="L875">                        Player player = new Player(this, -1, -1, 0, 0);</span>
+<span class="nc" id="L876">                        player.setInfo(perInfo.toString());</span>
+<span class="nc" id="L877">                        this.addActor(player);</span>
+<span class="nc" id="L878">                        this.setPnid(clienti++, player.getId());</span>
                         // this.setPlayerLivingNumber(this.getPlayerLivingNumber() + 1);
                         // this.setPnid(id, player.getId());
                     }
-<span class="nc bnc" id="L884" title="All 2 branches missed.">                    if (perInfo.substring(0, 1).equals(&quot;E&quot;)) {</span>
-<span class="nc" id="L885">                        Enemy enemy = new Enemy(this, -1, -1, 0, 0);</span>
-<span class="nc" id="L886">                        enemy.setInfo(perInfo.toString());</span>
-<span class="nc" id="L887">                        this.addActor(enemy);</span>
+<span class="nc bnc" id="L882" title="All 2 branches missed.">                    if (perInfo.substring(0, 1).equals(&quot;E&quot;)) {</span>
+<span class="nc" id="L883">                        Enemy enemy = new Enemy(this, -1, -1, 0, 0);</span>
+<span class="nc" id="L884">                        enemy.setInfo(perInfo.toString());</span>
+<span class="nc" id="L885">                        this.addActor(enemy);</span>
                     }
-<span class="nc bnc" id="L889" title="All 2 branches missed.">                    if (perInfo.substring(0, 1).equals(&quot;B&quot;)) {</span>
+<span class="nc bnc" id="L887" title="All 2 branches missed.">                    if (perInfo.substring(0, 1).equals(&quot;B&quot;)) {</span>
                         /*
                          * Bullet bullet = new Bullet(this, null, -1, -1, 0, 0, 0)
                          * bullet.setInfo(perInfo.toString());
@@ -897,14 +895,14 @@ public class ServerModel implements Runnable {
                         // 不考虑情商的说法：子弹要和创建者绑定，想加载子弹需要实现在字符串里记录子弹的创建者，这不符合精简的原则
                         // 低情商的说法：完成任务要求即可，没必要在这里给自己加难度
                     }
-<span class="nc" id="L900">                }</span>
+<span class="nc" id="L898">                }</span>
             }
-<span class="nc" id="L902">        } catch (FileNotFoundException e) {</span>
-<span class="nc" id="L903">            System.out.println(&quot;文件未找到: &quot; + e.getMessage());</span>
-<span class="nc" id="L904">        } catch (Exception e) {</span>
-<span class="nc" id="L905">            e.printStackTrace();</span>
-<span class="nc" id="L906">        }</span>
-<span class="nc" id="L907">    }</span>
+<span class="nc" id="L900">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L901">            System.out.println(&quot;文件未找到: &quot; + e.getMessage());</span>
+<span class="nc" id="L902">        } catch (Exception e) {</span>
+<span class="nc" id="L903">            e.printStackTrace();</span>
+<span class="nc" id="L904">        }</span>
+<span class="nc" id="L905">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

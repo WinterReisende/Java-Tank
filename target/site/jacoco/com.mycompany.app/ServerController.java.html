@@ -7,12 +7,12 @@ public class ServerController {
 	private ServerView view;
 	private ServerModel model;
 
-<span class="nc" id="L10">	public ServerController(ServerView thisview, ServerModel thismodel) {</span>
-<span class="nc" id="L11">		view = thisview;</span>
-<span class="nc" id="L12">		model = thismodel;</span>
+<span class="fc" id="L10">	public ServerController(ServerView thisview, ServerModel thismodel) {</span>
+<span class="fc" id="L11">		view = thisview;</span>
+<span class="fc" id="L12">		model = thismodel;</span>
 
 		// handel startServer button actions
-<span class="nc" id="L15">		view.saveMap.addActionListener(new ActionListener() {</span>
+<span class="fc" id="L15">		view.saveMap.addActionListener(new ActionListener() {</span>
 			public void actionPerformed(ActionEvent e) {
 				// System.out.println(&quot;map:&quot;);
 				// model.getMap().printMap();
@@ -21,7 +21,7 @@ public class ServerController {
 <span class="nc" id="L21">			}</span>
 		});
 
-<span class="nc" id="L24">		view.saveState.addActionListener(new ActionListener() {</span>
+<span class="fc" id="L24">		view.saveState.addActionListener(new ActionListener() {</span>
 			public void actionPerformed(ActionEvent e) {
 				// System.out.println(&quot;map:&quot;);
 				// model.getMap().printMap();
@@ -31,13 +31,13 @@ public class ServerController {
 		});
 
 		// handel exit button actions
-<span class="nc" id="L34">		view.exit.addActionListener(new ActionListener() {</span>
+<span class="fc" id="L34">		view.exit.addActionListener(new ActionListener() {</span>
 			public void actionPerformed(ActionEvent e) {
 <span class="nc" id="L36">				System.exit(0);</span>
 <span class="nc" id="L37">			}</span>
 		});
 
-<span class="nc" id="L40">		view.mainPanel.addMouseListener(new MouseListener() {</span>
+<span class="fc" id="L40">		view.mainPanel.addMouseListener(new MouseListener() {</span>
 			public void mouseClicked(MouseEvent e) {
 <span class="nc" id="L42">				view.mainPanel.requestFocus();</span>
 <span class="nc" id="L43">			}</span>
@@ -55,6 +55,6 @@ public class ServerController {
 <span class="nc" id="L55">			}</span>
 		});
 
-<span class="nc" id="L58">	}</span>
+<span class="fc" id="L58">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -517,7 +517,7 @@ public class ServerModel implements Runnable {
                             this.setInstruction(fromServer);
                             this.setInstructionPrepared(true);
                         }
-                        this.viewStarted = true;
+                        this.viewStarted = false;
                         this.actors = new Actor[400];
                         this.creater = null;
                         for (int i = 0; i < 5; i++) {
@@ -529,6 +529,7 @@ public class ServerModel implements Runnable {
                             }
                         }
                         preProgressBufferedReader.close();
+                        continue;
                     }
                     // 这里需要添加类似的逻辑，检查是否是load或者view
                 }
@@ -650,7 +651,7 @@ public class ServerModel implements Runnable {
                         if (i >= instructionCopy.length())
                             break;
                     }
-                    i++; 
+                    i++;
 
                     // 解析指令
                     if (perInstruction.substring(0, 1).equals("P")) {

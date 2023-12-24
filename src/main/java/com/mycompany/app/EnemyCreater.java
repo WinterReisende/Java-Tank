@@ -26,7 +26,7 @@ public class EnemyCreater implements Runnable {
         enemyTypeList[1] = 1;
         enemyTypeList[2] = 2;
         enemyTypeList[3] = 1;
-        enemyTypeList[4] = 3;
+        enemyTypeList[4] = 2;
         leftEnemy = 0;
         createInterval = 150;
     }

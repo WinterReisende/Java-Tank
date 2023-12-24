@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.awt.Rectangle;
+
+public class Player implements Actor, Runnable {
+    private ServerModel model;
+    private int clientId;
+    private int id;
+    private int xPos;
+    private int yPos;
+    private int size;
+    private int direction;
+    private int speed;
+    private int health;
+    private int score;
+    private int type;
+    private boolean isDead;
+    private boolean isMoving;
+    private boolean isShooting;
+    private int shootingInterval;
+    private Rectangle border;
+
+    public Rectangle getBorder() {
+<span class="nc" id="L24">        return this.border;</span>
+    }
+
+<span class="nc" id="L27">    public Player(ServerModel model, int clientId, int id, int x, int y) {</span>
+<span class="nc" id="L28">        this.model = model;</span>
+<span class="nc" id="L29">        this.clientId = clientId;</span>
+<span class="nc" id="L30">        this.id = id;</span>
+<span class="nc" id="L31">        this.xPos = x;</span>
+<span class="nc" id="L32">        this.yPos = y;</span>
+<span class="nc" id="L33">        this.size = 12;</span>
+<span class="nc" id="L34">        this.direction = 0;</span>
+<span class="nc" id="L35">        this.isMoving = false;</span>
+<span class="nc" id="L36">        this.isShooting = false;</span>
+<span class="nc" id="L37">        this.shootingInterval = 10;</span>
+<span class="nc" id="L38">        this.speed = 2;</span>
+<span class="nc" id="L39">        this.health = 3;</span>
+<span class="nc" id="L40">        this.isDead = false;</span>
+<span class="nc" id="L41">        this.score = 0;</span>
+<span class="nc" id="L42">        this.type = 1;// 1:player 2:enemy</span>
+<span class="nc" id="L43">        this.border = new Rectangle(xPos - size, yPos - size, size * 2, size * 2);</span>
+<span class="nc" id="L44">    }</span>
+
+    public int getId() {
+<span class="nc" id="L47">        return this.id;</span>
+    }
+
+    public int getX() {
+<span class="nc" id="L51">        return this.xPos;</span>
+    }
+
+    public int getY() {
+<span class="nc" id="L55">        return this.yPos;</span>
+    }
+
+    public void setId(int id) {
+<span class="nc" id="L59">        this.id = id;</span>
+<span class="nc" id="L60">    }</span>
+
+    public void setX(int x) {
+<span class="nc" id="L63">        this.xPos = x;</span>
+<span class="nc" id="L64">    }</span>
+
+    public void setY(int y) {
+<span class="nc" id="L67">        this.yPos = y;</span>
+<span class="nc" id="L68">    }</span>
+
+    public int getSize() {
+<span class="nc" id="L71">        return this.size;</span>
+    }
+
+    public int getDirection() {
+<span class="nc" id="L75">        return this.direction;</span>
+    }
+
+    public void setDirection(int d) {
+<span class="nc" id="L79">        this.direction = d;</span>
+<span class="nc" id="L80">    }</span>
+
+    public int getSpeed() {
+<span class="nc" id="L83">        return this.speed;</span>
+    }
+
+    public void setSpeed(int s) {
+<span class="nc" id="L87">        this.speed = s;</span>
+<span class="nc" id="L88">    }</span>
+
+    public int getHealth() {
+<span class="nc" id="L91">        return this.health;</span>
+    }
+
+    public void setHealth(int h) {
+<span class="nc" id="L95">        this.health = h;</span>
+<span class="nc" id="L96">    }</span>
+
+    public int getScore() {
+<span class="nc" id="L99">        return this.score;</span>
+    }
+
+    public void setScore(int s) {
+<span class="nc" id="L103">        this.score = s;</span>
+<span class="nc" id="L104">    }</span>
+
+    public void setMoving(boolean m) {
+<span class="nc" id="L107">        this.isMoving = m;</span>
+<span class="nc" id="L108">    }</span>
+
+    public boolean getMoving() {
+<span class="nc" id="L111">        return this.isMoving;</span>
+    }
+
+    public void setShooting(boolean s) {
+<span class="nc" id="L115">        this.isShooting = s;</span>
+<span class="nc" id="L116">    }</span>
+
+    public boolean getShooting() {
+<span class="nc" id="L119">        return this.isShooting;</span>
+    }
+
+    public int getClientId() {
+<span class="nc" id="L123">        return this.clientId;</span>
+    }
+
+    public void setClientId(int id) {
+<span class="nc" id="L127">        this.clientId = id;</span>
+<span class="nc" id="L128">    }</span>
+
+    public void setDead(boolean d) {
+<span class="nc" id="L131">        this.isDead = d;</span>
+<span class="nc" id="L132">    }</span>
+
+    public boolean isDead() {
+<span class="nc" id="L135">        return this.isDead;</span>
+    }
+
+    @Override
+    public void run() {
+        try {
+<span class="nc" id="L141">            long previousTime = System.currentTimeMillis();</span>
+            while (true) {
+<span class="nc" id="L143">                long currentTime = System.currentTimeMillis();</span>
+<span class="nc" id="L144">                long timeDiff = currentTime - previousTime;</span>
+<span class="nc" id="L145">                long sleep = 33 - timeDiff;</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">                if (sleep &lt; 0) {</span>
+<span class="nc" id="L147">                    sleep = 0;</span>
+                }
+<span class="nc" id="L149">                Thread.sleep(sleep);</span>
+<span class="nc" id="L150">                previousTime = System.currentTimeMillis();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                if (this.isDead) {</span>
+<span class="nc" id="L152">                    continue;</span>
+                }
+<span class="nc bnc" id="L154" title="All 2 branches missed.">                if (this.isMoving) {</span>
+<span class="nc" id="L155">                    this.move();</span>
+                }
+<span class="nc" id="L157">                this.shoot();</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">                if (model.getGameStarted() == false) {</span>
+<span class="nc" id="L159">                    break;</span>
+                }
+<span class="nc" id="L161">            }</span>
+<span class="nc" id="L162">        } catch (Exception e) {</span>
+<span class="nc" id="L163">            e.printStackTrace();</span>
+
+<span class="nc" id="L165">        }</span>
+<span class="nc" id="L166">    }</span>
+
+    public synchronized int getType() {
+<span class="nc" id="L169">        return this.type;</span>
+    }
+
+    public synchronized void move() {
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        if (this.direction == 0) {</span>
+<span class="nc" id="L174">            this.yPos -= this.speed;</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        } else if (this.direction == 1) {</span>
+<span class="nc" id="L176">            this.xPos += this.speed;</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        } else if (this.direction == 2) {</span>
+<span class="nc" id="L178">            this.yPos += this.speed;</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">        } else if (this.direction == 3) {</span>
+<span class="nc" id="L180">            this.xPos -= this.speed;</span>
+        }
+<span class="nc" id="L182">        this.border.setLocation(this.xPos - size, this.yPos - size);</span>
+<span class="nc" id="L183">        this.checkCollision();</span>
+<span class="nc" id="L184">    }</span>
+
+    public synchronized void checkCollision() {
+<span class="nc" id="L187">        Actor s = this.model.checkCollison(this);</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        if (s != null) {</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">            if (!s.getClass().getName().equals(&quot;com.mycompany.app.Bullet&quot;)) {</span>
+                // 如果碰到非子弹的物体，就停下来
+<span class="nc" id="L191">                this.setMoving(false);</span>
+                // 然后把自己的位置调整回来
+<span class="nc bnc" id="L193" title="All 2 branches missed.">                if (this.direction == 0) {</span>
+<span class="nc" id="L194">                    this.yPos += this.speed;</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">                } else if (this.direction == 1) {</span>
+<span class="nc" id="L196">                    this.xPos -= this.speed;</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">                } else if (this.direction == 2) {</span>
+<span class="nc" id="L198">                    this.yPos -= this.speed;</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">                } else if (this.direction == 3) {</span>
+<span class="nc" id="L200">                    this.xPos += this.speed;</span>
+                }
+<span class="nc" id="L202">                this.border.setLocation(this.xPos - size, this.yPos - size);</span>
+            }
+        }
+<span class="nc" id="L205">    }</span>
+
+    public void addScore(int s) {
+<span class="nc" id="L208">        this.score += s;</span>
+<span class="nc" id="L209">    }</span>
+
+    public synchronized void shoot() {
+<span class="nc bnc" id="L212" title="All 4 branches missed.">        if (this.getShooting() &amp;&amp; this.shootingInterval &lt;= 0) {</span>
+<span class="nc" id="L213">            this.setShooting(false);</span>
+<span class="nc" id="L214">            this.shootingInterval = 10;</span>
+            // 然后要创建子弹
+<span class="nc" id="L216">            Bullet bullet = new Bullet(model, this, -1, this.type, this.direction, this.xPos, this.yPos);</span>
+<span class="nc" id="L217">            bullet.setDirection(this.direction);</span>
+<span class="nc" id="L218">            model.addActor(bullet);</span>
+<span class="nc" id="L219">        } else {</span>
+<span class="nc" id="L220">            shootingInterval--;</span>
+        }
+<span class="nc" id="L222">    }</span>
+
+    // 需要一个受伤函数
+    public synchronized void hurt() {
+<span class="nc" id="L226">        this.setHealth(this.getHealth() - 1);</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">        if (this.getHealth() == 0) {</span>
+<span class="nc" id="L228">            this.model.setPlayerLivingNumber(this.model.getPlayerLivingNumber() - 1);</span>
+<span class="nc" id="L229">            this.setDead(true);</span>
+        }
+<span class="nc" id="L231">    }</span>
+
+    public String toString() {
+        // 参考：info += &quot;P&quot; + p.getClientId() + &quot;,&quot; + p.getX() + &quot;,&quot; + p.getY() + &quot;,&quot; +
+        // p.getDirection() + &quot;,&quot;
+        // + p.getHealth() + &quot;,&quot; + p.getScore() + &quot;;&quot;;
+<span class="nc" id="L237">        String info = &quot;P&quot; + this.getClientId() + &quot;,&quot; + this.getX() + &quot;,&quot; + this.getY() + &quot;,&quot; + this.getDirection() + &quot;,&quot;</span>
+<span class="nc" id="L238">                + this.getHealth() + &quot;,&quot; + this.getScore() + &quot;;&quot;;</span>
+<span class="nc" id="L239">        return info;</span>
+    }
+
+    //根据String重新设置player的信息
+    public void setInfo(String s) {
+        //s = s.substring(1, s.length());
+<span class="nc" id="L245">        String[] info = s.split(&quot;,&quot;);</span>
+<span class="nc" id="L246">        this.setClientId(Integer.parseInt(info[0].substring(1)));</span>
+<span class="nc" id="L247">        this.setX(Integer.parseInt(info[1]));</span>
+<span class="nc" id="L248">        this.setY(Integer.parseInt(info[2]));</span>
+<span class="nc" id="L249">        this.setDirection(Integer.parseInt(info[3]));</span>
+<span class="nc" id="L250">        this.setHealth(Integer.parseInt(info[4]));</span>
+<span class="nc" id="L251">        this.setScore(Integer.parseInt(info[5]));</span>
+<span class="nc" id="L252">    }</span>
+
+    public void responseInput(boolean up, boolean down, boolean left, boolean right, boolean shoot) {
+<span class="nc" id="L255">        System.out</span>
+<span class="nc" id="L256">                .println(&quot;Player:up:&quot; + up + &quot; down:&quot; + down + &quot; left:&quot; + left + &quot; right:&quot; + right + &quot; shoot:&quot; + shoot);</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">        if (up) {</span>
+<span class="nc" id="L258">            this.setDirection(0);</span>
+<span class="nc" id="L259">            this.setMoving(true);</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">        } else if (down) {</span>
+<span class="nc" id="L261">            this.setDirection(2);</span>
+<span class="nc" id="L262">            this.setMoving(true);</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">        } else if (left) {</span>
+<span class="nc" id="L264">            this.setDirection(3);</span>
+<span class="nc" id="L265">            this.setMoving(true);</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">        } else if (right) {</span>
+<span class="nc" id="L267">            this.setDirection(1);</span>
+<span class="nc" id="L268">            this.setMoving(true);</span>
+        } else {
+<span class="nc" id="L270">            this.setMoving(false);</span>
+        }
+<span class="nc bnc" id="L272" title="All 2 branches missed.">        if (shoot) {</span>
+<span class="nc" id="L273">            this.setShooting(true);</span>
+        } else {
+<span class="nc" id="L275">            this.setShooting(false);</span>
+        }
+<span class="nc" id="L277">        System.out.println(&quot;Player:direction:&quot; + this.getDirection() + &quot; moving:&quot; + this.getMoving() + &quot; shooting:&quot;</span>
+<span class="nc" id="L278">                + this.getShooting());</span>
+<span class="nc" id="L279">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

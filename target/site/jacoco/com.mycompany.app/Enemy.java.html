@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Enemy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">Enemy.java</span></div><h1>Enemy.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.awt.Rectangle;
+
+<span class="nc bnc" id="L5" title="All 2 branches missed.">public class Enemy implements Actor, Runnable {</span>
+    private ServerModel model;
+    private int id;
+    private int enemyId;
+    private int xPos;
+    private int yPos;
+    private int size;
+    private int type;
+    private int direction;
+    private int speed;
+    private Actor owner;
+    private Rectangle border;
+    private boolean isDead;
+    private int shootingInterval;
+    private int turningInterval;
+    private int health;
+    private EnemyCreater creater;
+
+    public Rectangle getBorder() {
+<span class="nc" id="L24">        return this.border;</span>
+    }
+
+    public int getType() {
+<span class="nc" id="L28">        return this.type;</span>
+    }
+
+    public int getId() {
+<span class="nc" id="L32">        return this.id;</span>
+    }
+
+    public int getX() {
+<span class="nc" id="L36">        return this.xPos;</span>
+    }
+
+    public int getY() {
+<span class="nc" id="L40">        return this.yPos;</span>
+    }
+
+    public int getDirection() {
+<span class="nc" id="L44">        return this.direction;</span>
+    }
+
+    public Actor getOwner() {
+<span class="nc" id="L48">        return this.owner;</span>
+    }
+
+    public void setId(int id) {
+<span class="nc" id="L52">        this.id = id;</span>
+<span class="nc" id="L53">    }</span>
+
+    public void setX(int x) {
+<span class="nc" id="L56">        this.xPos = x;</span>
+<span class="nc" id="L57">    }</span>
+
+    public void setY(int y) {
+<span class="nc" id="L60">        this.yPos = y;</span>
+<span class="nc" id="L61">    }</span>
+
+    public void setDirection(int direction) {
+<span class="nc" id="L64">        this.direction = direction;</span>
+<span class="nc" id="L65">    }</span>
+
+    public void setDead(boolean isDead) {
+<span class="nc" id="L68">        this.isDead = isDead;</span>
+<span class="nc" id="L69">    }</span>
+
+    public boolean getDead() {
+<span class="nc" id="L72">        return this.isDead;</span>
+    }
+
+    public void setShootingInterval(int shootingInterval) {
+<span class="nc" id="L76">        this.shootingInterval = shootingInterval;</span>
+<span class="nc" id="L77">    }</span>
+
+    public int getShootingInterval() {
+<span class="nc" id="L80">        return this.shootingInterval;</span>
+    }
+
+    public void setHealth(int health) {
+<span class="nc" id="L84">        this.health = health;</span>
+<span class="nc" id="L85">    }</span>
+
+    public int getHealth() {
+<span class="nc" id="L88">        return this.health;</span>
+    }
+
+    public void setOwner(Actor owner) {
+<span class="nc" id="L92">        this.owner = owner;</span>
+<span class="nc" id="L93">    }</span>
+
+    public void setBorder(Rectangle border) {
+<span class="nc" id="L96">        this.border = border;</span>
+<span class="nc" id="L97">    }</span>
+
+    public void setEnemyId(int enemyId) {
+<span class="nc" id="L100">        this.enemyId = enemyId;</span>
+<span class="nc" id="L101">    }</span>
+
+    public int getEnemyId() {
+<span class="nc" id="L104">        return this.enemyId;</span>
+    }
+
+<span class="nc" id="L107">    public Enemy(ServerModel model, int enemyId, int id, int x, int y) {</span>
+<span class="nc" id="L108">        this.model = model;</span>
+<span class="nc" id="L109">        this.creater = model.getEnemyCreater();</span>
+<span class="nc" id="L110">        this.enemyId = enemyId;</span>
+<span class="nc" id="L111">        this.id = id;</span>
+<span class="nc" id="L112">        this.xPos = x;</span>
+<span class="nc" id="L113">        this.yPos = y;</span>
+<span class="nc" id="L114">        this.size = 12;</span>
+        // 用一个随机数作为方向
+<span class="nc" id="L116">        this.direction = (int) (Math.random() * 3) + 1;</span>
+<span class="nc" id="L117">        this.owner = null;</span>
+        // 用一个随机数作为射击间隔
+<span class="nc" id="L119">        this.shootingInterval = (int) (Math.random() * 32) + 58;</span>
+        // 用一个随机数作为转向间隔
+<span class="nc" id="L121">        this.turningInterval = (int) (Math.random() * 52) + 28;</span>
+<span class="nc" id="L122">        this.speed = 2;</span>
+<span class="nc" id="L123">        this.health = this.enemyId;</span>
+<span class="nc" id="L124">        this.type = 2;// 1:player 2:enemy</span>
+<span class="nc" id="L125">        this.border = new Rectangle(xPos - size, yPos - size, size * 2, size * 2);</span>
+<span class="nc" id="L126">    }</span>
+
+    public void run() {
+        try {
+<span class="nc" id="L130">            long previousTime = System.currentTimeMillis();</span>
+            while (true) {
+<span class="nc" id="L132">                long currentTime = System.currentTimeMillis();</span>
+<span class="nc" id="L133">                long timeDiff = currentTime - previousTime;</span>
+<span class="nc" id="L134">                long sleep = 33 - timeDiff;</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">                if (sleep &lt; 0) {</span>
+<span class="nc" id="L136">                    sleep = 0;</span>
+                }
+<span class="nc" id="L138">                Thread.sleep(sleep);</span>
+<span class="nc" id="L139">                previousTime = System.currentTimeMillis();</span>
+<span class="nc" id="L140">                this.move();</span>
+<span class="nc" id="L141">                this.shoot();</span>
+<span class="nc" id="L142">                this.turn();</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">                if (this.getDead()) {</span>
+<span class="nc" id="L144">                    break;</span>
+                }
+<span class="nc bnc" id="L146" title="All 2 branches missed.">                if (model.getGameStarted() == false) {</span>
+<span class="nc" id="L147">                    break;</span>
+                }
+<span class="nc" id="L149">            }</span>
+<span class="nc" id="L150">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L151">            e.printStackTrace();</span>
+<span class="nc" id="L152">        }</span>
+<span class="nc" id="L153">    }</span>
+
+    public synchronized void move() {
+<span class="nc" id="L156">        this.turn();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (this.direction == 0) {</span>
+<span class="nc" id="L158">            this.yPos -= this.speed;</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        } else if (this.direction == 1) {</span>
+<span class="nc" id="L160">            this.xPos += this.speed;</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        } else if (this.direction == 2) {</span>
+<span class="nc" id="L162">            this.yPos += this.speed;</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        } else if (this.direction == 3) {</span>
+<span class="nc" id="L164">            this.xPos -= this.speed;</span>
+        }
+<span class="nc" id="L166">        this.border.setLocation(this.xPos - size, this.yPos - size);</span>
+<span class="nc" id="L167">        this.checkCollision();</span>
+<span class="nc" id="L168">    }</span>
+
+    public synchronized void checkCollision() {
+<span class="nc" id="L171">        Actor s = this.model.checkCollison(this);</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        if (s != null) {</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">            if (!s.getClass().getName().equals(&quot;com.mycompany.app.Bullet&quot;)) {</span>
+                // 如果碰到非子弹的物体，就把自己的位置调整回来
+<span class="nc bnc" id="L175" title="All 2 branches missed.">                if (this.direction == 0) {</span>
+<span class="nc" id="L176">                    this.yPos += this.speed;</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">                } else if (this.direction == 1) {</span>
+<span class="nc" id="L178">                    this.xPos -= this.speed;</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">                } else if (this.direction == 2) {</span>
+<span class="nc" id="L180">                    this.yPos -= this.speed;</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">                } else if (this.direction == 3) {</span>
+<span class="nc" id="L182">                    this.xPos += this.speed;</span>
+                }
+<span class="nc" id="L184">                this.border.setLocation(this.xPos - size, this.yPos - size);</span>
+                // 然后顺时针转向
+<span class="nc" id="L186">                this.direction = (this.direction + 1) % 4;</span>
+            }
+        }
+<span class="nc" id="L189">    }</span>
+
+    public synchronized void shoot() {
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        if (this.shootingInterval &lt;= 0) {</span>
+<span class="nc" id="L193">            Bullet b = new Bullet(this.model, this, -1, this.type, this.direction, this.xPos, this.yPos);</span>
+<span class="nc" id="L194">            this.model.addActor(b);</span>
+<span class="nc" id="L195">            this.shootingInterval = (int) (Math.random() * 32) + 58;</span>
+<span class="nc" id="L196">        } else {</span>
+<span class="nc" id="L197">            this.shootingInterval--;</span>
+        }
+<span class="nc" id="L199">    }</span>
+
+    // 到达间隔则随机转向
+    public synchronized void turn() {
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        if (this.turningInterval == 0) {</span>
+<span class="nc" id="L204">            this.direction = (int) (Math.random() * 4);</span>
+<span class="nc bnc" id="L205" title="All 6 branches missed.">            assert (this.direction &gt;= 0 &amp;&amp; this.direction &lt;= 3);</span>
+<span class="nc" id="L206">            this.turningInterval = (int) (Math.random() * 102) + 28;</span>
+        } else {
+<span class="nc" id="L208">            this.turningInterval--;</span>
+        }
+<span class="nc" id="L210">    }</span>
+
+    // 受伤函数，生命值归零则死亡
+    public synchronized void hurt() {
+<span class="nc" id="L214">        this.health--;</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        if (this.health == 0) {</span>
+<span class="nc" id="L216">            this.creater.setLeftEnemy(this.creater.getLeftEnemy() - 1);</span>
+<span class="nc" id="L217">            this.setDead(true);</span>
+<span class="nc" id="L218">            this.model.deleteActor(this);// 这个可以考虑，是留下与不留下尸体的区别</span>
+        }
+<span class="nc" id="L220">    }</span>
+
+    public String toString() {
+<span class="nc" id="L223">        String info = &quot;E&quot; + this.enemyId + &quot;,&quot; + this.xPos + &quot;,&quot; + this.yPos + &quot;,&quot; + this.direction + &quot;,&quot;</span>
+                + this.health + &quot;;&quot;;
+<span class="nc" id="L225">        return info;</span>
+    }
+
+    // 根据String重新设置enemy的信息
+    public void setInfo(String s) {
+<span class="nc" id="L230">        String[] info = s.split(&quot;,&quot;);</span>
+<span class="nc" id="L231">        this.setEnemyId(Integer.parseInt(info[0].substring(1)));</span>
+<span class="nc" id="L232">        this.setX(Integer.parseInt(info[1]));</span>
+<span class="nc" id="L233">        this.setY(Integer.parseInt(info[2]));</span>
+<span class="nc" id="L234">        this.setDirection(Integer.parseInt(info[3]));</span>
+<span class="nc" id="L235">        this.setHealth(Integer.parseInt(info[4]));</span>
+<span class="nc" id="L236">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

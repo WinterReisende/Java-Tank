@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Bullet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">Bullet.java</span></div><h1>Bullet.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.awt.Rectangle;
+
+public class Bullet implements Actor, Runnable {
+    private ServerModel model;
+    private int id;
+    private int xPos;
+    private int yPos;
+    private int size;
+    private int type;
+    private int direction;
+    private int speed;
+    private Actor owner;
+    private Rectangle border;
+    private boolean isDead;
+
+    public Rectangle getBorder() {
+<span class="nc" id="L19">        return this.border;</span>
+    }
+
+    public int getType() {
+<span class="nc" id="L23">        return this.type;</span>
+    }
+
+    public int getId() {
+<span class="nc" id="L27">        return this.id;</span>
+    }
+
+    public int getX() {
+<span class="nc" id="L31">        return this.xPos;</span>
+    }
+
+    public int getY() {
+<span class="nc" id="L35">        return this.yPos;</span>
+    }
+
+    public int getDirection() {
+<span class="nc" id="L39">        return this.direction;</span>
+    }
+
+    public Actor getOwner() {
+<span class="nc" id="L43">        return this.owner;</span>
+    }
+
+    public void setId(int id) {
+<span class="nc" id="L47">        this.id = id;</span>
+<span class="nc" id="L48">    }</span>
+
+    public void setX(int x) {
+<span class="nc" id="L51">        this.xPos = x;</span>
+<span class="nc" id="L52">    }</span>
+
+    public void setY(int y) {
+<span class="nc" id="L55">        this.yPos = y;</span>
+<span class="nc" id="L56">    }</span>
+
+    public void setDirection(int direction) {
+<span class="nc" id="L59">        this.direction = direction;</span>
+<span class="nc" id="L60">    }</span>
+
+    public void setDead(boolean isDead) {
+<span class="nc" id="L63">        this.isDead = isDead;</span>
+<span class="nc" id="L64">    }</span>
+
+    public boolean getDead() {
+<span class="nc" id="L67">        return this.isDead;</span>
+    }
+
+<span class="nc" id="L70">    public Bullet(ServerModel model, Actor actor, int id, int type, int direction, int x, int y) {</span>
+<span class="nc" id="L71">        this.model = model;</span>
+<span class="nc" id="L72">        this.id = id;</span>
+<span class="nc" id="L73">        this.xPos = x;</span>
+<span class="nc" id="L74">        this.yPos = y;</span>
+<span class="nc" id="L75">        this.owner = actor;</span>
+<span class="nc" id="L76">        this.type = type;</span>
+<span class="nc" id="L77">        this.size = 2;</span>
+<span class="nc" id="L78">        this.direction = direction;</span>
+<span class="nc" id="L79">        this.speed = 4;</span>
+<span class="nc" id="L80">        this.isDead = false;</span>
+<span class="nc" id="L81">        this.border = new Rectangle(xPos - size, yPos - size, size * 2, size * 2);</span>
+<span class="nc" id="L82">    }</span>
+
+    public void run() {
+        try {
+<span class="nc" id="L86">            long previousTime = System.currentTimeMillis();</span>
+            while (true) {
+<span class="nc" id="L88">                long currentTime = System.currentTimeMillis();</span>
+<span class="nc" id="L89">                long timeDiff = currentTime - previousTime;</span>
+<span class="nc" id="L90">                long sleep = 33 - timeDiff;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                if (sleep &lt; 0) {</span>
+<span class="nc" id="L92">                    sleep = 0;</span>
+                }
+<span class="nc" id="L94">                Thread.sleep(sleep);</span>
+<span class="nc" id="L95">                previousTime = System.currentTimeMillis();</span>
+<span class="nc" id="L96">                this.move();</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                if (this.getDead()) {</span>
+<span class="nc" id="L98">                    break;</span>
+                }
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                if (model.getGameStarted() == false) {</span>
+<span class="nc" id="L101">                    break;</span>
+                }
+<span class="nc" id="L103">            }</span>
+<span class="nc" id="L104">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L105">            e.printStackTrace();</span>
+<span class="nc" id="L106">        }</span>
+<span class="nc" id="L107">    }</span>
+
+    public synchronized void move() {
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        if (this.direction == 0) {</span>
+<span class="nc" id="L111">            this.yPos -= this.speed;</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        } else if (this.direction == 1) {</span>
+<span class="nc" id="L113">            this.xPos += this.speed;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        } else if (this.direction == 2) {</span>
+<span class="nc" id="L115">            this.yPos += this.speed;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        } else if (this.direction == 3) {</span>
+<span class="nc" id="L117">            this.xPos -= this.speed;</span>
+        }
+<span class="nc" id="L119">        this.border.setLocation(this.xPos - size, this.yPos - size);</span>
+<span class="nc" id="L120">        this.checkCollision();</span>
+<span class="nc" id="L121">    }</span>
+
+    public synchronized void checkCollision() {
+<span class="nc" id="L124">        Actor s = this.model.checkCollison(this);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        if (s == null) {</span>
+            ;
+        } else {
+            // 这里需要先检查s的类名信息，然后检查type为1或2，相同为友军，不同为敌人
+            // 如果是墙，就直接消失
+            // 如果是玩家，就扣血
+            // 如果是子弹，就消失
+            // 如果是道具，就消失
+            // 如果是边界，就消失
+            // 如果是敌人，就扣血
+            // 没有友伤
+<span class="nc bnc" id="L136" title="All 2 branches missed.">            if (s.getClass().getName().equals(&quot;com.mycompany.app.Wall&quot;)) {</span>
+<span class="nc" id="L137">                this.model.deleteActor(this);</span>
+<span class="nc" id="L138">                this.setDead(true);</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">            } else if (s.getClass().getName().equals(&quot;com.mycompany.app.Player&quot;)) {</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">                if (this.type == 2) {</span>
+<span class="nc" id="L141">                    this.model.deleteActor(this);</span>
+<span class="nc" id="L142">                    Player p = (Player) s;</span>
+<span class="nc" id="L143">                    p.hurt();</span>
+<span class="nc" id="L144">                    this.setDead(true);</span>
+<span class="nc" id="L145">                }</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            } else if (s.getClass().getName().equals(&quot;com.mycompany.app.Bullet&quot;)) {</span>
+<span class="nc" id="L147">                this.model.deleteActor(this);</span>
+<span class="nc" id="L148">                this.model.deleteActor(s);</span>
+<span class="nc" id="L149">                this.setDead(true);</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">            } else if (s.getClass().getName().equals(&quot;com.mycompany.app.Prop&quot;)) {</span>
+<span class="nc" id="L151">                this.model.deleteActor(this);</span>
+<span class="nc" id="L152">                this.setDead(true);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            } else if (s.getClass().getName().equals(&quot;com.mycompany.app.Boundary&quot;)) {</span>
+<span class="nc" id="L154">                this.model.deleteActor(this);</span>
+<span class="nc" id="L155">                this.setDead(true);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">            } else if (s.getClass().getName().equals(&quot;com.mycompany.app.Enemy&quot;)) {</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">                if (this.type == 1) {</span>
+<span class="nc" id="L158">                    this.model.deleteActor(this);</span>
+<span class="nc" id="L159">                    Enemy e = (Enemy) s;</span>
+<span class="nc" id="L160">                    int score = e.getEnemyId() * 5;</span>
+<span class="nc" id="L161">                    ((Player) this.owner).addScore(score);</span>
+<span class="nc" id="L162">                    e.hurt();</span>
+<span class="nc" id="L163">                    this.setDead(true);</span>
+                }
+            }
+        }
+<span class="nc" id="L167">    }</span>
+
+    public String toString() {
+<span class="nc" id="L170">        String info = &quot;B&quot; + this.xPos + &quot;,&quot; + this.yPos + &quot;,&quot; + this.direction + &quot;;&quot;;</span>
+<span class="nc" id="L171">        return info;</span>
+    }
+
+    // 根据传入的String来设置bullet的信息
+    public void setBullet(String s) {
+<span class="nc" id="L176">        String[] info = s.split(&quot;,&quot;);</span>
+<span class="nc" id="L177">        this.xPos = Integer.parseInt(info[0].substring(1));</span>
+<span class="nc" id="L178">        this.yPos = Integer.parseInt(info[1]);</span>
+<span class="nc" id="L179">        this.direction = Integer.parseInt(info[2]);</span>
+<span class="nc" id="L180">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

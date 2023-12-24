@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ServerSelector.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">ServerSelector.java</span></div><h1>ServerSelector.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.util.Set;
+import java.util.Iterator;
+
+//import javax.swing.text.html.HTMLDocument.Iterator;
+
+public class ServerSelector implements Runnable {
+
+    private ServerView view;
+    private ServerModel model;
+
+    private SelectionKey[] keys;
+    private int[] players;
+
+    private Selector selector;// 创建一个Selector，用于处理所有的网络事件
+    private InetSocketAddress listenAddress;
+    private String address;
+    private final static int PORT = 9093;// 服务器侦听的端口号
+
+<span class="nc" id="L30">    public ServerSelector(ServerView thisview) {</span>
+<span class="nc" id="L31">        view = thisview;</span>
+<span class="nc" id="L32">        address = &quot;localhost&quot;;</span>
+<span class="nc" id="L33">        keys = new SelectionKey[5];</span>
+<span class="nc" id="L34">        players = new int[5];</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc" id="L36">            players[i] = -1;</span>
+        }
+
+<span class="nc" id="L39">        listenAddress = new InetSocketAddress(address, PORT);</span>
+<span class="nc" id="L40">    }</span>
+
+    public void setModel(ServerModel thismodel) {
+<span class="nc" id="L43">        model = thismodel;</span>
+<span class="nc" id="L44">    }</span>
+
+    public synchronized int setClient(SelectionKey key) {
+<span class="nc" id="L47">        int id = model.addClient();</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (id == -1) {</span>
+<span class="nc" id="L49">            return 0;</span>
+        }
+<span class="nc" id="L51">        players[id] = id;</span>
+<span class="nc" id="L52">        keys[id] = key;</span>
+<span class="nc" id="L53">        return 1;</span>
+    }
+
+    public synchronized void deleteClient(SelectionKey key) {
+<span class="nc" id="L57">        int id = -1;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">            if (keys[i] == key) {</span>
+<span class="nc" id="L60">                id = i;</span>
+<span class="nc" id="L61">                break;</span>
+            }
+        }
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (players[id] != -1) {</span>
+<span class="nc" id="L65">            players[id] = -1;</span>
+<span class="nc" id="L66">            keys[id] = null;</span>
+<span class="nc" id="L67">            model.deleteClient(id);</span>
+        }
+<span class="nc" id="L69">    }</span>
+
+    public synchronized void setClientInstruction(SelectionKey key, String s) {
+<span class="nc" id="L72">        int id = -1;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">            if (keys[i] == key) {</span>
+<span class="nc" id="L75">                id = i;</span>
+<span class="nc" id="L76">                break;</span>
+            }
+        }
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (players[id] != -1) {</span>
+<span class="nc" id="L80">            model.setClientInstruction(id, s);</span>
+<span class="nc" id="L81">            model.setClientInstructionPrepared(id, true);</span>
+        }
+<span class="nc" id="L83">    }</span>
+
+    // startServer 方法，启动服务器的核心方法
+    public void run() {
+        try {
+<span class="nc" id="L88">            this.selector = Selector.open();// 打开选择器</span>
+<span class="nc" id="L89">            ServerSocketChannel serverChannel = ServerSocketChannel.open();// 打开ServerSocketChannel以侦听客户端连接</span>
+<span class="nc" id="L90">            serverChannel.configureBlocking(false);// 配置为非阻塞模式</span>
+
+            // 绑定服务器通道到指定端口
+<span class="nc" id="L93">            serverChannel.socket().bind(listenAddress);</span>
+<span class="nc" id="L94">            serverChannel.register(this.selector, SelectionKey.OP_ACCEPT); // 向选择器注册ServerSocketChannel，并监听接受连接事件</span>
+<span class="nc" id="L95">            System.out.println(&quot;Server started on port &gt;&gt; &quot; + PORT);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            while (!Thread.currentThread().isInterrupted()) { // 循环处理就绪的事件</span>
+                // 向全部client发送信息
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                if (model.getInstructionPrepared()) {</span>
+<span class="nc" id="L99">                    String s = model.getInstruction();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L101" title="All 6 branches missed.">                        if (players[i] != -1 &amp;&amp; keys[i] != null &amp;&amp; keys[i].isValid()) {</span>
+<span class="nc" id="L102">                            write(keys[i], s);</span>
+                        }
+                    }
+<span class="nc" id="L105">                    model.setInstructionPrepared(false);</span>
+                }
+
+                // wait for events
+<span class="nc" id="L109">                int readyCount = selector.select(12);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                if (readyCount == 0) {</span>
+<span class="nc" id="L111">                    continue;// 如果没有事件发生，继续循环</span>
+                }
+                // 获取已经就绪的键集合
+<span class="nc" id="L114">                Set&lt;SelectionKey&gt; readyKeys = selector.selectedKeys();</span>
+<span class="nc" id="L115">                Iterator&lt;SelectionKey&gt; iterator = readyKeys.iterator();</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L117">                    SelectionKey key = (SelectionKey) iterator.next();</span>
+                    // 从集合中移除当前的键，防止重复处理
+<span class="nc" id="L119">                    iterator.remove();</span>
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">                    if (!key.isValid()) {// 检查键是否有效</span>
+<span class="nc" id="L122">                        continue;</span>
+                    }
+
+<span class="nc bnc" id="L125" title="All 2 branches missed.">                    if (key.isAcceptable()) { // Accept client connections // 检查是否有新的连接</span>
+<span class="nc" id="L126">                        this.accept(key);</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                    } else if (key.isReadable()) { // Read from client // 检查通道是否有数据可读</span>
+<span class="nc" id="L128">                        this.read(key);</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">                    } else if (key.isWritable()) {</span>
+                        ;
+                    }
+<span class="nc" id="L132">                }</span>
+<span class="nc" id="L133">            }</span>
+<span class="nc" id="L134">        } catch (IOException e) {</span>
+<span class="nc" id="L135">            e.printStackTrace();</span>
+<span class="nc" id="L136">            view.mainPanel.setgameStart(false);</span>
+<span class="nc" id="L137">            model.setGameStarted(false);</span>
+<span class="nc" id="L138">        }</span>
+<span class="nc" id="L139">    }</span>
+
+    // accept 方法，处理接受新连接的事件
+    private synchronized void accept(SelectionKey key) throws IOException {
+<span class="nc" id="L143">        ServerSocketChannel serverChannel = (ServerSocketChannel) key.channel();</span>
+<span class="nc" id="L144">        SocketChannel channel = serverChannel.accept();// 接受连接并创建SocketChannel</span>
+<span class="nc" id="L145">        channel.configureBlocking(false); // 设置非阻塞模式</span>
+<span class="nc" id="L146">        Socket socket = channel.socket();</span>
+<span class="nc" id="L147">        SocketAddress remoteAddr = socket.getRemoteSocketAddress();</span>
+<span class="nc" id="L148">        System.out.println(&quot;Connected to: &quot; + remoteAddr);</span>
+
+        // 将新的SocketChannel注册到选择器，准备读取数据
+<span class="nc" id="L151">        SelectionKey clientKey = channel.register(this.selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE);</span>
+<span class="nc" id="L152">        setClient(clientKey);// 将新的SocketChannel注册到selector和model中</span>
+
+<span class="nc" id="L154">    }</span>
+
+    //
+    // 从SocketChannel读取数据
+    private synchronized void read(SelectionKey key) throws IOException {
+<span class="nc" id="L159">        SocketChannel channel = (SocketChannel) key.channel();</span>
+<span class="nc" id="L160">        ByteBuffer buffer = ByteBuffer.allocate(1024);// 分配缓冲区</span>
+<span class="nc" id="L161">        int numRead = -1;</span>
+<span class="nc" id="L162">        numRead = channel.read(buffer);// 将数据读入缓冲区</span>
+
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        if (numRead == -1) {// 检查是否到达流的末尾（客户端关闭连接）</span>
+<span class="nc" id="L165">            Socket socket = channel.socket();</span>
+<span class="nc" id="L166">            SocketAddress remoteAddr = socket.getRemoteSocketAddress();</span>
+<span class="nc" id="L167">            System.out.println(&quot;Connection closed by client: &quot; + remoteAddr);</span>
+<span class="nc" id="L168">            deleteClient(key);</span>
+<span class="nc" id="L169">            channel.close();// 关闭通道</span>
+<span class="nc" id="L170">            key.cancel();// 取消选择键</span>
+<span class="nc" id="L171">            return;</span>
+        }
+
+<span class="nc" id="L174">        byte[] data = new byte[numRead];</span>
+<span class="nc" id="L175">        System.arraycopy(buffer.array(), 0, data, 0, numRead);// 将数据从缓冲区复制到字节数组</span>
+<span class="nc" id="L176">        System.out.println(&quot;Got: &quot; + new String(data));// 打印接收到的数据</span>
+<span class="nc" id="L177">        String clientInstruction = new String(data);</span>
+<span class="nc" id="L178">        setClientInstruction(key, clientInstruction);// 将接收到的数据存到model的clientInstruction中</span>
+<span class="nc" id="L179">    }</span>
+
+    private void write(SelectionKey key, String message) throws IOException {
+<span class="nc" id="L182">        System.out.println(&quot;Sending: &quot; + new String(message));// 打印接收到的数据</span>
+<span class="nc" id="L183">        SocketChannel channel = (SocketChannel) key.channel();</span>
+<span class="nc" id="L184">        ByteBuffer buffer = ByteBuffer.wrap(message.getBytes()); //</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">        while (buffer.hasRemaining()) { //</span>
+<span class="nc" id="L186">            channel.write(buffer); //</span>
+        }
+<span class="nc" id="L188">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

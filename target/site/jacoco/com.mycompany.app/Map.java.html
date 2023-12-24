@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Map.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">Map.java</span></div><h1>Map.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
+<span class="nc bnc" id="L11" title="All 2 branches missed.">public class Map {</span>
+    private ServerModel model;
+    private String[][] mapList;
+    private String[] map;
+    private int mapId;
+
+<span class="nc" id="L17">    public Map(ServerModel model) {</span>
+<span class="nc" id="L18">        this.model = model;</span>
+<span class="nc" id="L19">        this.mapList = new String[4][400];</span>
+
+<span class="nc" id="L21">        this.mapList[0] = new String[] {</span>
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;
+        };
+
+<span class="nc" id="L64">        this.mapList[1] = new String[] {</span>
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;
+        };
+
+<span class="nc" id="L107">        this.mapList[2] = new String[] {</span>
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;
+        };
+
+<span class="nc" id="L150">        this.mapList[3] = new String[] {</span>
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;##&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
+                &quot;__&quot;, &quot;__&quot;, &quot;__&quot;
+        };
+
+        // 生成一个随机数，决定地图的类型
+<span class="nc" id="L194">        int mapType = (int) (Math.random() * 4);</span>
+<span class="nc" id="L195">        this.mapId = mapType;</span>
+<span class="nc" id="L196">        this.map = mapList[mapType];</span>
+<span class="nc" id="L197">    }</span>
+
+    // 构建函数中给出一个文件路径，读取文件内容创建地图
+    public synchronized void setMapFromSources(String filePath) {
+<span class="nc" id="L201">        this.map = new String[400];</span>
+        // 打开文件
+        try {
+<span class="nc" id="L204">            InputStream inputStream = (InputStream) getClass().getClassLoader()</span>
+<span class="nc" id="L205">                    .getResourceAsStream(&quot;config/&quot; + filePath + &quot;.txt&quot;);</span>
+<span class="nc" id="L206">            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));</span>
+            String line;
+<span class="nc" id="L208">            int j = 0;</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">            while ((line = reader.readLine()) != null) {</span>
+<span class="nc" id="L210">                this.map[j++] = line.substring(0, 2);</span>
+            }
+<span class="nc bnc" id="L212" title="All 2 branches missed.">            for (int i = 0; i &lt; 400; i++) {</span>
+<span class="nc bnc" id="L213" title="All 6 branches missed.">                assert (this.map[i].equals(&quot;##&quot;) || this.map[i].equals(&quot;__&quot;));</span>
+            }
+<span class="nc" id="L215">        } catch (Exception e) {</span>
+<span class="nc" id="L216">            e.printStackTrace();</span>
+<span class="nc" id="L217">        }</span>
+<span class="nc" id="L218">    }</span>
+
+    // 把地图写入文件
+    public synchronized void writeMapToFile(String filePath) {
+        try {
+<span class="nc" id="L223">            java.io.File file = new java.io.File(filePath + &quot;.txt&quot;);</span>
+<span class="nc" id="L224">            java.io.PrintWriter output = new java.io.PrintWriter(file);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">            for (int i = 0; i &lt; 400; i++) {</span>
+<span class="nc" id="L226">                output.println(this.map[i]);</span>
+            }
+<span class="nc" id="L228">            output.close();</span>
+<span class="nc" id="L229">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L230">            System.out.println(&quot;文件未找到: &quot; + e.getMessage());</span>
+<span class="nc" id="L231">        } catch (Exception e) {</span>
+<span class="nc" id="L232">            e.printStackTrace();</span>
+<span class="nc" id="L233">        }</span>
+<span class="nc" id="L234">    }</span>
+
+    // 从文件读入地图
+    public synchronized void setMapFromFile(String filePath) {
+        try {
+<span class="nc" id="L239">            File file = new File(filePath + &quot;.txt&quot;);</span>
+<span class="nc" id="L240">            BufferedReader reader = new BufferedReader(</span>
+                    new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+            String line;
+<span class="nc" id="L243">            int i = 0;</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">            while ((line = reader.readLine()) != null) {</span>
+                // 处理每一行数据
+<span class="nc" id="L246">                this.map[i++] = line.substring(0, 2);</span>
+            }
+<span class="nc" id="L248">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L249">            System.out.println(&quot;文件未找到: &quot; + e.getMessage());</span>
+<span class="nc" id="L250">        } catch (Exception e) {</span>
+<span class="nc" id="L251">            e.printStackTrace();</span>
+<span class="nc" id="L252">        }</span>
+<span class="nc" id="L253">    }</span>
+
+    // 用作测试，将地图的内容打印到标准输出
+    public void printMap() {
+<span class="nc bnc" id="L257" title="All 2 branches missed.">        for (String line : this.map) {</span>
+<span class="nc" id="L258">            System.out.println(line);</span>
+        }
+<span class="nc" id="L260">    }</span>
+
+    public String[] getMap() {
+<span class="nc" id="L263">        return this.map;</span>
+    }
+
+    public void setMap(String[] map) {
+<span class="nc" id="L267">        this.map = map;</span>
+<span class="nc" id="L268">    }</span>
+
+    public void setRandomMap(){
+<span class="nc" id="L271">        int mapType = (int) (Math.random() * 4);</span>
+<span class="nc" id="L272">        this.mapId = mapType;</span>
+<span class="nc" id="L273">        this.map = mapList[mapType];</span>
+<span class="nc" id="L274">    }</span>
+
+    public void setMap(int mapType) {
+<span class="nc" id="L277">        this.mapId = mapType;</span>
+<span class="nc" id="L278">        this.map = mapList[mapType];</span>
+<span class="nc" id="L279">    }</span>
+
+    public int getMapId() {
+<span class="nc" id="L282">        return this.mapId;</span>
+    }
+
+    public void setMapId(int mapId) {
+<span class="nc" id="L286">        this.mapId = mapId;</span>
+<span class="nc" id="L287">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

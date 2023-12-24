@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EnemyCreater.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">EnemyCreater.java</span></div><h1>EnemyCreater.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+public class EnemyCreater implements Runnable {
+    private ServerModel model;
+    private Map map;
+    private int level;
+    // private int[] enemyNumber;
+    private int[] enemyNumberList;
+    private int[] enemyTypeList;
+    private int leftEnemy;
+    private int createInterval;
+
+<span class="nc" id="L13">    public EnemyCreater(ServerModel model, Map map) {</span>
+<span class="nc" id="L14">        this.model = model;</span>
+<span class="nc" id="L15">        this.map = map;</span>
+<span class="nc" id="L16">        this.level = 0;</span>
+        // enemyNumber = new int[4];
+<span class="nc" id="L18">        enemyNumberList = new int[5];</span>
+<span class="nc" id="L19">        enemyNumberList[0] = 1;</span>
+<span class="nc" id="L20">        enemyNumberList[1] = 1;</span>
+<span class="nc" id="L21">        enemyNumberList[2] = 1;</span>
+<span class="nc" id="L22">        enemyNumberList[3] = 1;</span>
+<span class="nc" id="L23">        enemyNumberList[4] = 1;</span>
+<span class="nc" id="L24">        enemyTypeList = new int[5];</span>
+<span class="nc" id="L25">        enemyTypeList[0] = 1;</span>
+<span class="nc" id="L26">        enemyTypeList[1] = 1;</span>
+<span class="nc" id="L27">        enemyTypeList[2] = 2;</span>
+<span class="nc" id="L28">        enemyTypeList[3] = 1;</span>
+<span class="nc" id="L29">        enemyTypeList[4] = 2;</span>
+<span class="nc" id="L30">        leftEnemy = 0;</span>
+<span class="nc" id="L31">        createInterval = 150;</span>
+<span class="nc" id="L32">    }</span>
+
+    public void run() {
+        try {
+<span class="nc" id="L36">            long previousTime = System.currentTimeMillis();</span>
+            while (true) {
+<span class="nc bnc" id="L38" title="All 2 branches missed.">                if (model.getGameStarted() == false) {</span>
+<span class="nc" id="L39">                    break;</span>
+                }
+<span class="nc" id="L41">                System.out.println(&quot;    leftEnemy: &quot; + leftEnemy);</span>
+<span class="nc" id="L42">                long currentTime = System.currentTimeMillis();</span>
+<span class="nc" id="L43">                long timeDiff = currentTime - previousTime;</span>
+<span class="nc" id="L44">                long sleep = 33 - timeDiff;</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                if (sleep &lt; 0) {</span>
+<span class="nc" id="L46">                    sleep = 0;</span>
+                }
+<span class="nc" id="L48">                Thread.sleep(sleep);</span>
+<span class="nc" id="L49">                previousTime = System.currentTimeMillis();</span>
+<span class="nc bnc" id="L50" title="All 4 branches missed.">                if (leftEnemy == 0 &amp;&amp; level &lt; 5) {</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                    if (createInterval &gt; 0) {</span>
+<span class="nc" id="L52">                        createInterval--;</span>
+<span class="nc" id="L53">                        continue;</span>
+                    }
+<span class="nc" id="L55">                    leftEnemy = enemyNumberList[level];</span>
+<span class="nc" id="L56">                    createInterval = 100;</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">                    for (int i = 0; i &lt; enemyNumberList[level]; i++) {</span>
+<span class="nc" id="L58">                        Enemy enemy = new Enemy(model, enemyTypeList[level], -1,</span>
+                                500 / (enemyNumberList[level] + 1) * (i + 1), 20);
+<span class="nc" id="L60">                        model.addActor(enemy);</span>
+                    }
+<span class="nc bnc" id="L62" title="All 2 branches missed.">                    if (level &lt; 5) {</span>
+<span class="nc" id="L63">                        level++;</span>
+                    }
+                }
+<span class="nc bnc" id="L66" title="All 4 branches missed.">                if (leftEnemy == 0 &amp;&amp; level == 5) {</span>
+<span class="nc" id="L67">                    model.setGameWin(true);</span>
+                }
+
+<span class="nc" id="L70">            }</span>
+<span class="nc" id="L71">        } catch (Exception e) {</span>
+<span class="nc" id="L72">            e.printStackTrace();</span>
+
+<span class="nc" id="L74">        }</span>
+<span class="nc" id="L75">    }</span>
+
+    public synchronized void setLeftEnemy(int n) {
+<span class="nc" id="L78">        this.leftEnemy = n;</span>
+<span class="nc" id="L79">    }</span>
+
+    public synchronized int getLeftEnemy() {
+<span class="nc" id="L82">        return this.leftEnemy;</span>
+    }
+
+    public synchronized void setLevel(int n) {
+<span class="nc" id="L86">        this.level = n;</span>
+<span class="nc" id="L87">    }</span>
+
+    public synchronized int getLevel() {
+<span class="nc" id="L90">        return this.level;</span>
+    }
+
+    // 将enemycreater的全部信息存在一个String中，以便之后通过这个String来重新设置enemycreater的信息
+    public String toString() {
+<span class="nc" id="L95">        String s = &quot;&quot;;</span>
+<span class="nc" id="L96">        s += level + &quot;,&quot;;</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc" id="L98">            s += enemyNumberList[i] + &quot;,&quot;;</span>
+        }
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc" id="L101">            s += enemyTypeList[i] + &quot;,&quot;;</span>
+        }
+<span class="nc" id="L103">        s += leftEnemy + &quot;,&quot;;</span>
+<span class="nc" id="L104">        s += createInterval + &quot;,&quot;;</span>
+<span class="nc" id="L105">        return s;</span>
+    }
+
+    // 通过一个String来重新设置enemycreater的信息
+    public void setEnemyCreater(String s) {
+<span class="nc" id="L110">        String[] ss = s.split(&quot;,&quot;);</span>
+<span class="nc" id="L111">        System.out.println(ss.length);</span>
+        // 依次输出ss的每一个字符串
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        for (int i = 0; i &lt; ss.length; i++) {</span>
+<span class="nc" id="L114">            System.out.println(ss[i]);</span>
+        }
+<span class="nc" id="L116">        level = Integer.parseInt(ss[0]);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc" id="L118">            enemyNumberList[i] = Integer.parseInt(ss[i + 1]);</span>
+        }
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc" id="L121">            enemyTypeList[i] = Integer.parseInt(ss[i + 6]);</span>
+        }
+<span class="nc" id="L123">        leftEnemy = Integer.parseInt(ss[11]);</span>
+<span class="nc" id="L124">        createInterval = Integer.parseInt(ss[12]);</span>
+<span class="nc" id="L125">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ServerView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">ServerView.java</span></div><h1>ServerView.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import javax.swing.*;
+
+public class ServerView extends JFrame {
+	public DrawingPanel mainPanel;
+	public JButton saveMap, saveState, exit;
+	public ServerController controller;
+	public ServerModel model;
+	public ServerSelector selector;
+	public int playerNumber;
+	public ExecutorService exec;
+
+	public ServerView() throws InterruptedException, IOException {
+<span class="nc" id="L20">		super(&quot;APP show&quot;);</span>
+<span class="nc" id="L21">		playerNumber = 1;</span>
+<span class="nc" id="L22">		getContentPane().setLayout(null);</span>
+
+<span class="nc" id="L24">		mainPanel = new DrawingPanel();</span>
+<span class="nc" id="L25">		mainPanel.setLayout(null);</span>
+<span class="nc" id="L26">		mainPanel.setBounds(0, 22, 679, 605);</span>
+<span class="nc" id="L27">		mainPanel.setBackground(new java.awt.Color(255, 255, 255));</span>
+
+<span class="nc" id="L29">		getContentPane().add(mainPanel);</span>
+<span class="nc" id="L30">		mainPanel.setFocusable(true);</span>
+
+<span class="nc" id="L32">		saveMap = new JButton(&quot;saveMap&quot;);</span>
+<span class="nc" id="L33">		saveMap.setBounds(150, 0, 125, 22);</span>
+<span class="nc" id="L34">		getContentPane().add(saveMap);</span>
+<span class="nc" id="L35">		saveMap.setFocusable(false);</span>
+
+<span class="nc" id="L37">		saveState = new JButton(&quot;saveState&quot;);</span>
+<span class="nc" id="L38">		saveState.setBounds(280, 0, 125, 22);</span>
+<span class="nc" id="L39">		getContentPane().add(saveState);</span>
+<span class="nc" id="L40">		saveState.setFocusable(false);</span>
+
+<span class="nc" id="L42">		exit = new JButton(&quot;Exit&quot;);</span>
+<span class="nc" id="L43">		exit.setBounds(410, 0, 125, 22);</span>
+<span class="nc" id="L44">		getContentPane().add(exit);</span>
+<span class="nc" id="L45">		exit.setFocusable(false);</span>
+
+<span class="nc" id="L47">		model = new ServerModel(this);</span>
+<span class="nc" id="L48">		selector = new ServerSelector(this);</span>
+<span class="nc" id="L49">		controller = new ServerController(this, model);</span>
+<span class="nc" id="L50">		selector.setModel(model);</span>
+<span class="nc" id="L51">		model.setController(controller);</span>
+<span class="nc" id="L52">		model.setSelector(selector);</span>
+
+<span class="nc" id="L54">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L55">		setBounds(1150, 130, 643, 650);</span>
+<span class="nc" id="L56">		setVisible(true);</span>
+<span class="nc" id="L57">		setResizable(false);</span>
+<span class="nc" id="L58">		mainPanel.setVisible(true);</span>
+<span class="nc" id="L59">		mainPanel.setgameStart(true);</span>
+<span class="nc" id="L60">		mainPanel.repaint();</span>
+<span class="nc" id="L61">		mainPanel.setgameStart(false);</span>
+
+<span class="nc" id="L63">		exec = Executors.newCachedThreadPool();</span>
+<span class="nc" id="L64">		exec.execute(model);</span>
+<span class="nc" id="L65">		exec.execute(selector);</span>
+<span class="nc" id="L66">		repaint();</span>
+<span class="nc" id="L67">		revalidate();</span>
+<span class="nc" id="L68">	}</span>
+
+	public synchronized void setPlayerNumber(int n) {
+<span class="nc" id="L71">		this.playerNumber = n;</span>
+<span class="nc" id="L72">	}</span>
+
+	public static void main(String[] args) throws InterruptedException {
+<span class="nc" id="L75">		SwingUtilities.invokeLater(new Runnable() {</span>
+			public void run() {
+				try {
+<span class="nc" id="L78">					new ServerView();</span>
+<span class="nc" id="L79">				} catch (InterruptedException e) {</span>
+<span class="nc" id="L80">					e.printStackTrace();</span>
+<span class="nc" id="L81">				} catch (FileNotFoundException e) {</span>
+<span class="nc" id="L82">					e.printStackTrace();</span>
+<span class="nc" id="L83">				} catch (IOException e) {</span>
+<span class="nc" id="L84">					e.printStackTrace();</span>
+<span class="nc" id="L85">				}</span>
+<span class="nc" id="L86">			}</span>
+		});
+<span class="nc" id="L88">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">ClientController.java</span></div><h1>ClientController.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.awt.event.*;
+
+public class ClientController {
+
+	private ClientView view;
+	private ClientModel model;
+	private ClientSocket socket;
+
+<span class="nc" id="L11">	public ClientController(ClientView thisview, ClientModel thismodel, ClientSocket thissocket) {</span>
+<span class="nc" id="L12">		view = thisview;</span>
+<span class="nc" id="L13">		model = thismodel;</span>
+<span class="nc" id="L14">		socket = thissocket;</span>
+
+<span class="nc" id="L16">		view.connectServer.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+<span class="nc" id="L19">				socket.setConnecting(true);</span>
+<span class="nc" id="L20">			}</span>
+		});
+
+<span class="nc" id="L23">		view.exit.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+<span class="nc" id="L26">				System.exit(0);</span>
+<span class="nc" id="L27">			}</span>
+		});
+
+<span class="nc" id="L30">		view.startGame.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+<span class="nc" id="L33">				model.setGamePrepared(true);</span>
+<span class="nc" id="L34">			}</span>
+		});
+
+<span class="nc" id="L37">		view.loadPreviousGame.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+<span class="nc" id="L40">				model.setGameLoad(true);</span>
+				// view.mainPanel.repaint();
+<span class="nc" id="L42">			}</span>
+		});
+
+<span class="nc" id="L45">		view.viewPlayback.addActionListener(new ActionListener() {</span>
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+<span class="nc" id="L48">				model.setViewPlayback(true);</span>
+				// view.mainPanel.repaint();
+<span class="nc" id="L50">			}</span>
+		});
+
+<span class="nc" id="L53">		view.mainPanel.addKeyListener(new KeyAdapter() {</span>
+			public void keyPressed(KeyEvent e) {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">				if (e.getKeyCode() == KeyEvent.VK_UP) {</span>
+<span class="nc" id="L56">					model.setMoveDirections(true, false, false, false);</span>
+				}
+<span class="nc bnc" id="L58" title="All 2 branches missed.">				if (e.getKeyCode() == KeyEvent.VK_DOWN) {</span>
+<span class="nc" id="L59">					model.setMoveDirections(false, true, false, false);</span>
+				}
+<span class="nc bnc" id="L61" title="All 2 branches missed.">				if (e.getKeyCode() == KeyEvent.VK_LEFT) {</span>
+<span class="nc" id="L62">					model.setMoveDirections(false, false, true, false);</span>
+				}
+<span class="nc bnc" id="L64" title="All 2 branches missed.">				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {</span>
+<span class="nc" id="L65">					model.setMoveDirections(false, false, false, true);</span>
+				}
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">				if (e.getKeyChar() == 's') {</span>
+<span class="nc" id="L69">					model.setFire(true);</span>
+				}
+<span class="nc" id="L71">			}</span>
+
+			public void keyReleased(KeyEvent e) {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">				if (e.getKeyCode() == KeyEvent.VK_UP) {</span>
+<span class="nc" id="L75">					model.setMoveDirections(false, model.isMoveDown(), model.isMoveLeft(), model.isMoveRight()); // 假设isMoveDown等方法存在</span>
+				}
+<span class="nc bnc" id="L77" title="All 2 branches missed.">				if (e.getKeyCode() == KeyEvent.VK_DOWN) {</span>
+<span class="nc" id="L78">					model.setMoveDirections(model.isMoveUp(), false, model.isMoveLeft(), model.isMoveRight());</span>
+				}
+<span class="nc bnc" id="L80" title="All 2 branches missed.">				if (e.getKeyCode() == KeyEvent.VK_LEFT) {</span>
+<span class="nc" id="L81">					model.setMoveDirections(model.isMoveUp(), model.isMoveDown(), false, model.isMoveRight());</span>
+				}
+<span class="nc bnc" id="L83" title="All 2 branches missed.">				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {</span>
+<span class="nc" id="L84">					model.setMoveDirections(model.isMoveUp(), model.isMoveDown(), model.isMoveLeft(), false);</span>
+				}
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				if (e.getKeyChar() == 's') {</span>
+<span class="nc" id="L87">					model.setFire(false);</span>
+				}
+<span class="nc" id="L89">			}</span>
+		});
+<span class="nc" id="L91">	}</span>
+
+	public void showmovew() {
+<span class="nc" id="L94">		while (true) {</span>
+			try {
+<span class="nc" id="L96">				Thread.sleep(33);</span>
+<span class="nc" id="L97">				view.mainPanel.repaint();</span>
+<span class="nc" id="L98">			} catch (InterruptedException e1) {</span>
+<span class="nc" id="L99">				e1.printStackTrace();</span>
+			}
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

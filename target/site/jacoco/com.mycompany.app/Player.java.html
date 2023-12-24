@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.awt.image.BufferedImage;
+
+public class Player implements Actor {
+    private int xPos;
+    private int yPos;
+    private int ClientID;
+    private int health;
+    private int score;
+    private ClientModel gameModel;
+    private int direction;
+    private BufferedImage[][] player;;
+
+<span class="nc" id="L15">    public Player(int ClientID, int xPos, int yPos, int direction, int health, int score, ClientModel gameModel) {</span>
+<span class="nc" id="L16">        this.ClientID = ClientID;</span>
+<span class="nc" id="L17">        this.xPos = xPos;</span>
+<span class="nc" id="L18">        this.yPos = yPos;</span>
+<span class="nc" id="L19">        this.gameModel = gameModel;</span>
+<span class="nc" id="L20">        this.direction = direction;</span>
+<span class="nc" id="L21">        this.health = health;</span>
+<span class="nc" id="L22">        this.score = score;</span>
+<span class="nc" id="L23">        this.player = new BufferedImage[5][4];</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">            for (int j = 0; j &lt; 4; j++) {</span>
+<span class="nc" id="L26">                this.player[i][j] = gameModel.getTexture(10 + i * 4 + j);</span>
+            }
+        }
+<span class="nc" id="L29">    }</span>
+
+    public int getxPos() {
+<span class="nc" id="L32">        return xPos;</span>
+    }
+
+    public int getyPos() {
+<span class="nc" id="L36">        return yPos;</span>
+    }
+
+    public int getClientId() {
+<span class="nc" id="L40">        return ClientID;</span>
+    }
+
+    public int getHealth() {
+<span class="nc" id="L44">        return health;</span>
+    }
+
+    public int getScore() {
+<span class="nc" id="L48">        return score;</span>
+    }
+
+    public BufferedImage getMainImage() {
+<span class="nc" id="L52">        return player[ClientID][0];</span>
+    }
+
+    public void draw(java.awt.Graphics g) {
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (direction == 0)</span>
+<span class="nc" id="L57">            g.drawImage(player[ClientID][0], xPos - 12, yPos - 12, 25, 25, null);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (direction == 1)</span>
+<span class="nc" id="L59">            g.drawImage(player[ClientID][3], xPos - 12, yPos - 12, 25, 25, null);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (direction == 2)</span>
+<span class="nc" id="L61">            g.drawImage(player[ClientID][1], xPos - 12, yPos - 12, 25, 25, null);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (direction == 3)</span>
+<span class="nc" id="L63">            g.drawImage(player[ClientID][2], xPos - 12, yPos - 12, 25, 25, null);</span>
+<span class="nc" id="L64">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

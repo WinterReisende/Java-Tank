@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">ClientView.java</span></div><h1>ClientView.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import javax.swing.*;
+
+import javafx.scene.paint.Color;
+
+public class ClientView extends JFrame {
+	public DrawingPanel mainPanel;
+	public JButton connectServer, loadPreviousGame, startGame, exit, viewPlayback;
+	public JLabel enterIP;
+	public JTextField IPfield;
+	public ClientController controller;
+	// public ClientMover mover;
+	public ClientModel model;
+	public ClientSocket socket;
+	public int playerNumber;
+	public ExecutorService exec;
+
+	public ClientView() throws InterruptedException {
+<span class="nc" id="L23">		super(&quot;Client show&quot;);</span>
+<span class="nc" id="L24">		playerNumber = 1;</span>
+<span class="nc" id="L25">		getContentPane().setLayout(null);</span>
+
+		// make main panel where the animation will be drawn
+<span class="nc" id="L28">		mainPanel = new DrawingPanel();</span>
+<span class="nc" id="L29">		mainPanel.setLayout(null);</span>
+<span class="nc" id="L30">		mainPanel.setBounds(0, 22, 750, 650);</span>
+<span class="nc" id="L31">		mainPanel.setBackground(new java.awt.Color(255, 255, 255));</span>
+
+<span class="nc" id="L33">		getContentPane().add(mainPanel);</span>
+<span class="nc" id="L34">		mainPanel.setFocusable(true);</span>
+
+<span class="nc" id="L36">		connectServer = new JButton(&quot;Connect server&quot;);</span>
+<span class="nc" id="L37">		connectServer.setBounds(10, 0, 125, 22);</span>
+<span class="nc" id="L38">		getContentPane().add(connectServer);</span>
+<span class="nc" id="L39">		connectServer.setFocusable(false);</span>
+
+<span class="nc" id="L41">		startGame = new JButton(&quot;Start new game&quot;);</span>
+<span class="nc" id="L42">		startGame.setBounds(140, 0, 160, 22);</span>
+<span class="nc" id="L43">		getContentPane().add(startGame);</span>
+<span class="nc" id="L44">		startGame.setFocusable(false);</span>
+
+<span class="nc" id="L46">		loadPreviousGame = new JButton(&quot;Load Precious Game&quot;);</span>
+<span class="nc" id="L47">		loadPreviousGame.setBounds(305, 0, 160, 22);</span>
+<span class="nc" id="L48">		getContentPane().add(loadPreviousGame);</span>
+<span class="nc" id="L49">		loadPreviousGame.setFocusable(false);</span>
+
+<span class="nc" id="L51">		viewPlayback = new JButton(&quot;View Playback&quot;);</span>
+<span class="nc" id="L52">		viewPlayback.setBounds(470, 0, 160, 22);</span>
+<span class="nc" id="L53">		getContentPane().add(viewPlayback);</span>
+<span class="nc" id="L54">		viewPlayback.setFocusable(false);</span>
+
+<span class="nc" id="L56">		exit = new JButton(&quot;Exit&quot;);</span>
+<span class="nc" id="L57">		exit.setBounds(635, 0, 90, 22);</span>
+<span class="nc" id="L58">		getContentPane().add(exit);</span>
+<span class="nc" id="L59">		exit.setFocusable(false);</span>
+
+<span class="nc" id="L61">		model = new ClientModel(this);</span>
+<span class="nc" id="L62">		socket = new ClientSocket(this);</span>
+<span class="nc" id="L63">		controller = new ClientController(this, model, socket);</span>
+		//socket.setController(controller);
+<span class="nc" id="L65">		socket.setModel(model);</span>
+<span class="nc" id="L66">		model.setController(controller);</span>
+<span class="nc" id="L67">		model.setSocket(socket);</span>
+
+		// mover_2 = new ClientMover_2(this);
+
+		// setup the main frame
+<span class="nc" id="L72">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L73">		setBounds(150, 130, 750, 700);</span>
+<span class="nc" id="L74">		setVisible(true);</span>
+<span class="nc" id="L75">		setResizable(false);</span>
+		//mainPanel.setModel(model);
+		//((DrawingPanel)mainPanel).setModel(model);
+<span class="nc" id="L78">		mainPanel.setVisible(true);</span>
+<span class="nc" id="L79">		mainPanel.setgameStart(true);</span>
+<span class="nc" id="L80">		mainPanel.repaint();</span>
+		// Thread.sleep(10000);
+<span class="nc" id="L82">		mainPanel.repaint();</span>
+
+<span class="nc" id="L84">		exec = Executors.newCachedThreadPool();</span>
+<span class="nc" id="L85">		exec.execute(model);</span>
+<span class="nc" id="L86">		exec.execute(socket);</span>
+<span class="nc" id="L87">		repaint();</span>
+<span class="nc" id="L88">		revalidate();</span>
+<span class="nc" id="L89">	}</span>
+
+	public synchronized void setPlayerNumber(int n) {
+<span class="nc" id="L92">		this.playerNumber = n;</span>
+<span class="nc" id="L93">	}</span>
+
+	public static void main(String[] args) throws InterruptedException {
+<span class="nc" id="L96">		SwingUtilities.invokeLater(new Runnable() {</span>
+			public void run() {
+				try {
+<span class="nc" id="L99">					new ClientView();</span>
+<span class="nc" id="L100">				} catch (InterruptedException e) {</span>
+<span class="nc" id="L101">					e.printStackTrace();</span>
+				}
+<span class="nc" id="L103">			}</span>
+		});
+<span class="nc" id="L105">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

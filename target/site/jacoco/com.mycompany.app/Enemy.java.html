@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Enemy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">my-app</a> &gt; <a href="index.source.html" class="el_package">com.mycompany.app</a> &gt; <span class="el_source">Enemy.java</span></div><h1>Enemy.java</h1><pre class="source lang-java linenums">package com.mycompany.app;
+
+import java.awt.image.BufferedImage;
+
+public class Enemy implements Actor {
+    private int xPos;
+    private int yPos;
+    private int EnemyId;
+    private int health;
+    private ClientModel gameModel;
+    private int direction;
+    private BufferedImage[][] enemy;;
+
+<span class="nc" id="L14">    public Enemy(int EnemyID, int xPos, int yPos, int direction, int health, ClientModel gameModel) {</span>
+<span class="nc" id="L15">        this.EnemyId = EnemyID;</span>
+<span class="nc" id="L16">        this.xPos = xPos;</span>
+<span class="nc" id="L17">        this.yPos = yPos;</span>
+<span class="nc" id="L18">        this.gameModel = gameModel;</span>
+<span class="nc" id="L19">        this.direction = direction;</span>
+<span class="nc" id="L20">        this.health = health;</span>
+<span class="nc" id="L21">        this.enemy = new BufferedImage[2][4];</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        for (int i = 0; i &lt; 2; i++) {</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">            for (int j = 0; j &lt; 4; j++) {</span>
+<span class="nc" id="L24">                this.enemy[i][j] = gameModel.getTexture(2 + i * 8 + j);</span>
+            }
+        }
+<span class="nc" id="L27">    }</span>
+
+    public int getxPos() {
+<span class="nc" id="L30">        return xPos;</span>
+    }
+
+    public int getyPos() {
+<span class="nc" id="L34">        return yPos;</span>
+    }
+
+    public void draw(java.awt.Graphics g) {
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (direction == 0)</span>
+<span class="nc" id="L39">            g.drawImage(enemy[EnemyId - 1][0], xPos - 12, yPos - 12, 25, 25, null);</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if (direction == 1)</span>
+<span class="nc" id="L41">            g.drawImage(enemy[EnemyId - 1][3], xPos - 12, yPos - 12, 25, 25, null);</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (direction == 2)</span>
+<span class="nc" id="L43">            g.drawImage(enemy[EnemyId - 1][1], xPos - 12, yPos - 12, 25, 25, null);</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (direction == 3)</span>
+<span class="nc" id="L45">            g.drawImage(enemy[EnemyId - 1][2], xPos - 12, yPos - 12, 25, 25, null);</span>
+<span class="nc" id="L46">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

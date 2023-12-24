@@ -1,0 +1,19 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+my-app,com.mycompany.app,Player,181,0,12,0,28,0,14,0,8,0
+my-app,com.mycompany.app,ClientController.new ActionListener() {...},9,0,0,0,3,0,2,0,2,0
+my-app,com.mycompany.app,ClientController.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
+my-app,com.mycompany.app,ClientController,71,0,0,0,16,0,2,0,2,0
+my-app,com.mycompany.app,Bullet,64,0,8,0,14,0,8,0,4,0
+my-app,com.mycompany.app,DrawingPanel,224,0,20,0,52,0,16,0,6,0
+my-app,com.mycompany.app,ClientModel,1467,0,124,0,338,0,98,0,36,0
+my-app,com.mycompany.app,Map,6651,0,16,0,209,0,16,0,8,0
+my-app,com.mycompany.app,Wall,46,0,0,0,12,0,5,0,5,0
+my-app,com.mycompany.app,ClientController.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
+my-app,com.mycompany.app,ClientSocket,313,0,26,0,80,0,19,0,6,0
+my-app,com.mycompany.app,ClientController.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
+my-app,com.mycompany.app,ClientView,253,0,0,0,53,0,3,0,3,0
+my-app,com.mycompany.app,ClientController.new KeyAdapter() {...},158,0,20,0,23,0,13,0,3,0
+my-app,com.mycompany.app,ClientController.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
+my-app,com.mycompany.app,ClientView.new Runnable() {...},10,0,0,0,5,0,2,0,2,0
+my-app,com.mycompany.app,ClientModel.ImageLoader,25,0,0,0,7,0,2,0,2,0
+my-app,com.mycompany.app,Enemy,169,0,12,0,23,0,10,0,4,0

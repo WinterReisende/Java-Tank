@@ -5,8 +5,6 @@ import java.util.concurrent.Executors;
 
 import javax.swing.*;
 
-import javafx.scene.paint.Color;
-
 public class ClientView extends JFrame {
 	public DrawingPanel mainPanel;
 	public JButton connectServer, loadPreviousGame, startGame, exit, viewPlayback;
@@ -61,7 +59,7 @@ public class ClientView extends JFrame {
 		model = new ClientModel(this);
 		socket = new ClientSocket(this);
 		controller = new ClientController(this, model, socket);
-		//socket.setController(controller);
+		// socket.setController(controller);
 		socket.setModel(model);
 		model.setController(controller);
 		model.setSocket(socket);
@@ -73,8 +71,8 @@ public class ClientView extends JFrame {
 		setBounds(150, 130, 750, 700);
 		setVisible(true);
 		setResizable(false);
-		//mainPanel.setModel(model);
-		//((DrawingPanel)mainPanel).setModel(model);
+		// mainPanel.setModel(model);
+		// ((DrawingPanel)mainPanel).setModel(model);
 		mainPanel.setVisible(true);
 		mainPanel.setgameStart(true);
 		mainPanel.repaint();

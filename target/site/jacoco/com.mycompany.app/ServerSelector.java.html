@@ -27,21 +27,21 @@ public class ServerSelector implements Runnable {
     private String address;
     private final static int PORT = 9093;// 服务器侦听的端口号
 
-<span class="fc" id="L30">    public ServerSelector(ServerView thisview) {</span>
-<span class="fc" id="L31">        view = thisview;</span>
-<span class="fc" id="L32">        address = &quot;localhost&quot;;</span>
-<span class="fc" id="L33">        keys = new SelectionKey[5];</span>
-<span class="fc" id="L34">        players = new int[5];</span>
-<span class="fc bfc" id="L35" title="All 2 branches covered.">        for (int i = 0; i &lt; 5; i++) {</span>
-<span class="fc" id="L36">            players[i] = -1;</span>
+<span class="nc" id="L30">    public ServerSelector(ServerView thisview) {</span>
+<span class="nc" id="L31">        view = thisview;</span>
+<span class="nc" id="L32">        address = &quot;localhost&quot;;</span>
+<span class="nc" id="L33">        keys = new SelectionKey[5];</span>
+<span class="nc" id="L34">        players = new int[5];</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc" id="L36">            players[i] = -1;</span>
         }
 
-<span class="fc" id="L39">        listenAddress = new InetSocketAddress(address, PORT);</span>
-<span class="fc" id="L40">    }</span>
+<span class="nc" id="L39">        listenAddress = new InetSocketAddress(address, PORT);</span>
+<span class="nc" id="L40">    }</span>
 
     public void setModel(ServerModel thismodel) {
-<span class="fc" id="L43">        model = thismodel;</span>
-<span class="fc" id="L44">    }</span>
+<span class="nc" id="L43">        model = thismodel;</span>
+<span class="nc" id="L44">    }</span>
 
     public synchronized int setClient(SelectionKey key) {
 <span class="nc" id="L47">        int id = model.addClient();</span>
@@ -85,17 +85,17 @@ public class ServerSelector implements Runnable {
     // startServer 方法，启动服务器的核心方法
     public void run() {
         try {
-<span class="fc" id="L88">            this.selector = Selector.open();// 打开选择器</span>
-<span class="fc" id="L89">            ServerSocketChannel serverChannel = ServerSocketChannel.open();// 打开ServerSocketChannel以侦听客户端连接</span>
-<span class="fc" id="L90">            serverChannel.configureBlocking(false);// 配置为非阻塞模式</span>
+<span class="nc" id="L88">            this.selector = Selector.open();// 打开选择器</span>
+<span class="nc" id="L89">            ServerSocketChannel serverChannel = ServerSocketChannel.open();// 打开ServerSocketChannel以侦听客户端连接</span>
+<span class="nc" id="L90">            serverChannel.configureBlocking(false);// 配置为非阻塞模式</span>
 
             // 绑定服务器通道到指定端口
-<span class="fc" id="L93">            serverChannel.socket().bind(listenAddress);</span>
-<span class="fc" id="L94">            serverChannel.register(this.selector, SelectionKey.OP_ACCEPT); // 向选择器注册ServerSocketChannel，并监听接受连接事件</span>
-<span class="fc" id="L95">            System.out.println(&quot;Server started on port &gt;&gt; &quot; + PORT);</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">            while (!Thread.currentThread().isInterrupted()) { // 循环处理就绪的事件</span>
+<span class="nc" id="L93">            serverChannel.socket().bind(listenAddress);</span>
+<span class="nc" id="L94">            serverChannel.register(this.selector, SelectionKey.OP_ACCEPT); // 向选择器注册ServerSocketChannel，并监听接受连接事件</span>
+<span class="nc" id="L95">            System.out.println(&quot;Server started on port &gt;&gt; &quot; + PORT);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            while (!Thread.currentThread().isInterrupted()) { // 循环处理就绪的事件</span>
                 // 向全部client发送信息
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">                if (model.getInstructionPrepared()) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                if (model.getInstructionPrepared()) {</span>
 <span class="nc" id="L99">                    String s = model.getInstruction();</span>
 <span class="nc bnc" id="L100" title="All 2 branches missed.">                    for (int i = 0; i &lt; 5; i++) {</span>
 <span class="nc bnc" id="L101" title="All 6 branches missed.">                        if (players[i] != -1 &amp;&amp; keys[i] != null &amp;&amp; keys[i].isValid()) {</span>
@@ -106,9 +106,9 @@ public class ServerSelector implements Runnable {
                 }
 
                 // wait for events
-<span class="fc" id="L109">                int readyCount = selector.select(12);</span>
-<span class="pc bpc" id="L110" title="1 of 2 branches missed.">                if (readyCount == 0) {</span>
-<span class="fc" id="L111">                    continue;// 如果没有事件发生，继续循环</span>
+<span class="nc" id="L109">                int readyCount = selector.select(12);</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                if (readyCount == 0) {</span>
+<span class="nc" id="L111">                    continue;// 如果没有事件发生，继续循环</span>
                 }
                 // 获取已经就绪的键集合
 <span class="nc" id="L114">                Set&lt;SelectionKey&gt; readyKeys = selector.selectedKeys();</span>
@@ -131,12 +131,12 @@ public class ServerSelector implements Runnable {
                     }
 <span class="nc" id="L132">                }</span>
 <span class="nc" id="L133">            }</span>
-<span class="fc" id="L134">        } catch (IOException e) {</span>
-<span class="fc" id="L135">            e.printStackTrace();</span>
-<span class="fc" id="L136">            view.mainPanel.setgameStart(false);</span>
-<span class="fc" id="L137">            model.setGameStarted(false);</span>
+<span class="nc" id="L134">        } catch (IOException e) {</span>
+<span class="nc" id="L135">            e.printStackTrace();</span>
+<span class="nc" id="L136">            view.mainPanel.setgameStart(false);</span>
+<span class="nc" id="L137">            model.setGameStarted(false);</span>
 <span class="nc" id="L138">        }</span>
-<span class="fc" id="L139">    }</span>
+<span class="nc" id="L139">    }</span>
 
     // accept 方法，处理接受新连接的事件
     private synchronized void accept(SelectionKey key) throws IOException {

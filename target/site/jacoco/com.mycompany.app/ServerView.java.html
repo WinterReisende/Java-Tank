@@ -17,55 +17,55 @@ public class ServerView extends JFrame {
 	public ExecutorService exec;
 
 	public ServerView() throws InterruptedException, IOException {
-<span class="fc" id="L20">		super(&quot;APP show&quot;);</span>
-<span class="fc" id="L21">		playerNumber = 1;</span>
-<span class="fc" id="L22">		getContentPane().setLayout(null);</span>
+<span class="nc" id="L20">		super(&quot;APP show&quot;);</span>
+<span class="nc" id="L21">		playerNumber = 1;</span>
+<span class="nc" id="L22">		getContentPane().setLayout(null);</span>
 
-<span class="fc" id="L24">		mainPanel = new DrawingPanel();</span>
-<span class="fc" id="L25">		mainPanel.setLayout(null);</span>
-<span class="fc" id="L26">		mainPanel.setBounds(0, 22, 679, 605);</span>
-<span class="fc" id="L27">		mainPanel.setBackground(new java.awt.Color(255, 255, 255));</span>
+<span class="nc" id="L24">		mainPanel = new DrawingPanel();</span>
+<span class="nc" id="L25">		mainPanel.setLayout(null);</span>
+<span class="nc" id="L26">		mainPanel.setBounds(0, 22, 679, 605);</span>
+<span class="nc" id="L27">		mainPanel.setBackground(new java.awt.Color(255, 255, 255));</span>
 
-<span class="fc" id="L29">		getContentPane().add(mainPanel);</span>
-<span class="fc" id="L30">		mainPanel.setFocusable(true);</span>
+<span class="nc" id="L29">		getContentPane().add(mainPanel);</span>
+<span class="nc" id="L30">		mainPanel.setFocusable(true);</span>
 
-<span class="fc" id="L32">		saveMap = new JButton(&quot;saveMap&quot;);</span>
-<span class="fc" id="L33">		saveMap.setBounds(150, 0, 125, 22);</span>
-<span class="fc" id="L34">		getContentPane().add(saveMap);</span>
-<span class="fc" id="L35">		saveMap.setFocusable(false);</span>
+<span class="nc" id="L32">		saveMap = new JButton(&quot;saveMap&quot;);</span>
+<span class="nc" id="L33">		saveMap.setBounds(150, 0, 125, 22);</span>
+<span class="nc" id="L34">		getContentPane().add(saveMap);</span>
+<span class="nc" id="L35">		saveMap.setFocusable(false);</span>
 
-<span class="fc" id="L37">		saveState = new JButton(&quot;saveState&quot;);</span>
-<span class="fc" id="L38">		saveState.setBounds(280, 0, 125, 22);</span>
-<span class="fc" id="L39">		getContentPane().add(saveState);</span>
-<span class="fc" id="L40">		saveState.setFocusable(false);</span>
+<span class="nc" id="L37">		saveState = new JButton(&quot;saveState&quot;);</span>
+<span class="nc" id="L38">		saveState.setBounds(280, 0, 125, 22);</span>
+<span class="nc" id="L39">		getContentPane().add(saveState);</span>
+<span class="nc" id="L40">		saveState.setFocusable(false);</span>
 
-<span class="fc" id="L42">		exit = new JButton(&quot;Exit&quot;);</span>
-<span class="fc" id="L43">		exit.setBounds(410, 0, 125, 22);</span>
-<span class="fc" id="L44">		getContentPane().add(exit);</span>
-<span class="fc" id="L45">		exit.setFocusable(false);</span>
+<span class="nc" id="L42">		exit = new JButton(&quot;Exit&quot;);</span>
+<span class="nc" id="L43">		exit.setBounds(410, 0, 125, 22);</span>
+<span class="nc" id="L44">		getContentPane().add(exit);</span>
+<span class="nc" id="L45">		exit.setFocusable(false);</span>
 
-<span class="fc" id="L47">		model = new ServerModel(this);</span>
-<span class="fc" id="L48">		selector = new ServerSelector(this);</span>
-<span class="fc" id="L49">		controller = new ServerController(this, model);</span>
-<span class="fc" id="L50">		selector.setModel(model);</span>
-<span class="fc" id="L51">		model.setController(controller);</span>
-<span class="fc" id="L52">		model.setSelector(selector);</span>
+<span class="nc" id="L47">		model = new ServerModel(this);</span>
+<span class="nc" id="L48">		selector = new ServerSelector(this);</span>
+<span class="nc" id="L49">		controller = new ServerController(this, model);</span>
+<span class="nc" id="L50">		selector.setModel(model);</span>
+<span class="nc" id="L51">		model.setController(controller);</span>
+<span class="nc" id="L52">		model.setSelector(selector);</span>
 
-<span class="fc" id="L54">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
-<span class="fc" id="L55">		setBounds(1150, 130, 643, 650);</span>
-<span class="fc" id="L56">		setVisible(true);</span>
-<span class="fc" id="L57">		setResizable(false);</span>
-<span class="fc" id="L58">		mainPanel.setVisible(true);</span>
-<span class="fc" id="L59">		mainPanel.setgameStart(true);</span>
-<span class="fc" id="L60">		mainPanel.repaint();</span>
-<span class="fc" id="L61">		mainPanel.setgameStart(false);</span>
+<span class="nc" id="L54">		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L55">		setBounds(1150, 130, 643, 650);</span>
+<span class="nc" id="L56">		setVisible(true);</span>
+<span class="nc" id="L57">		setResizable(false);</span>
+<span class="nc" id="L58">		mainPanel.setVisible(true);</span>
+<span class="nc" id="L59">		mainPanel.setgameStart(true);</span>
+<span class="nc" id="L60">		mainPanel.repaint();</span>
+<span class="nc" id="L61">		mainPanel.setgameStart(false);</span>
 
-<span class="fc" id="L63">		exec = Executors.newCachedThreadPool();</span>
-<span class="fc" id="L64">		exec.execute(model);</span>
-<span class="fc" id="L65">		exec.execute(selector);</span>
-<span class="fc" id="L66">		repaint();</span>
-<span class="fc" id="L67">		revalidate();</span>
-<span class="fc" id="L68">	}</span>
+<span class="nc" id="L63">		exec = Executors.newCachedThreadPool();</span>
+<span class="nc" id="L64">		exec.execute(model);</span>
+<span class="nc" id="L65">		exec.execute(selector);</span>
+<span class="nc" id="L66">		repaint();</span>
+<span class="nc" id="L67">		revalidate();</span>
+<span class="nc" id="L68">	}</span>
 
 	public synchronized void setPlayerNumber(int n) {
 <span class="nc" id="L71">		this.playerNumber = n;</span>

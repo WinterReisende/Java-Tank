@@ -56,82 +56,82 @@ public class ServerModel implements Runnable {
     private java.io.File progressFile;
     private java.io.PrintWriter progressOutpuWriter;
 
-<span class="fc" id="L59">    public ServerModel(ServerView thisview) throws IOException {</span>
-<span class="fc" id="L60">        view = thisview;</span>
+<span class="nc" id="L59">    public ServerModel(ServerView thisview) throws IOException {</span>
+<span class="nc" id="L60">        view = thisview;</span>
         // fromUsers = new String[5];
-<span class="fc" id="L62">        fromServer = &quot;&quot;;</span>
-<span class="fc" id="L63">        moveUp = new boolean[5];</span>
-<span class="fc" id="L64">        moveDown = new boolean[5];</span>
-<span class="fc" id="L65">        moveLeft = new boolean[5];</span>
-<span class="fc" id="L66">        moveRight = new boolean[5];</span>
-<span class="fc" id="L67">        fire = new boolean[5];</span>
+<span class="nc" id="L62">        fromServer = &quot;&quot;;</span>
+<span class="nc" id="L63">        moveUp = new boolean[5];</span>
+<span class="nc" id="L64">        moveDown = new boolean[5];</span>
+<span class="nc" id="L65">        moveLeft = new boolean[5];</span>
+<span class="nc" id="L66">        moveRight = new boolean[5];</span>
+<span class="nc" id="L67">        fire = new boolean[5];</span>
 
-<span class="fc" id="L69">        clientInstructionPrepared = new boolean[5];</span>
-<span class="fc" id="L70">        clientInstruction = new String[5];</span>
-<span class="fc" id="L71">        playerNumber = 0;</span>
-<span class="fc" id="L72">        playerLivingNumber = 0;</span>
-<span class="fc" id="L73">        Pnid = new int[5];</span>
+<span class="nc" id="L69">        clientInstructionPrepared = new boolean[5];</span>
+<span class="nc" id="L70">        clientInstruction = new String[5];</span>
+<span class="nc" id="L71">        playerNumber = 0;</span>
+<span class="nc" id="L72">        playerLivingNumber = 0;</span>
+<span class="nc" id="L73">        Pnid = new int[5];</span>
 
-<span class="fc" id="L75">        clientConnected = new boolean[5];</span>
-<span class="fc" id="L76">        gamePrepared = new boolean[5];</span>
-<span class="fc" id="L77">        wantToLoad = new boolean[5];</span>
-<span class="fc" id="L78">        wantToView = new boolean[5];</span>
+<span class="nc" id="L75">        clientConnected = new boolean[5];</span>
+<span class="nc" id="L76">        gamePrepared = new boolean[5];</span>
+<span class="nc" id="L77">        wantToLoad = new boolean[5];</span>
+<span class="nc" id="L78">        wantToView = new boolean[5];</span>
 
-<span class="fc" id="L80">        actors = new Actor[400];</span>
-<span class="fc" id="L81">        map = new Map(this);</span>
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        for (int i = 0; i &lt; 5; i++) {</span>
-<span class="fc" id="L83">            clientConnected[i] = false;</span>
-<span class="fc" id="L84">            gamePrepared[i] = false;</span>
-<span class="fc" id="L85">            wantToLoad[i] = false;</span>
-<span class="fc" id="L86">            wantToView[i] = false;</span>
-<span class="fc" id="L87">            Pnid[i] = -1;</span>
-<span class="fc" id="L88">            moveUp[i] = false;</span>
-<span class="fc" id="L89">            moveDown[i] = false;</span>
-<span class="fc" id="L90">            moveLeft[i] = false;</span>
-<span class="fc" id="L91">            moveRight[i] = false;</span>
-<span class="fc" id="L92">            fire[i] = false;</span>
-<span class="fc" id="L93">            clientInstructionPrepared[i] = false;</span>
-<span class="fc" id="L94">            clientInstruction[i] = &quot;&quot;;</span>
+<span class="nc" id="L80">        actors = new Actor[400];</span>
+<span class="nc" id="L81">        map = new Map(this);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        for (int i = 0; i &lt; 5; i++) {</span>
+<span class="nc" id="L83">            clientConnected[i] = false;</span>
+<span class="nc" id="L84">            gamePrepared[i] = false;</span>
+<span class="nc" id="L85">            wantToLoad[i] = false;</span>
+<span class="nc" id="L86">            wantToView[i] = false;</span>
+<span class="nc" id="L87">            Pnid[i] = -1;</span>
+<span class="nc" id="L88">            moveUp[i] = false;</span>
+<span class="nc" id="L89">            moveDown[i] = false;</span>
+<span class="nc" id="L90">            moveLeft[i] = false;</span>
+<span class="nc" id="L91">            moveRight[i] = false;</span>
+<span class="nc" id="L92">            fire[i] = false;</span>
+<span class="nc" id="L93">            clientInstructionPrepared[i] = false;</span>
+<span class="nc" id="L94">            clientInstruction[i] = &quot;&quot;;</span>
         }
 
-<span class="fc" id="L97">        instructionPrepared = false;</span>
-<span class="fc" id="L98">        gameStarted = false;</span>
-<span class="fc" id="L99">        viewStarted = false;</span>
-<span class="fc" id="L100">        gameWin = false;</span>
+<span class="nc" id="L97">        instructionPrepared = false;</span>
+<span class="nc" id="L98">        gameStarted = false;</span>
+<span class="nc" id="L99">        viewStarted = false;</span>
+<span class="nc" id="L100">        gameWin = false;</span>
 
-<span class="fc" id="L102">        this.saveProgress();</span>
-<span class="fc" id="L103">    }</span>
+<span class="nc" id="L102">        this.saveProgress();</span>
+<span class="nc" id="L103">    }</span>
 
     public void saveProgress() {
         // 开始时，读取上次存储的savedProgress.txt，并将其存储到preProgress.txt中
-<span class="fc" id="L107">        java.io.File preProgressFile = new java.io.File(&quot;preProgress.txt&quot;);</span>
-<span class="fc" id="L108">        try (java.io.PrintWriter preProgressOutpuWriter = new java.io.PrintWriter(preProgressFile)) {</span>
-<span class="fc" id="L109">            java.io.BufferedReader preProgressBufferedReader = new java.io.BufferedReader(</span>
+<span class="nc" id="L107">        java.io.File preProgressFile = new java.io.File(&quot;preProgress.txt&quot;);</span>
+<span class="nc" id="L108">        try (java.io.PrintWriter preProgressOutpuWriter = new java.io.PrintWriter(preProgressFile)) {</span>
+<span class="nc" id="L109">            java.io.BufferedReader preProgressBufferedReader = new java.io.BufferedReader(</span>
                     new java.io.FileReader(&quot;savedProgress.txt&quot;));
             String line;
-<span class="pc bpc" id="L112" title="1 of 2 branches missed.">            while ((line = preProgressBufferedReader.readLine()) != null) {</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">            while ((line = preProgressBufferedReader.readLine()) != null) {</span>
 <span class="nc" id="L113">                preProgressOutpuWriter.println(line);</span>
             }
-<span class="fc" id="L115">            preProgressBufferedReader.close();</span>
-<span class="fc" id="L116">            preProgressOutpuWriter.close();</span>
+<span class="nc" id="L115">            preProgressBufferedReader.close();</span>
+<span class="nc" id="L116">            preProgressOutpuWriter.close();</span>
 <span class="nc" id="L117">        } catch (IOException e) {</span>
 <span class="nc" id="L118">            e.printStackTrace();</span>
-<span class="fc" id="L119">        }</span>
-<span class="fc" id="L120">        this.progressFile = new java.io.File(&quot;savedProgress.txt&quot;);</span>
+<span class="nc" id="L119">        }</span>
+<span class="nc" id="L120">        this.progressFile = new java.io.File(&quot;savedProgress.txt&quot;);</span>
         try {
-<span class="fc" id="L122">            this.progressOutpuWriter = new java.io.PrintWriter(progressFile);</span>
+<span class="nc" id="L122">            this.progressOutpuWriter = new java.io.PrintWriter(progressFile);</span>
 <span class="nc" id="L123">        } catch (FileNotFoundException e) {</span>
 <span class="nc" id="L124">            e.printStackTrace();</span>
-<span class="fc" id="L125">        }</span>
-<span class="fc" id="L126">    }</span>
+<span class="nc" id="L125">        }</span>
+<span class="nc" id="L126">    }</span>
 
     public void setSelector(ServerSelector thisselector) {
-<span class="fc" id="L129">        selector = thisselector;</span>
-<span class="fc" id="L130">    }</span>
+<span class="nc" id="L129">        selector = thisselector;</span>
+<span class="nc" id="L130">    }</span>
 
     public void setController(ServerController thisControler) {
-<span class="fc" id="L133">        controller = thisControler;</span>
-<span class="fc" id="L134">    }</span>
+<span class="nc" id="L133">        controller = thisControler;</span>
+<span class="nc" id="L134">    }</span>
 
     public synchronized void setMoveDirections(int id, boolean up, boolean down, boolean left, boolean right) {
 <span class="nc" id="L137">        this.moveUp[id] = up;</span>
@@ -183,8 +183,8 @@ public class ServerModel implements Runnable {
     }
 
     public void setGameStarted(boolean c) {
-<span class="fc" id="L186">        this.gameStarted = c;</span>
-<span class="fc" id="L187">    }</span>
+<span class="nc" id="L186">        this.gameStarted = c;</span>
+<span class="nc" id="L187">    }</span>
 
     public void setClientConnected(int id, boolean c) {
 <span class="nc" id="L190">        this.clientConnected[id] = c;</span>
@@ -305,7 +305,7 @@ public class ServerModel implements Runnable {
 <span class="nc" id="L305">    }</span>
 
     public boolean getInstructionPrepared() {
-<span class="fc" id="L308">        return this.instructionPrepared;</span>
+<span class="nc" id="L308">        return this.instructionPrepared;</span>
     }
 
     public void setInstruction(String thisinstruction) {
@@ -381,35 +381,35 @@ public class ServerModel implements Runnable {
     public void run() {
         try {
             // System.out.println(&quot; ServerModel is running&quot;);
-<span class="fc" id="L384">            int preplayerNumber = 0;</span>
-<span class="fc" id="L385">            int preparedplayerNumber = 0;</span>
-<span class="fc" id="L386">            int sleepTooLong = 0;</span>
-<span class="fc" id="L387">            long previousTime = System.currentTimeMillis();</span>
+<span class="nc" id="L384">            int preplayerNumber = 0;</span>
+<span class="nc" id="L385">            int preparedplayerNumber = 0;</span>
+<span class="nc" id="L386">            int sleepTooLong = 0;</span>
+<span class="nc" id="L387">            long previousTime = System.currentTimeMillis();</span>
             while (true) {
                 // 使用动态帧率控制进行睡眠33毫秒，同时设置sleepTooLong
-<span class="fc" id="L390">                sleepTooLong++;</span>
+<span class="nc" id="L390">                sleepTooLong++;</span>
                 try {
                     // 使用动态帧率控制，记录每次循环的开始时间，以及结束时间，计算时间差，然后进行sleep
-<span class="fc" id="L393">                    long currentTime = System.currentTimeMillis();</span>
-<span class="fc" id="L394">                    long timeDiff = currentTime - previousTime;</span>
-<span class="fc" id="L395">                    long sleep = 33 - timeDiff;</span>
-<span class="pc bpc" id="L396" title="1 of 2 branches missed.">                    if (sleep &lt; 0) {</span>
+<span class="nc" id="L393">                    long currentTime = System.currentTimeMillis();</span>
+<span class="nc" id="L394">                    long timeDiff = currentTime - previousTime;</span>
+<span class="nc" id="L395">                    long sleep = 33 - timeDiff;</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">                    if (sleep &lt; 0) {</span>
 <span class="nc" id="L397">                        sleep = 0;</span>
                     }
-<span class="fc" id="L399">                    Thread.sleep(sleep);</span>
-<span class="fc" id="L400">                    previousTime = System.currentTimeMillis();</span>
+<span class="nc" id="L399">                    Thread.sleep(sleep);</span>
+<span class="nc" id="L400">                    previousTime = System.currentTimeMillis();</span>
 <span class="nc" id="L401">                } catch (InterruptedException e) {</span>
 <span class="nc" id="L402">                    System.err.println(&quot;Thread was interrupted: &quot; + e.getMessage());</span>
 <span class="nc" id="L403">                    view.mainPanel.setgameStart(false);</span>
 <span class="nc" id="L404">                    Thread.currentThread().interrupt();</span>
 <span class="nc" id="L405">                    break;</span>
-<span class="fc" id="L406">                }</span>
-<span class="fc" id="L407">                fromServer = &quot;&quot;;</span>
-<span class="fc bfc" id="L408" title="All 2 branches covered.">                if (sleepTooLong &gt; 10) {</span>
-<span class="fc" id="L409">                    fromServer = &quot;noon;&quot;;// 如果sleepTooLong超过10次，则发送一个noon，以防止客户端长时间没有收到消息</span>
+<span class="nc" id="L406">                }</span>
+<span class="nc" id="L407">                fromServer = &quot;&quot;;</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">                if (sleepTooLong &gt; 10) {</span>
+<span class="nc" id="L409">                    fromServer = &quot;noon;&quot;;// 如果sleepTooLong超过10次，则发送一个noon，以防止客户端长时间没有收到消息</span>
                 }
-<span class="pc bpc" id="L411" title="1 of 2 branches missed.">                if (playerNumber == 0) {</span>
-<span class="fc" id="L412">                    continue;</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">                if (playerNumber == 0) {</span>
+<span class="nc" id="L412">                    continue;</span>
                 }
 <span class="nc bnc" id="L414" title="All 2 branches missed.">                if (playerNumber != preplayerNumber) {</span>
 <span class="nc" id="L415">                    preplayerNumber = playerNumber;</span>

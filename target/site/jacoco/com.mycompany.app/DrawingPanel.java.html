@@ -12,26 +12,26 @@ public class DrawingPanel extends JPanel {
 
 	private long lastCallTime;
 
-<span class="fc" id="L15">	public DrawingPanel() {</span>
-<span class="fc" id="L16">		playerNumber = 1;</span>
-<span class="fc" id="L17">		lastCallTime = System.currentTimeMillis();</span>
-<span class="fc" id="L18">		offScreenImage = createImage(getPreferredSize().width, getPreferredSize().height);</span>
-<span class="fc" id="L19">	}</span>
+<span class="nc" id="L15">	public DrawingPanel() {</span>
+<span class="nc" id="L16">		playerNumber = 1;</span>
+<span class="nc" id="L17">		lastCallTime = System.currentTimeMillis();</span>
+<span class="nc" id="L18">		offScreenImage = createImage(getPreferredSize().width, getPreferredSize().height);</span>
+<span class="nc" id="L19">	}</span>
 
 	public void paintComponent(Graphics g) {
-<span class="pc bpc" id="L22" title="1 of 2 branches missed.">		if (offScreenImage == null) {</span>
-<span class="fc" id="L23">			offScreenImage = createImage(this.getWidth(), this.getHeight());</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">		if (offScreenImage == null) {</span>
+<span class="nc" id="L23">			offScreenImage = createImage(this.getWidth(), this.getHeight());</span>
 		}
 		Graphics offScreenGraphics;
-<span class="fc" id="L26">		offScreenGraphics = offScreenImage.getGraphics();</span>
-<span class="fc" id="L27">		myPaint(offScreenGraphics);</span>
-<span class="fc" id="L28">		g.drawImage(offScreenImage, 0, 0, this);</span>
-<span class="fc" id="L29">	}</span>
+<span class="nc" id="L26">		offScreenGraphics = offScreenImage.getGraphics();</span>
+<span class="nc" id="L27">		myPaint(offScreenGraphics);</span>
+<span class="nc" id="L28">		g.drawImage(offScreenImage, 0, 0, this);</span>
+<span class="nc" id="L29">	}</span>
 
 	public void myPaint(Graphics g) {
-<span class="fc" id="L32">		super.paintComponent(g);</span>
+<span class="nc" id="L32">		super.paintComponent(g);</span>
 
-<span class="pc bpc" id="L34" title="1 of 2 branches missed.">		if (gameStarted) {</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">		if (gameStarted) {</span>
 <span class="nc" id="L35">			long currentTime = System.currentTimeMillis();</span>
 <span class="nc" id="L36">			long elapsedTime = currentTime - lastCallTime;</span>
 			// draw game information
@@ -39,11 +39,11 @@ public class DrawingPanel extends JPanel {
 <span class="nc" id="L39">			g.drawString(&quot;refresh interval: &quot; + elapsedTime, 527, 39);</span>
 <span class="nc" id="L40">			lastCallTime = currentTime;</span>
 		}
-<span class="fc" id="L42">	}</span>
+<span class="nc" id="L42">	}</span>
 
 	public synchronized void setgameStart(boolean c) {
-<span class="fc" id="L45">		this.gameStarted = c;</span>
-<span class="fc" id="L46">	}</span>
+<span class="nc" id="L45">		this.gameStarted = c;</span>
+<span class="nc" id="L46">	}</span>
 
 	public synchronized void setPlayerNumber(int n) {
 <span class="nc" id="L49">		this.playerNumber = n;</span>

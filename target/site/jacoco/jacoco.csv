@@ -2,17 +2,17 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 my-app,com.mycompany.app,ServerView.new Runnable() {...},20,0,0,0,10,0,2,0,2,0
 my-app,com.mycompany.app,Boundary,96,0,0,0,31,0,15,0,15,0
 my-app,com.mycompany.app,Player,589,0,44,0,147,0,57,0,35,0
-my-app,com.mycompany.app,ServerController.new ActionListener() {...},6,6,0,0,2,1,1,1,1,1
-my-app,com.mycompany.app,ServerController,0,41,0,0,0,8,0,1,0,1
-my-app,com.mycompany.app,ServerController.new ActionListener() {...},6,6,0,0,2,1,1,1,1,1
-my-app,com.mycompany.app,ServerView,9,197,0,0,4,41,2,1,2,1
-my-app,com.mycompany.app,ServerController.new MouseListener() {...},10,6,0,0,6,1,5,1,5,1
+my-app,com.mycompany.app,ServerController.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
+my-app,com.mycompany.app,ServerController,41,0,0,0,8,0,1,0,1,0
+my-app,com.mycompany.app,ServerController.new ActionListener() {...},12,0,0,0,3,0,2,0,2,0
+my-app,com.mycompany.app,ServerView,206,0,0,0,45,0,3,0,3,0
+my-app,com.mycompany.app,ServerController.new MouseListener() {...},16,0,0,0,7,0,6,0,6,0
 my-app,com.mycompany.app,Bullet,374,0,32,0,98,0,35,0,19,0
-my-app,com.mycompany.app,ServerController.new ActionListener() {...},3,6,0,0,2,1,1,1,1,1
-my-app,com.mycompany.app,DrawingPanel,34,57,2,2,7,16,3,4,1,4
+my-app,com.mycompany.app,ServerController.new ActionListener() {...},9,0,0,0,3,0,2,0,2,0
+my-app,com.mycompany.app,DrawingPanel,91,0,4,0,23,0,7,0,5,0
 my-app,com.mycompany.app,EnemyCreater,379,0,28,0,75,0,22,0,8,0
-my-app,com.mycompany.app,Map,247,6455,17,1,51,12,19,2,10,2
+my-app,com.mycompany.app,Map,6702,0,18,0,63,0,21,0,12,0
 my-app,com.mycompany.app,Wall,84,0,0,0,25,0,12,0,12,0
-my-app,com.mycompany.app,ServerModel,2043,253,215,7,449,73,157,9,48,7
+my-app,com.mycompany.app,ServerModel,2296,0,222,0,522,0,166,0,55,0
 my-app,com.mycompany.app,Enemy,527,0,40,0,123,0,51,0,31,0
-my-app,com.mycompany.app,ServerSelector,316,92,39,5,78,27,27,4,6,3
+my-app,com.mycompany.app,ServerSelector,408,0,44,0,105,0,31,0,9,0

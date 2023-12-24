@@ -8,17 +8,17 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-<span class="pc bpc" id="L11" title="1 of 2 branches missed.">public class Map {</span>
+<span class="nc bnc" id="L11" title="All 2 branches missed.">public class Map {</span>
     private ServerModel model;
     private String[][] mapList;
     private String[] map;
     private int mapId;
 
-<span class="fc" id="L17">    public Map(ServerModel model) {</span>
-<span class="fc" id="L18">        this.model = model;</span>
-<span class="fc" id="L19">        this.mapList = new String[4][400];</span>
+<span class="nc" id="L17">    public Map(ServerModel model) {</span>
+<span class="nc" id="L18">        this.model = model;</span>
+<span class="nc" id="L19">        this.mapList = new String[4][400];</span>
 
-<span class="fc" id="L21">        this.mapList[0] = new String[] {</span>
+<span class="nc" id="L21">        this.mapList[0] = new String[] {</span>
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
@@ -61,7 +61,7 @@ import java.nio.charset.StandardCharsets;
                 &quot;##&quot;, &quot;__&quot;, &quot;__&quot;
         };
 
-<span class="fc" id="L64">        this.mapList[1] = new String[] {</span>
+<span class="nc" id="L64">        this.mapList[1] = new String[] {</span>
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;,
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;,
@@ -104,7 +104,7 @@ import java.nio.charset.StandardCharsets;
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;
         };
 
-<span class="fc" id="L107">        this.mapList[2] = new String[] {</span>
+<span class="nc" id="L107">        this.mapList[2] = new String[] {</span>
                 &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
                 &quot;##&quot;, &quot;__&quot;, &quot;__&quot;,
                 &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;, &quot;##&quot;, &quot;__&quot;, &quot;__&quot;, &quot;##&quot;, &quot;##&quot;,
@@ -147,7 +147,7 @@ import java.nio.charset.StandardCharsets;
                 &quot;##&quot;, &quot;__&quot;, &quot;__&quot;
         };
 
-<span class="fc" id="L150">        this.mapList[3] = new String[] {</span>
+<span class="nc" id="L150">        this.mapList[3] = new String[] {</span>
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
                 &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;, &quot;__&quot;,
@@ -191,10 +191,10 @@ import java.nio.charset.StandardCharsets;
         };
 
         // 生成一个随机数，决定地图的类型
-<span class="fc" id="L194">        int mapType = (int) (Math.random() * 4);</span>
-<span class="fc" id="L195">        this.mapId = mapType;</span>
-<span class="fc" id="L196">        this.map = mapList[mapType];</span>
-<span class="fc" id="L197">    }</span>
+<span class="nc" id="L194">        int mapType = (int) (Math.random() * 4);</span>
+<span class="nc" id="L195">        this.mapId = mapType;</span>
+<span class="nc" id="L196">        this.map = mapList[mapType];</span>
+<span class="nc" id="L197">    }</span>
 
     // 构建函数中给出一个文件路径，读取文件内容创建地图
     public synchronized void setMapFromSources(String filePath) {
